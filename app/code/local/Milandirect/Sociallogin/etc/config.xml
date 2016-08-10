@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Sociallogin>
+            <version>0.1.0</version>
+        </Milandirect_Sociallogin>
+    </modules>
+    <frontend>
+        <routers>
+            <sociallogin>
+                <args>
+                    <modules>
+                        <Milandirect_Sociallogin before="Magestore_Sociallogin">Milandirect_Sociallogin</Milandirect_Sociallogin>
+                    </modules>
+                </args>
+            </sociallogin>
+        </routers>
+    </frontend>
+    <global>
+        <models>
+            <milandirect_sociallogin>
+                <class>Milandirect_Sociallogin_Model</class>
+            </milandirect_sociallogin>
+            <sociallogin>
+                <rewrite>
+                    <observer>Milandirect_Sociallogin_Model_Observer</observer>
+                </rewrite>
+            </sociallogin>
+        </models>
+    </global>
+</config>

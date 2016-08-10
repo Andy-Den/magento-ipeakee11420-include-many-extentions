@@ -1,0 +1,312 @@
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<?php
+/**
+ *
+ * @author Derek Li <derek@balanceinternet.com.au>
+ */
+
+/** @var Balance_ShopLook_Block_LookGroup_View $this */
+
+$lookGroup = $this->getLookGroup();
+
+switch($lookGroup->getId()){
+    case '1':
+        $lookCollectionUrl = '/test';
+        break;
+    case '2':
+        $lookCollectionUrl = '/high-society-collection';
+        break;
+    case '3':
+        $lookCollectionUrl = '/blue-valentine-collection';
+        break;
+}
+
+if (!($lookGroup instanceof Balance_ShopLook_Model_LookGroup) || !$lookGroup->getId())
+{
+    /**
+     * @todo Display ? if look group not loaded correctly.
+     */
+    return;
+}
+
+
+//print_r($lookGroup); die();
+$lookProductCollection = $this->getLookProductsCollection($lookGroup->getId());
+
+// Get default look product.
+$defaultLookProductId = $this->getDefaultLookProductId();
+
+if (empty($defaultLookProductId))
+{
+    foreach ($lookProductCollection as $lookProduct)
+    {
+        $defaultLookProduct = $lookProduct;
+        $defaultLookProductId = $lookProduct->getId();
+        break;
+    }
+}
+else
+{
+    foreach ($lookProductCollection as $lookProduct)
+    {
+        if ($defaultLookProductId == $lookProduct->getId())
+        {
+            $defaultLookProduct = $lookProduct;
+            break;
+        }
+    }
+}
+
+// Return if default product does not exit.
+if (!isset($defaultLookProduct)
+    || !($defaultLookProduct instanceof Mage_Catalog_Model_Product)
+    || !$defaultLookProduct->getId()
+) {
+    /**
+     * @todo Should redirect to 404 page?
+     */
+    return;
+}
+
+$this->getChild('lookgroup.view.list')->setLookProduct($defaultLookProduct);
+//assist($defaultLookProduct);
+//echo $defaultLookProductId;
+//$totalLookProducts = $lookProductCollection->count();
+//assist($defaultLookProductId);
+
+//$defaultLinkedProductCollection = $this->getLinkedProductCollection($defaultLookProduct);
+
+//$detailBlock = $this->getChild('lookgroup.view.detail');
+//assist($detailBlock);die;
+//$detailBlock->setProduct($defaultLookProduct);
+?>
+
+<div class="stl-cont">
+    <ul id="stl-messages" class="messages"></ul>
+    <div id="lookgroup-body-overlay" class="overlay"></div>
+    <div class="stl-body-left">
+<!--        <h3 class="section-title">--><?php //echo $lookGroup->getName();?><!--</h3>-->
+        <h2 class='stl-look-ttl section-title'>
+            <?php echo $lookGroup->getTitle();?>
+        </h2>
+
+        <!-- main look slider -->
+        <div id="slider-container" >
+            <div class="flexslider">
+                <ul class="slides">
+                    <?php foreach ($lookProductCollection as $lookProduct):
+                        $active = (isset($defaultLookProductId) && $defaultLookProductId == $lookProduct->getId())?" is-active":"";
+                        ?>
+                        <li class="stl-look-slide <?php echo $active; ?>" data-pid="<?php echo $lookProduct->getId();?>"  data-thumb="<?php echo $this->helper('catalog/image')->init($lookProduct, 'small_image')->resize(200, 200); ?>" >
+<!--                            <a href="javascript:void(0)" onclick="showZoom(--><?php //echo $lookProduct->getId();?><!--)" class="jqzoom" rel="gal1" title="Cassidy Small Bag">-->
+                                <img src="<?php echo $this->helper('catalog/image')->init($lookProduct, 'small_image')->resize(587, 593)?>"  alt="<?php echo $lookProduct->getName();?>"/>
+<!--                            </a>-->
+                        </li>
+                    <?php endforeach?>
+                </ul>
+            </div>
+        </div>
+        <!-- / main look slider -->
+
+
+
+
+        <!-- look navigation tiles -->
+<!--        <div style="position:relative">-->
+<!--            <ul class='stl-look-tiles' id="forever-new-lookproduct">-->
+<!--                --><?php //$pos = 0;
+//                foreach ($lookProductCollection as $lookProduct) : ?>
+<!--                    --><?php //$active = (isset($defaultLookProductId) && $defaultLookProductId == $lookProduct->getId())?' is-active':''; ?>
+<!--                    <li class="stl-look-tile--><?php //echo $active;?><!--" data-pid="--><?php //echo $lookProduct->getId();?><!--" dlslider-index="--><?php //echo $pos?><!--" style="float: left;width: 106px;height: 126px;text-align: center;">-->
+<!--                        <img src="--><?php //echo $this->helper('catalog/image')->init($lookProduct, 'small_image')->resize(104, 124)?><!--"  alt="--><?php //echo $lookProduct->getName();?><!--"/>-->
+<!--                    </li>-->
+<!--                    --><?php //$pos++; endforeach;?>
+<!--            </ul>-->
+<!--            <a href="#" id="prev-item" class='btn-arrow arrow-prev-product' style="top: 40px;left: 10px;"><span>prev</span></a>-->
+<!--            <a href="#" id="next-item" class='btn-arrow arrow-next-product' style="top: 40px;right: 40px;"><span>next</span></a>-->
+<!--        </div>-->
+        <!-- / look navigation tiles -->
+
+
+        <!-- look details -->
+        <ul class="stl-look-details">
+            <?php foreach ($lookProductCollection as $lookProduct):
+                $active = ($defaultLookProductId == $lookProduct->getId())?' is-active':''; ?>
+                <li class="stl-look-detail<?php echo $active; ?>" data-pid="<?php echo $lookProduct->getId();?>">
+                    <?php //$this->getChild('lookgroup.view.detail')->setLookProduct($lookProduct);
+                    //                    echo $this->getChildHtml('lookgroup.view.detail', false);//?>
+
+                    <div class='stl-look-desc'>
+                        <?php echo $lookGroup->getDescription();?>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <!-- / look details -->
+        <div class="clear"></div>
+    </div>
+
+    <div class="stl-body-right">
+        <!--        <div id="lookgroup-product-list-overlay" class="overlay" style='left: 0px; top: 0px;'></div>-->
+        <!-- look products -->
+        <div id="product-list-container">
+            <?php echo $this->getChildHtml('lookgroup.view.list');?>
+        </div
+            <!-- / look products -->
+    </div>
+
+    <div class="stl-footer">
+<!--        <a class="stl-collection button btn-inline" href="--><?php //echo $lookCollectionUrl;?><!--">-->
+<!--            <span>-->
+<!--                <span>Shop the entire collection</span>-->
+<!--            </span>-->
+<!--        </a>-->
+<!--        <a class="stl-all-collections" href="/shop-by-collection">View all Collections &gt;</a>-->
+    </div>
+
+
+    <div class="clear"></div>
+</div>
+<script>
+
+    (function($){
+        "use-strict";
+
+        $(document).ready(function()
+        {
+            var galleryItems = $('li.stl-look-tile');
+            var detailItems = $('li.stl-look-detail');
+
+            $('.flexslider').flexslider({
+                animation: "fade",
+                controlNav: "thumbnails",
+                slideshow: false,
+                after: function(sl) {
+                    var groupId = $(sl.slides[sl.currentSlide]).attr('data-pid');
+
+                    console.log(groupId);
+                    loadGroup(groupId);
+                }
+            });
+
+
+            function loadGroup(id){
+                $('#lookgroup-product-list-overlay').show();
+
+                $('#shop-look-form').html('<span class="loader">Loading Products...   <i class="fa fa-spinner fa-spin fa-2x"></i></span>');
+                $('.stl-list-btns').hide();
+
+                $.ajax(
+                    {
+                        url: '<?php echo Mage::getBaseUrl(); ?>shoplook/lookGroup/viewList/lp/'+id,
+                        type: 'GET',
+                        async: true,
+                        success: function(response)
+                        {
+                            $('#product-list-container').html(response);
+                            $('#lookgroup-product-list-overlay').hide();
+                        },
+                        error: function(response)
+                        {
+                            $('#lookgroup-product-list-overlay').hide();
+                        }
+                    });
+            }
+
+
+
+//            jQuery('.flexslider').flexslider({
+//                namespace:			"",
+//                animation:			'fade',
+//
+//                easing:				'easeInOutCubic',
+//                useCSS:				false,
+//
+//                animationLoop:		1,
+//                smoothHeight:		0,
+//
+//                slideshowSpeed:		10000,
+//
+//                animationSpeed:		600,
+//
+//                pauseOnHover:		1
+//            });
+
+
+
+        //alert('here');
+
+/*
+            var galleryItems = $('li.stl-look-tile');
+            var detailItems = $('li.stl-look-detail');
+
+            var sliderContainer = $('#slider-container');
+            var slider = sliderContainer.dlslider(
+                {
+                    autoSlide: false,
+                    animation: 'none'
+                });
+
+
+            galleryItems.click(function()
+            {
+                if ($(this).attr('dlslider-index'))
+                {
+                    sliderContainer.trigger(slider.getEvent('slideTo'), {'index':$(this).attr('dlslider-index')});
+                }
+            });
+
+            sliderContainer.bind(slider.getEvent('slideToAfter'), function(event, data)
+            {
+                if (galleryItems[data.index])
+                {
+                    galleryItems.removeClass('is-active');
+                    $(galleryItems[data.index]).addClass('is-active');
+                }
+                if (detailItems[data.index])
+                {
+                    detailItems.removeClass('is-active');
+                    $(detailItems[data.index]).addClass('is-active');
+                }
+            });
+
+            sliderContainer.bind(slider.getEvent('slideToBefore'), function(event, data)
+            {
+                if (galleryItems[data.index])
+                {
+                    $('#lookgroup-product-list-overlay').show();
+                    $.ajax(
+                        {
+                            url: '<?php echo Mage::getBaseUrl(); ?>shoplook/lookGroup/viewList/lp/'+$(galleryItems[data.index]).attr('data-pid'),
+                            type: 'GET',
+                            async: true,
+                            success: function(response)
+                            {
+                                $('#product-list-container').html(response);
+                                $('#lookgroup-product-list-overlay').hide();
+                            },
+                            error: function(response)
+                            {
+                                $('#lookgroup-product-list-overlay').hide();
+                            }
+                        });
+                }
+            });*/
+        });
+    })(jQuery);
+
+//    function showZoom(id){
+//        jQuery('#fancybox'+id).trigger('click');
+//    }
+//    jQuery("#forever-new-lookproduct").carouFredSel({
+//        auto: false,
+//        width: 520,
+//        height: 'variable',
+//        prev: '#prev-item',
+//        next: '#next-item',
+//        items:4,
+//        scroll : 1,
+//        mousewheel: true
+//    });
+</script>

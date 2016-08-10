@@ -1,0 +1,18 @@
+
+/* For Iksanika, generic skin */
+#onestepcheckout-form .onestepcheckout-skin-generic > .onestepcheckout-column-middle #braintree-tick.bt-validation-passed {
+    background: transparent url("../../../iksanika/onestepcheckout/images/onestepcheckout-numbers-4.png") no-repeat;
+    height: 33px;
+    width: 33px;
+    transform: none;
+    -ms-transform: none;
+}
+/* For Iksanika, Magento skin */
+#onestepcheckout-form .onestepcheckout-skin-magento > .onestepcheckout-column-middle #braintree-tick.bt-validation-passed {
+    background: transparent url("../../../iksanika/onestepcheckout/images/skin-magento/onestepcheckout-numbers-4.png") no-repeat;
+    margin-top: 7px;
+    height: 18px;
+    width: 18px;
+    transform: none;
+    -ms-transform: none;
+}

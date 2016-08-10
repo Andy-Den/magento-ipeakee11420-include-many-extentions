@@ -1,0 +1,109 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div id="subscribe-form" class="clearer">
+    <div class="title1"><?php echo $this->__('Want the latest specials and exclusive deals?');?></div>
+    <div class="title2"><?php echo $this->__('Subscribe to our newsletter. It\'s free!');?></div>
+    <form action="<?php echo $this->getUrl('newsletter/subscriber/send/', array('_secure' => $this->getRequest()->isSecure())) ?>" onsubmit="return subscribeToNewsletterFormDetail.submit(event)" method="post" id="newsletter-validate-detail">
+        <div class="clearer main-form">
+        	<?php /*
+          <div class="input-box" style="margin-bottom:10px">
+        		<input type="text" name="cm-name" id="deals-name" class="input-text required-entry" placeholder="Enter your name" />
+        	</div>
+          */ ?>
+            <input type="hidden" name="cm-name" id="deals-name" value="default" >
+            <div class="input-box">
+                <input type="text" name="cm-nkrlkr-nkrlkr" id="deals-email" title="<?php echo $this->__('Sign up for our newsletter') ?>" class="input-text required-entry validate-email" placeholder="Enter your email address" />
+            </div>
+            <div class="input-box">
+            	<div class="input-text" style="padding-top:10px">
+            		<button type="submit" title="<?php echo $this->__('Sign Up') ?>" class="button style1" style="float:none"><span><span><?php echo $this->__('Sign Up') ?></span></span></button>
+            	</div>
+            </div>
+        </div>
+    </form>
+    <div id="loading-mask-subscribe-newsletter" style="display: none;">
+  	<div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/><br />
+    	<?php echo $this->__('Please wait...') ?></div>
+    	<div id="loading-mask"></div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var subscribeToNewsletterFormDetail = new VarienForm('newsletter-validate-detail');
+    var postUrl = "<?php echo $this->getUrl('newsletter/subscriber/send/', array('_secure' => $this->getRequest()->isSecure())) ?>";
+    subscribeToNewsletterFormDetail.submit = function(event) {
+        if (this.validator.validate()) {
+        	submitSubscribeToNewsletterForm();
+        }
+        return false;
+    }
+
+    function submitSubscribeToNewsletterForm()
+    {
+    	Element.show('loading-mask-subscribe-newsletter');
+    	var request = new Ajax.Request(
+    			postUrl,
+               {
+                   method: 'post',
+                   evalJS: 'force',
+                   onComplete: function(response){
+                       //alert('subscribe successfully');
+                   },
+                   onFailure: function(response){
+                       alert('An error occurred while processing your request');
+                       Element.hide('loading-mask-subscribe-newsletter');
+                   },
+                   onSuccess: function(response){
+                       if (response && response.responseText){
+                           try{
+                               result = eval('(' + response.responseText + ')');
+                           }
+                           catch (e) {
+                        	   result = {};
+                           }
+                       }
+                       isSuccess = /You have successfully subscribed to this list$/.test(result.message);
+
+                       if(isSuccess) {
+                    	   Element.hide('loading-mask-subscribe-newsletter');
+                    	   alert(result.message);
+                    	   $('deals-email').value = '';
+                       }
+                       else{
+                    	   alert('An error occurred while processing request');
+                    	   Element.hide('loading-mask-subscribe-newsletter');
+                       }
+                   },
+                   parameters: jQuery('#newsletter-validate-detail').serialize()
+               }
+       );
+
+    }
+
+//]]>
+</script>

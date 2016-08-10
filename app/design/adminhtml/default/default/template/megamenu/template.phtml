@@ -1,0 +1,94 @@
+<form action="<?php echo $this->getLoadUrl() ?>" method="post" id="template_load_form">   
+    <?php echo $this->getBlockHtml('formkey')?>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend">
+            <?php echo Mage::helper('adminhtml')->__('Load default template') ?>
+            </h4>            
+            <div class="form-buttons"></div>
+        </div>
+        <div class="fieldset">
+            <table class="form-list" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="label">
+                            <label for="template_select">
+                            <?php echo Mage::helper('adminhtml')->__('Template') ?> 
+                            
+                            </label>
+                        </td>
+                        <td class="value">
+                            <select id="template_select" name="code" class="select validate-select">
+                                <option value="-1"><?php echo Mage::helper('adminhtml')->__('-- Please choose template --') ?></option>
+                                <?php foreach ($this->getCollectionTemplate() as $_option): ?>
+                                <option value="<?php echo $_option->getId() ?>"><?php echo $_option->getData('name_template') ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div id="advice-validate-select-template_select" class="validation-advice" style="display: none">Please select an option.</div>
+                        </td>
+                        <td></td>
+                    </tr>                   
+                    <tr>
+                        <td class="label">
+                            <label>&nbsp;</label>
+                        </td>
+                        <td class="value">
+                            <?php echo $this->getLoadButtonHtml() ?>                          
+                        </td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <td class="label">
+                            <label>&nbsp;</label>
+                        </td>
+                        <td class="value">
+                            <a class=""><img id="image_template" src =""/></a>                                                 
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>         
+<?php echo $this->getFormHtml() ?>
+<script type="text/javascript">
+//<![CDATA[
+
+var templateControl = {
+    load: function() {
+        if ($('template_select').value == -1){
+            $('advice-validate-select-template_select').setStyle({display: 'block'});
+            return
+        }else{
+             $('advice-validate-select-template_select').setStyle({display: 'none'});
+        }     
+        this.variables = null;
+        new Ajax.Request($('template_load_form').action, {
+           parameters: Form.serialize($('template_load_form'), true),
+           area: $('template_load_form'),
+           onComplete: function (transport) {
+               if (transport.responseText.isJSON()) {
+                   var field = transport.responseText.evalJSON(); 
+                   if (field.image){
+	                   var url = "<?php echo Mage::helper('megamenu')->getUrlImage(); ?>";
+	                   $('image_template').show();
+	                   $('image_template').setAttribute('src',url+field.template_id+"/"+field.image);
+                   } else {
+                   	   $('image_template').setAttribute('src','');
+                   	   $('image_template').hide();
+                   }
+                    if (tinyMCE.getInstanceById('code_template') == null){
+                       $('code_template').value = field.code_template; 
+                   } else {
+			tinyMCE.execCommand('mceRemoveControl', false, 'code_template');
+                        $('code_template').value = field.code_template; 
+                         tinyMCE.execCommand('mceAddControl', false, 'code_template'); 							
+                   }                   
+               }
+           }.bind(this)
+        });
+    }   
+ }
+//]]>
+</script>

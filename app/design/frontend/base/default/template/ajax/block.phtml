@@ -1,0 +1,10 @@
+<?php 
+$helper = Mage::helper('ajax');
+$nodiv = $this->getData('nodiv');
+?>
+<?php if (empty($nodiv)) :?>
+<div id="<?php echo $helper->getId($this)?>"></div>
+<?php endif;?>
+<script type="text/javascript">
+biAjax.addView(new Balance.AjaxView('<?php echo $helper->getId($this)?>','<?php echo $helper->getAjaxString($this)?>', <?php echo $helper->getAjaxSort($this)?>));
+</script>

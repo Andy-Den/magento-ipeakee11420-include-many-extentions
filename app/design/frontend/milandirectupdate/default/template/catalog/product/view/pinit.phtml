@@ -1,0 +1,8 @@
+<?php
+if($this->getRequest()->getControllerName() == 'product') :
+$currentUrl = $this->helper("core/url")->getCurrentUrl();
+?>
+<a href="javascript:void(0)" onclick="window.open('http://pinterest.com/pin/create/button/?url=<?php echo $currentUrl ?>&media=<?php echo Mage::helper('catalog/image')->init(Mage::registry('current_product'), 'image');?>&description=<?php echo Mage::registry('current_product')->getName(); ?>', 'Share a link on Pinterest', 'toolbar=yes, scrollbars=yes, resizable=yes, width=800, height=600')"
+   class="pin-it-button" count-layout="horizontal">
+</a>
+<?php endif; ?>

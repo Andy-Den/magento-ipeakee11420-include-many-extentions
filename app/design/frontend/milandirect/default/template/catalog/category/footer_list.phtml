@@ -1,0 +1,10 @@
+<?php $_menu = $this->renderFooterCategoriesHtml(0,'level-top') ?>
+<?php if($_menu): ?>
+<div class="spcl-product-links">
+        <?php echo $_menu ?>
+    </ul>
+</div>
+<script>
+    decorateGeneric($$('ul.category-grid'), ['first', 'last']);
+</script>
+<?php endif ?>

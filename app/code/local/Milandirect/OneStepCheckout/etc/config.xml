@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_OneStepCheckout>
+            <version>0.1.0</version>
+        </Milandirect_OneStepCheckout>
+    </modules>
+    <frontend>
+        <routers>
+            <onestepcheckout>
+                <args>
+                    <modules>
+                        <Milandirect_OneStepCheckout before="Idev_OneStepCheckout">Milandirect_OneStepCheckout</Milandirect_OneStepCheckout>
+                    </modules>
+                </args>
+            </onestepcheckout>
+        </routers>
+    </frontend>
+    <global>
+        <blocks>
+            <onestepcheckout>
+                <rewrite>
+                    <checkout>Milandirect_OneStepCheckout_Block_Checkout</checkout>
+                    <fields>Milandirect_OneStepCheckout_Block_Fields</fields>
+                </rewrite>
+            </onestepcheckout>
+        </blocks>
+    </global>
+</config>

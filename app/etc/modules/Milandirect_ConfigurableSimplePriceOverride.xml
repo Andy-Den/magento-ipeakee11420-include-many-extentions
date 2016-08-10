@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_ConfigurableSimplePriceOverride>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog />
+                <Balance_ConfigurableSimplePriceOverride />
+            </depends>
+        </Milandirect_ConfigurableSimplePriceOverride>
+    </modules>
+</config>

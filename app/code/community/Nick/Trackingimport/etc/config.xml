@@ -1,0 +1,138 @@
+<config>
+	<modules>
+		<Nick_Trackingimport>
+			<version>2.0.0</version>
+		</Nick_Trackingimport>
+	</modules>
+
+    <global>
+        <models>
+            <Trackingimport>
+                <class>Nick_Trackingimport_Model</class>
+            </Trackingimport>
+        </models>
+        <helpers>
+            <trackingimport>
+                <class>Nick_Trackingimport_Helper</class>
+            </trackingimport>
+        </helpers>
+		<blocks>
+            <trackingimport>
+            	<class>Nick_Trackingimport_Block</class>
+           	</trackingimport>
+		</blocks>     
+     </global>
+	
+	<admin>
+        <routers>
+            <adminhtml>
+				<args>
+					<modules>
+						<sintax before="Mage_Adminhtml">Nick_Trackingimport_Adminhtml</sintax>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    
+	 
+    <adminhtml>
+        <menu>
+            <sales>
+                <children>
+				   <trackingimport translate="title" module="trackingimport">
+                          <title>Import Tracking</title>
+                          <action>adminhtml/sintax_import/index</action>
+						  <sort_order>1000</sort_order>
+                   </trackingimport>
+				</children>
+			</sales>
+		</menu>
+		<acl>
+            <resources>
+			<all>
+					<title>Allow Everything</title>
+				</all>			
+                <admin>
+                    <children>
+                        <sales>
+                            <children>
+                                <trackingimport>
+                                    <title>Tracking Import</title>
+                                </trackingimport>
+                            </children>
+                        </sales>
+					  <system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <trackingimport module="trackingimport">
+											<title>Tracking Import</title>
+	                                    </trackingimport>
+	                                </children>
+	                            </config>
+	                        </children>
+	                    </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+		<layout>
+            <updates>
+                <sintax>
+                    <file>trackingimport.xml</file>
+                </sintax>
+            </updates>
+        </layout>
+		
+		
+	</adminhtml>
+	
+	
+    <routers>
+            <Nick_Trackingimport>
+                <use>admin</use>
+                <args>
+                    <module>Nick_Trackingimport</module>
+                    <frontName>trackingimport</frontName>
+                </args>
+            </Nick_Trackingimport>
+    </routers>
+
+   <crontab>
+        <jobs>
+            <trackingimport>
+                <schedule>
+                	
+                	<cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                	<model>Trackingimport/Observer::Fileimport</model>
+                </run>
+            </trackingimport>
+        </jobs>
+    </crontab>
+	<default>
+        <trackingimport>
+			 <general>
+				<invoice>0</invoice>
+				<email>1</email>
+				<delimiter>,</delimiter>
+				<enclosure>"</enclosure>
+			</general>
+			<csvheaders>
+                <orderid>Order Id</orderid>
+                <shipmentid>Tracking No</shipmentid>
+                <carrierid>Carrier</carrierid>
+                <postcode>Postcode</postcode>
+                <date_dispatched>Date dispatched</date_dispatched>
+                <tracking_link>Tracking Link</tracking_link>
+                <!--<sku>Sku</sku>
+                <qty>Qtytoship</qty>-->
+	        </csvheaders>			
+			<cron_settings>
+			<cron_folder>shipment</cron_folder>
+			</cron_settings>		 
+        </trackingimport>
+  </default>
+</config>

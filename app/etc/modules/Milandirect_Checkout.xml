@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Checkout>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>>
+                <Exceedz_Checkout />
+                <Balance_Ajax />
+            </depends>
+        </Milandirect_Checkout>
+    </modules>
+</config>

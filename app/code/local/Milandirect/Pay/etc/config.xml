@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Pay>
+            <version>0.1.0</version>
+        </Milandirect_Pay>
+    </modules>
+    <global>
+        <models>
+            <fris_pay>
+                <rewrite>
+                    <method_braintreevzero>Milandirect_Pay_Model_Method_Braintreevzero</method_braintreevzero>
+                </rewrite>
+            </fris_pay>
+        </models>
+    </global>
+</config>

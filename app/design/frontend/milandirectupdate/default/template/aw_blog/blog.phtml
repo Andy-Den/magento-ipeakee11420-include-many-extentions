@@ -1,0 +1,106 @@
+<div class="common_spacing">
+  <?php $posts = $this->getPosts(); ?>
+<!--  <div id="breadcrumb" class="breadcrumbs">--><?php ////echo $this->getLayout()->getBlock('breadcrumbs')->toHtml()?><!-- </div>-->
+
+  <div class="page-title category-title blog-title">
+    <h1>Blog</h1>
+    <p class="sub-text">All the Latest Milan Direct News and Specials</p>
+  </div>
+</div>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+  <div class="postWrapper blog-milandirect">
+    <dl>
+      <?php
+$show = true;
+      $i=0;
+foreach ($posts as $key=>$post): ?>
+      <dt <?php if($show) : ?>class="first active"<?php endif; ?> id="post_<?php echo $key; ?>">
+        <div class="blogTitle">
+        <span class="arrow" id="post_<?php echo $key; ?>" onclick="showhidePost('<?php echo $key; ?>');">&nbsp;</span>
+        <?php $createdTime =	$post->getCreatedTime();?>
+            <div class="blog-date">
+              <span class="date"><?php echo Mage::getModel('core/date')->date('d' , $createdTime); ?></span>
+              <span class="month-date"><?php echo Mage::getModel('core/date')->date('F' , $createdTime)?></span>
+              <span class="year"><?php echo Mage::getModel('core/date')->date('Y' , $createdTime);?></span>
+            </div>
+            <div class="title-toggle">
+                <h2><?php echo $post->getTitle();?></h2>
+                <a href="javascript:void(0);" onclick="showhidePost('<?php echo $key; ?>');" id="read_more_<?php echo $key; ?>" <?php if($show) : ?>style="display:none"<?php endif; ?> class="btn-read-more read-more-<?php echo $key; ?>" title="Read More">Read more</a>
+                <a href="javascript:void(0);" onclick="showhidePost('<?php echo $key; ?>');" id="read_more_<?php echo $key; ?>" <?php if(!$show) : ?>style="display:none"<?php endif; ?> class="btn-read-less read-less-<?php echo $key; ?>" title="Read More">Read less</a>
+            </div>
+        </div>
+      </dt>
+      <dd id="post_<?php echo $key; ?>_content" <?php if(!$show) : ?>style="display:none"<?php endif; ?>>
+        <?php
+        //if($i==0):
+            echo $this->getLayout()->createBlock('blog/postcontent')->setPostId($post->getId())->setTemplate('aw_blog/postcontent.phtml')->toHtml();
+          //  endif;
+        ?>
+      </dd>
+
+      <?php $show = false; $i++; endforeach; ?>
+    </dl>
+
+  <?php //$this->getPages(); ?>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    jQuery(document).ready(function() {
+       if(jQuery('#blog-link'))
+        jQuery('#blog-link').addClass('select');
+     });
+
+    function showhidePost(id){
+        var link_detail ='<?php echo Mage::getUrl('blog/post/postdetail') ?>';
+        var currentUrl = window.location.href;
+        var isHttps = currentUrl.search('https://');
+        if(isHttps>=0){
+            link_search = link_detail.replace('http://','https://');
+        }
+        else {
+            link_search = link_detail.replace('https://','http://');
+        }
+        jQuery("#post_"+id).toggleClass('active');
+        if(jQuery('.btn-read-less').css('display') !== 'none'){
+            jQuery('.read-more-'+id).toggle();
+            jQuery('.read-less-'+id).toggle();
+        }else {
+            jQuery('.read-more-'+id).toggle();
+            jQuery('.read-less-'+id).toggle();
+        }
+        if(jQuery("#post_"+id+"_content .postContent").length){
+            jQuery("#post_"+id+'_content').toggle();
+        }
+        else {
+            jQuery("#post_"+id+'_content').toggle();
+            jQuery("#post_"+id+'_content').html(jQuery("#loading-mask-cart").html());
+            new Ajax.Request(link_detail, {
+                method: 'post',
+                parameters: {"postId":id},
+                onSuccess: function(data){
+                    html = data.responseText.evalJSON();
+                    jQuery("#post_"+id+'_content').html(html.content);
+
+                },
+                onFailure: function(data){
+                    jQuery("#post_"+id+'_content').html('');
+                }
+            });
+        }
+
+
+    }
+    document.observe("dom:loaded", function() {
+		$$('div.share-buttons').each(function(item){
+				var id = item.id;
+				var postId = id.split('_');
+				var realPostId = postId[1];
+				var link = $('facebook_share_link_'+realPostId).innerHTML;
+				$$('div[id="'+id+'"] li[id="facebook-share"]').each(function(fbItem){
+					fbItem.update(link);
+				});
+            });
+	});
+//]]>
+</script>
+

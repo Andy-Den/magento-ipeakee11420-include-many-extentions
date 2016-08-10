@@ -1,0 +1,452 @@
+//
+// Magento Enterprise Edition
+//
+// NOTICE OF LICENSE
+//
+// This source file is subject to the Magento Enterprise Edition End User License Agreement
+// that is bundled with this package in the file LICENSE_EE.txt.
+// It is also available through the world-wide-web at this URL:
+// http://www.magento.com/license/enterprise-edition
+// If you did not receive a copy of the license and are unable to
+// obtain it through the world-wide-web, please send an email
+// to license@magento.com so we can send you a copy immediately.
+//
+// DISCLAIMER
+//
+// Do not edit or add to this file if you wish to upgrade Magento to newer
+// versions in the future. If you wish to customize Magento for your
+// needs please refer to http://www.magento.com for more information.
+//
+// @category    design
+// @package     rwd_default
+// @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @license http://www.magento.com/license/enterprise-edition
+//
+
+// =============================================
+// Mixin - all content
+// =============================================
+
+@mixin easy-include ($desktop-value, $mobile-value){
+
+}
+
+// This mixin outputs the styles to allow for grids with more than 3 columns
+@mixin menu-grid($column-count, $container-width, $col-num:"") {
+
+    /* Config: Columns + flexible gutter */
+    $column-gutters: ($column-count) - 1;
+    $container: $container-width - (2 * $trim);
+    $column-width: ($container - ($column-gutters * $product-column-spacing)) / $column-count;
+
+    /* Set column config */
+
+    /*.grid#{$column-count}-#{$col-num} {*/
+    width: percentage($col-num / $column-count);
+    display:inline-block;
+    vertical-align: top;
+    /*}*/
+}
+
+@mixin easy-grid($num-col,$device-width,$column-spacing) {
+
+    /* Config: two columns + flexible gutter */
+    // Container: 600 - (2 * 30 trim wide) = 540
+    $column-spacing: 20;
+    $column-count: $num-col;
+    $column-gutters: $num-col - 1;
+    $container: 728 - ($column-gutters * $column-spacing);  // 600 - (1 * 20) =580
+
+    // Math: (540 - (1 * 30 gutter)) / 2 items = 160
+    $column-width: (728 - ($column-gutters * $column-spacing)) / $column-count; // (580 -(1* 20)) / 2 = 280
+
+    & {
+        /* Undo two-column config */
+        > *:nth-child(odd) {
+            clear: none;
+        }
+        > *:nth-child(even) {
+            margin-right: percentage($column-spacing / 728);
+        }
+
+        /* Set three-column config */
+        > * {
+            width: percentage($column-width / 728);
+            margin-right: percentage($column-spacing / 728);     //  20/280
+        }
+        > *:nth-child(#{$column-count}n+1) {
+            clear: left;
+        }
+        > *:nth-child(#{$column-count}n) {
+            margin-right: 0;
+        }
+        > * {
+            float: left;
+        }
+    }
+}
+
+
+// =============================================
+// Mixin - font size
+// =============================================
+
+$mq-support: true !default;
+$f-size-in-var-support-desktop-first: true !default;    // it mean all f-size,f-size-xs..... in var.scss currently they support desktop
+
+$f-size-desktop-base: $f-size;
+$f-size-mobile-base: $f-size-xs;
+$f-size-mobile-s: $f-size-xxxs;
+$f-size-mobile-l: $f-size-s;
+$f-size-mobile-xl: $f-size;
+
+// Convert font size from desktop first in _var.scss to Mobile first
+@mixin easy-fs($f-size-desktop-value, $f-size-mobile-value: null, $f-size-tablet-value: null) {
+
+    @if $f-size-in-var-support-desktop-first == true {
+        $f-size-base: $f-size-desktop-base; // font size base will set to body tag
+        // Convert font size from desktop first to Mobile first and allow support font size mobile first
+
+        @if $f-size-mobile-value != null {
+            font-size: $f-size-mobile-value;
+        } @else if $f-size-desktop-value == $f-size-desktop-base {
+            font-size: $f-size-mobile-base;     // convert desktop to font size mobile
+        } @else if $f-size-desktop-value > 0px and $f-size-desktop-value < $f-size-base {       // normally font size less than 10px will can't render font smaller than 10px
+            font-size: $f-size-mobile-s;
+        } @else if $f-size-desktop-value == $f-size-xl or $f-size-desktop-value == $f-size-l {
+            font-size: $f-size-mobile-l;
+        } @else if $f-size-desktop-value == $f-size-xxl {
+            font-size: $f-size-mobile-xl;
+        }
+        @if $f-size-tablet-value != null {
+            @include bp(min-width, $bp-small +1) {
+                font-size: $f-size-tablet-value;
+            }
+            @include bp(min-width, $bp-large +1) {
+                font-size: $f-size-desktop-value;
+            }
+        } @else {
+            @include bp(min-width, $bp-small +1) {
+                font-size: $f-size-desktop-value;
+            }
+        }
+    }
+}
+
+/*
+// ----------------------------------------------
+// Usage example:
+// For IE set $mq-support to false.
+// Set the fixed value.
+// Then use mixins to test whether styles should be applied.
+// ----------------------------------------------
+
+// Renders at fixed value
+@include fs ($f-size)
+
+// ----------------------------------------------
+*/
+
+// =============================================
+// Mixin - border-radius
+// =============================================
+
+@mixin easy-border-radius($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+
+    @include border-radius($mobile-value);
+
+    @if $tablet-value != null {
+        @include bp(min-width, $bp-small +1) {
+            @include border-radius($tablet-value);
+        }
+
+        @include bp(min-width, $bp-large +1) {
+            @include border-radius($desktop-value);
+        }
+    } @else {
+        @include bp(min-width, $bp-small +1) {
+            @include border-radius($desktop-value);
+        }
+    }
+}
+
+// =============================================
+// Mixin - Sample
+// =============================================
+
+@mixin easy-sample($desktop-value: null, $mobile-value: null, $tablet-value: null, $attr: null, $direct: null) {
+    $suffix-direct: '';
+    @if $direct != null {
+        $suffix-direct: -#{$direct};
+    }
+    @if $mobile-value != null {
+        #{$attr}#{$suffix-direct}: $mobile-value;
+    }
+    @if $tablet-value != null {
+        @include bp(min-width, $bp-small +1) {
+            #{$attr}#{$suffix-direct}: $tablet-value;
+        }
+        @include bp(min-width, $bp-large +1) {
+            #{$attr}#{$suffix-direct}: $desktop-value;
+        }
+    }
+    @else if $desktop-value != null {
+        @include bp(min-width, $bp-small +1) {
+            #{$attr}#{$suffix-direct}: $desktop-value;
+        }
+    }
+}
+
+// =============================================
+// Mixin - Margin
+// =============================================
+
+@mixin easy-margin($desktop-value: null, $mobile-value: null, $tablet-value: null, $direct: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,margin,$direct);
+}
+@mixin easy-margin-top($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-margin($desktop-value,$mobile-value,$tablet-value,top);
+}
+@mixin easy-margin-right($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-margin($desktop-value,$mobile-value,$tablet-value,right);
+}
+@mixin easy-margin-bottom($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-margin($desktop-value,$mobile-value,$tablet-value,bottom);
+}
+@mixin easy-margin-left($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-margin($desktop-value,$mobile-value,$tablet-value,left);
+}
+
+/*
+// ----------------------------------------------
+// Usage example:
+// use mixins to test whether styles should be applied.
+// ----------------------------------------------
+
+
+// Renders at fixed value
+@include margin(0,10px,null,right);
+
+// output:
+
+    margin: 0;
+    @media only screen and min-width > 600px {
+        margin-right: 10px;
+    }
+
+// ----------------------------------------------
+*/
+
+// =============================================
+// Mixin - padding
+// =============================================
+
+@mixin easy-padding($desktop-value: null, $mobile-value: null, $tablet-value: null, $direct: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,padding,$direct);
+}
+
+@mixin easy-padding-top($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-padding($desktop-value,$mobile-value,$tablet-value,top);
+}
+@mixin easy-padding-right($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-padding($desktop-value,$mobile-value,$tablet-value,right);
+}
+@mixin easy-padding-bottom($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-padding($desktop-value,$mobile-value,$tablet-value,bottom);
+}
+@mixin easy-padding-left($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-padding($desktop-value,$mobile-value,$tablet-value,left);
+}
+
+// =============================================
+// Mixin - line height
+// =============================================
+
+@mixin easy-line-height($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,line-height);
+}
+
+// =============================================
+// Mixin - min height
+// =============================================
+
+@mixin easy-min-height($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,min-height);
+}
+
+// =============================================
+// Mixin - max-height
+// =============================================
+
+@mixin easy-max-height($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,max-height);
+}
+
+// =============================================
+// Mixin - top right bottom left
+// =============================================
+
+@mixin easy-top($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,top);
+}
+@mixin easy-right($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,right);
+}
+@mixin easy-bottom($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,bottom);
+}
+@mixin easy-left($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,left);
+}
+
+// =============================================
+// Mixin - display
+// =============================================
+
+@mixin easy-display($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,display);
+}
+
+// =============================================
+// Mixin - letter spacing
+// =============================================
+
+@mixin easy-letter-spacing($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,letter-spacing);
+}
+
+// =============================================
+// Mixin - clear
+// =============================================
+
+@mixin easy-clear($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,clear);
+}
+// =============================================
+// Mixin - background
+// =============================================
+
+@mixin easy-background($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,background);
+}
+
+// =============================================
+// Mixin - width
+// =============================================
+
+@mixin easy-width($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,width);
+}
+
+// =============================================
+// Mixin - height
+// =============================================
+
+@mixin easy-height($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+    @include easy-sample($desktop-value,$mobile-value,$tablet-value,height);
+}
+
+// =============================================
+// Mixin - border
+// =============================================
+
+@mixin easy-border($desktop-value: null, $mobile-value: null, $tablet-value: null, $direct: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,border,$direct);
+}
+
+@mixin easy-border-top($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-border($desktop-value,$mobile-value,$tablet-value,top);
+}
+@mixin easy-border-right($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-border($desktop-value,$mobile-value,$tablet-value,right);
+}
+@mixin easy-border-bottom($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-border($desktop-value,$mobile-value,$tablet-value,bottom);
+}
+@mixin easy-border-left($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-border($desktop-value,$mobile-value,$tablet-value,left);
+}
+
+// =============================================
+// Mixin - color
+// =============================================
+
+@mixin easy-color($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,color);
+}
+
+// =============================================
+// Mixin - float
+// =============================================
+
+@mixin easy-float($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,float);
+}
+
+// =============================================
+// Mixin - text align
+// =============================================
+
+@mixin easy-text-align($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,text-align);
+}
+
+// =============================================
+// Mixin - overflow
+// =============================================
+
+@mixin easy-overflow($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,overflow);
+}
+
+// =============================================
+// Mixin - min width
+// =============================================
+
+@mixin easy-min-width($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,min-width);
+}
+
+// =============================================
+// Mixin - max width
+// =============================================
+
+@mixin easy-max-width($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,max-width);
+}
+
+// =============================================
+// Mixin - font-weight
+// =============================================
+
+@mixin easy-font-weight($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,font-weight);
+}
+
+@mixin easy-font-size($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,font-size);
+}
+
+// =============================================
+// Mixin - position
+// =============================================
+
+@mixin easy-position($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,position);
+}
+
+// =============================================
+// Mixin - vertical-align
+// =============================================
+
+@mixin easy-vertical-align($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,vertical-align);
+}
+
+// =============================================
+// Mixin - white-space
+// =============================================
+
+@mixin easy-white-space($desktop-value: null, $mobile-value: null, $tablet-value: null) {
+  @include easy-sample($desktop-value,$mobile-value,$tablet-value,white-space);
+}

@@ -1,0 +1,6 @@
+<?php
+$details = $this->getOsAndBrowserDetail();
+$browser = str_replace(' ','',$details['browser']);
+$browser = str_replace('.','_',$browser);
+$os = str_replace(' ','',$details['os']);
+?>

@@ -1,0 +1,149 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/**
+ * @var $this Balance_SuperPtype_Block_Catalog_Product_View_Type_Super_Media
+ */
+?>
+<?php
+//$_product = $this->getProduct();
+$_product = $this->getCurrentConfigurableProduct();
+// Current product does not exist.
+if (!$_product || !$_product->getId())
+{
+    return;
+}
+$_helper = $this->helper('catalog/output');
+?>
+<?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
+    <div class="right" id="content" >
+        <div class="right product-main-image">
+            <a href="javascript:void(0)" onclick="showZoom('<?php echo $_product->getId()?>')"  class="jqzoom" rel='gal1'  title="<?php echo $this->escapeHtml($this->getImageLabel()) ?>" >
+                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(425) ?>" width="425"  title="" class="main-image" >
+            </a>
+            <img class="zoom-hover" style="position: absolute; display: none;" src="<?php echo $this->getSkinUrl('images/zoom-hover.png') ?>"/>
+        </div>
+        <a href="<?php echo $this->getUrl('ajax/index/zoom',array('product_id'=>$_product->getId(),'index_img'=>0)) ?>" class="ajax-fancybox" id="fancybox<?php echo $_product->getId()?>" style="display:none">
+            Zoom
+        </a>
+    </div>
+<?php elseif(count($this->getGalleryImages()) > 3): ?>
+    <div class="right" id="content" >
+        <div class="right product-main-image">
+            <?php foreach ($this->getGalleryImages() as $_image): ?>
+                <a href="javascript:void(0)" onclick="showZoom('<?php echo $_product->getId()?>')"  class="jqzoom" rel='gal1'  title="<?php echo $this->escapeHtml($this->getImageLabel()) ?>" >
+                    <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize(425) ?>" width="425"  title="" class="main-image" >
+                </a>
+                <img class="zoom-hover" style="position: absolute; display: none;" src="<?php echo $this->getSkinUrl('images/zoom-hover.png') ?>"/>
+                <?php break;?>
+            <?php endforeach; ?>
+        </div>
+        <a href="<?php echo $this->getUrl('ajax/index/zoom',array('product_id'=>$_product->getId(),'index_img'=>0)) ?>" class="ajax-fancybox" id="fancybox<?php echo $_product->getId()?>" style="display:none">
+            Zoom
+        </a>
+    </div>
+<?php else: ?>
+    <p class="product-image">
+        <?php
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(425).'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" />';
+        echo $_helper->productAttribute($_product, $_img, 'image');
+        ?>
+    </p>
+<?php endif; ?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var mouseX;
+        var mouseY;
+        jQuery(document).mousemove( function(e) {
+            mouseX = e.pageX - 65;
+            mouseY = e.pageY + 10;
+        });
+          jQuery(".product-main-image").mousemove(function(ev){
+			var el = jQuery(this);
+			mouseX = ev.pageX - 60 - el.offset().left;
+            mouseY = ev.pageY + 20 - el.offset().top;
+            jQuery(".zoom-hover").css({'top':mouseY,'left':mouseX}).show('fast');
+        });
+        jQuery(".product-main-image").mouseout(function(){
+            jQuery(".zoom-hover").hide();
+        });
+    });
+
+    jQuery(".ajax-fancybox").fancybox(
+        {
+            padding : 0,
+            hideOnContentClick : true,
+            width:765,height:950,
+            //autoDimensions: true,
+            type : 'iframe',
+            showTitle: false,
+            scrolling: 'no',
+            autoSize    : false,
+            closeClick  : false,
+            openEffect  : 'none',
+            closeEffect : 'none'
+        }
+    );
+    function showZoom(id){
+        jQuery('#fancybox'+id).trigger('click');
+    }
+</script>
+
+<?php if (count($this->getGalleryImages()) > 0): ?>
+    <div class="more-views">
+        <ul id="thumblist">
+            <?php foreach ($this->getGalleryImages() as $_image): ?>
+                <li>
+                    <a href='javascript:void(0);' mainimage ="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize(425) ?>">
+                        <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepFRAME(false)->resize(90,null); ?>" width="90" />
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+
+    jQuery(document).ready(function() {
+        jQuery("#thumblist li").click(function(){
+            var _eq = jQuery("#thumblist li").index(this);
+            var _src = jQuery(this).find("a").attr('mainimage');
+            jQuery(".main-image").attr('src',_src);
+            var _currentUrl = jQuery(".ajax-fancybox").attr("href");
+            var _urlArr = _currentUrl.split("index_img");
+            var _replaceUrl = _urlArr[0]+"index_img/"+_eq;
+            jQuery(".ajax-fancybox").attr("href",_replaceUrl);
+        });
+// <?php // I don't think this is used for anything ?>
+//        jQuery('#thumblist').jcarousel({
+//            vertical: true,
+//            visible:3,
+//            scroll: 1
+//        });
+    });
+</script>
+    

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<widgets>
+    <innobyte_product_questions_widget type="innobyte_product_questions/widget">
+        <name>Innobyte Product Questions Widget</name>
+        <description type="desc">Show last questions asked by customers</description>
+        <parameters>
+            <questions_count translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>5</value>
+                <label>Number of Questions to Display</label>
+                <type>text</type>
+            </questions_count>
+            <questions_sorting>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Sort widget by</label>
+                <type>select</type>
+                <values>
+                    <sort_by_date_asc translate="label">
+                        <value>1</value>
+                        <label>date ascending</label>
+                    </sort_by_date_asc>
+                    <sort_by_date_desc translate="label">
+                        <value>2</value>
+                        <label>date descending</label>
+                    </sort_by_date_desc>
+                    <sort_by_votes_up translate="label">
+                        <value>3</value>
+                        <label>votes ascending</label>
+                    </sort_by_votes_up>
+                    <sort_by_votes_down translate="label">
+                        <value>4</value>
+                        <label>votes descending</label>
+                    </sort_by_votes_down>
+                </values>
+            </questions_sorting>
+            <template translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Frontend Template</label>
+                <type>select</type>
+                <values>
+                    <text translate="label">
+                        <value>innobyte/product_questions/widget.phtml</value>
+                        <label>Simple</label>
+                    </text>
+                    <image translate="label">
+                        <value>innobyte/product_questions/widget_image.phtml</value>
+                        <label>Products with Image</label>
+                    </image>
+                </values>                   
+            </template> 
+        </parameters>
+    </innobyte_product_questions_widget>
+</widgets>

@@ -1,0 +1,159 @@
+<?php
+/**
+ * author Blanka
+ * */
+?>
+<?php
+    $sumenu = $this->getCollection();
+    $store = Mage::app()->getStore();
+    $effect = Mage::getStoreConfig('megamenu/general/menu_effect', $store);
+    $typemenu = Mage::getStoreConfig('megamenu/general/menu_type_config', $store);
+    $mobile_effect = Mage::getStoreConfig('megamenu/mobile_menu/mobile_effect', $store);
+    if (!Mage::getStoreConfig('megamenu/left_menu/menu_width_main', $store)) {
+        $threshold = 768;
+    } else {
+        $threshold = Mage::getStoreConfig('megamenu/left_menu/menu_width_main', $store);
+    }
+    $array_width = $this->getSubmenuWidth();
+?>
+    <?php if($typemenu !=1): ?>
+<div class="form-group col-xs-12">&nbsp;</div>
+    <div class="lmegamenu-pc ms-megamenu">
+        
+         <!--- Day la left menu -->
+        <div id="ms-leftmenu" class="ms-leftmenu">
+            <?php $i=0; foreach ($sumenu as $su): ?>       
+                <?php
+                $template = $su->getTemplateFilename();
+                $block = $this->getLayout()
+                        ->createBlock('megamenu/item')
+                        ->setData('menu_item', $su->getData())
+                        ->setItem($su)
+                        ->setArea('frontend')
+                        ->setTemplate('megamenu/templates/'. $template);
+                ?>   
+                <?php if ($su->getMenuType() == 6):?>
+                 <div class="msl-level0 lnav-<?php echo $su->getId();?> anchor_text"  id="lnav-<?php echo $su->getId();?>">
+                    <a class="msl-label col-xs-12 <?php if($i==0) echo 'first'; ?>" href="<?php echo $su->getLink(); ?>" >
+                        <?php if($su->getItemIcon()):?><img draggable="false" class="ms-iconmega" src="<?php echo Mage::getBaseUrl('media')  . '/' . $su->getItemIcon() ?>"/>&nbsp;<?php endif; ?>
+                        <?php echo $su->getNameMenu()?>
+                    </a>
+		</div>   
+                <?php else: ?>
+                <div class="msl-level0 nav-<?php echo $su->getId(); ?><?php if($su->getLeftsubmenuAlign()) echo ' item_relative' ?>" id="lnav-<?php echo $su->getId(); ?>">  
+                    <a class="msl-label msl-hassubmenu col-xs-12 <?php if($i==0) echo 'first'; ?>"  <?php if($effect!=3&&$su->getLink()):?> href="<?php echo $su->getLink();?>"<?php endif; ?>>
+                        <?php if($su->getItemIcon()):?><img draggable="false" class="ms-iconmega" src="<?php echo Mage::getBaseUrl('media')  . '/' . $su->getItemIcon() ?>"/>&nbsp;<?php endif; ?>
+                        <?php echo $su->getNameMenu() ?>
+                        <span class="glyphicon small glyphicon-chevron-right">&nbsp;</span>
+                    </a>
+                    <div class="msl-submenu col-xs-12 <?php echo Mage::helper('megamenu')->positionLeftSubAuto($su->getSubmenuAlign()); ?>" id="submenu-<?php echo $su->getId(); ?>">
+                        <?php  //Zend_debug::dump($su->getData());die(); ?>
+                        <?php if($su->getHeader()): ?>
+                        <div class="ms-header"><?php echo $su->getHeader(); ?></div>
+                        <?php endif;?>   
+                        <div class="ms-content">
+                          <div class="ms-maincontent" <?php if($su->getFeaturedType() != 0):?>style="float:left;width:<?php echo 100-$su->getFeaturedWidth(); ?>%;<?php if($su->getFeaturedWidth()==100): ?>display:none;<?php endif; ?>"<?php endif;?>><?php echo $block->toHtml() ?></div>
+                          <?php if($su->getFeaturedType() != 0): ?>
+                          <div class="ms-featured" style="float:right;width:<?php echo $su->getFeaturedWidth(); ?>%;<?php if($su->getFeaturedWidth()==0): ?>display:none;<?php endif; ?>">
+                              <?php echo $block->setTemplate('megamenu/templates/featured/featured.phtml')->toHtml() ;?>
+                          </div>
+                          <?php endif; ?>
+                        </div>
+                        <?php if($su->getFooter()): ?>
+                        <div class="ms-footer"><?php echo $su->getFooter(); ?></div>
+                        <?php endif;?>
+                    </div>	
+                </div>
+                <?php endif; ?>
+            <?php $i++; endforeach; ?>
+        </div> 
+    </div>
+    <div class="form-group">&nbsp;</div>
+    <?php endif; ?>
+    <!-- For Mobile-->
+    <?php if($typemenu != 0): ?>
+    <div class="lmegamenu-mobile ms-megamenu mb-version"<?php if($typemenu==1): ?>style="display:block"<?php endif;?>>
+        <div class="form-group">&nbsp;</div>
+        <div  class="anchor_lmbmenu col-xs-12 text-right"><a  class="anchor_lmbmenu_text  glyphicon glyphicon-align-justify">&nbsp;</a></div>
+        <div id="lmb-leftmenu" class="lmb-leftmenu ">
+            <?php foreach ($sumenu as $su): ?>
+                
+                <?php
+                $template = $su->getTemplateFilenameforMobile();
+                $block = $this->getLayout()
+                        ->createBlock('megamenu/item')
+                        ->setData('menu_item', $su->getData())
+                        ->setItem($su)
+                        ->setArea('frontend')
+                        ->setTemplate('megamenu/templates/'. $template);
+                ?>   
+                <?php if ($su->getMenuType() == 6):?>
+                <div class="lmb-level0  nav-<?php echo $su->getId();?> anchor_text"  id="mbnav-<?php echo $su->getId();?>">
+                    <a class="mb-label col-xs-12" href="<?php echo $su->getLink(); ?>" ><?php echo $su->getNameMenu()?></a>
+		</div>   
+                <?php else: ?>
+                <div class="lmb-level0 nav-<?php echo $su->getId(); ?>" id="nav-<?php echo $su->getId(); ?>">  
+                    <a class="lmb-label lmb-click col-xs-12 text-left"   ><?php echo $su->getNameMenu() ?><span class="glyphicon small <?php if($mobile_effect): ?>glyphicon-plus<?php else: ?>glyphicon-chevron-right<?php endif;?>">&nbsp;</span></a>
+                    <div class="lmb-submenu<?php if($mobile_effect): ?> blind<?php else: ?> slide<?php endif ?>" id="submenu-<?php echo $su->getId(); ?>">
+                        <?php if(!$mobile_effect): ?>
+                        <a class="lmb-label lmb-return col-xs-12 text-center"   ><span class="glyphicon glyphicon-chevron-left">&nbsp;</span><?php echo $su->getNameMenu() ?></a>
+                        <?php endif;?>
+                        <div class="mb-submain col-xs-12">
+                        <?php if($su->getHeader()): ?>
+                        <div class="mb-header col-xs-12"><?php echo $su->getHeader(); ?></div>
+                        <div class="col-sm-12 form-group"></div>
+                        <?php endif;?>   
+                        <div class="mb-content form-group">
+                          <div class="mb-maincontent col-xs-12"<?php if($su->getFeaturedWidth()== 100): ?>style="display:none;"<?php endif; ?>><?php echo $block->toHtml() ?></div>
+                          <?php if($su->getFeaturedType() != 0): ?>
+                          <div class="col-sm-12 form-group"></div>
+                          <div class="mb-featured col-xs-12"<?php if($su->getFeaturedWidth()== 0): ?>style="display:none;"<?php endif; ?>>
+                              <?php echo $block->setTemplate('megamenu/templates/featured/featured.phtml')->toHtml() ;?>
+                          </div>
+                          <?php endif; ?>
+                        </div>
+                        <?php if($su->getFooter()): ?>
+                        <div class="col-sm-12 form-group"></div>
+                        <div class="mb-footer col-xs-12"><?php echo $su->getFooter(); ?></div>
+                        <?php endif;?>
+                        </div>
+                    </div>	
+                </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+       <div class="form-group">&nbsp;</div>
+    </div>
+    <?php endif;?>
+   <script>
+        /*-- init variable --*/
+        var leftmenu = null;
+        var lmbmenu = null;
+        var larr_width =[];
+        var $lmega = jQuery.noConflict();
+        var ltype_menu = parseInt('<?php echo $typemenu;?>');
+        var leftmenu_effect = parseInt('<?php echo $effect; ?>');
+        var lwidth_change = parseInt('<?php echo $threshold ?>');
+        var lmobile_effect = parseInt('<?php echo $mobile_effect; ?>');
+        var lmain = $lmega('.main');
+        var lisMobile = navigator.userAgent.match(/iPhone|iPad|iPod/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Opera Mini/i) || navigator.userAgent.match(/IEMobile/i);
+        if(ltype_menu != 1){
+            var lpc_megamenu = $lmega('.lmegamenu-pc')
+            leftmenu = $lmega('#ms-leftmenu');
+            var llabel = $lmega('#ms-leftmenu .msl-label');
+            var llabel_hassub = $lmega('#ms-leftmenu .msl-hassubmenu');
+            var lms_level0 = $lmega('#ms-leftmenu .msl-level0');
+            var pos_menu = $lmega('#ms-leftmenu .position_menu');
+            var pos_item = $lmega('#ms-leftmenu .position_item');
+            <?php for($i=0;$i<count($array_width);$i++){?>
+                larr_width['<?php echo $i ?>']=parseInt('<?php echo $array_width[$i] ?>');
+            <?php } ?>
+        }
+        if(ltype_menu != 0){
+            var lmb_megamenu = $lmega('.lmegamenu-mobile');
+            lmbmenu = $lmega('#lmb-leftmenu');
+            var lmclick = $lmega('#lmb-leftmenu .lmb-click');
+            var lmreturn = $lmega('#lmb-leftmenu .lmb-return');
+            var lanchor = $lmega('.anchor_lmbmenu .anchor_lmbmenu_text');
+        }    
+    </script>

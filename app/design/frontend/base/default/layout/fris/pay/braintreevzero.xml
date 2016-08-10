@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * fris - smart commerce extensions for Magento
+ *
+ * @category  Fris
+ * @package   Fris_BTHF
+ * @copyright Copyright (c) 2015 fris IT (http://fris.technology)
+ * @license   http://fris.technology/license
+ * @author    fris IT <support@fris.technology>
+ */
+-->
+<layout version="0.1.0">
+    <default>
+        <!-- Considered doing this for the Braintree v.zero BLOCK only, for any
+             action that generates it, but Magento doesn't seem to allow us to
+             do this without explicitly specifying all actions. Putting it under
+             default includes it on every page, which has the advantage that
+             the JS can be merged and cached. The JS isn't that big. 
+             braintreevzero.js = https://js.braintreegateway.com/v2/braintree.js
+        -->
+        <reference name="head">
+            <action method="addJs"><script>fris/pay/braintreevzero.js</script></action>
+            <action method="addJs"><script>fris/pay/braintree-data.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>fris/pay/js/braintreevzero-checkout1.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>fris/pay/css/braintreevzero-checkout.css</name></action>
+            <reference name="before_body_end">
+                <block type="page/html_head" name="script_in_footer" template="fris/pay/form/braintreevzero.phtml">
+                    <action method="addItem"><type>skin_js</type><name>fris/pay/js/braintreevzero-checkout0.js</name></action>
+                </block>
+            </reference>
+        </reference>
+    </default>
+
+    <checkout_onepage_index>
+        <reference name="before_body_end">
+            <block type="page/html_head" name="script_in_footer2" template="fris/pay/form/braintreevzero.phtml">
+                <action method="addItem"><type>skin_js</type><name>fris/pay/js/braintreevzero-checkout2.js</name></action>
+                <action method="addItem"><type>skin_js</type><name>fris/pay/js/braintreevzero-checkout3.js</name></action>
+            </block>
+        </reference>
+    </checkout_onepage_index>
+
+    <onestepcheckout_index_index>
+        <!-- onestepcheckout.com, magestore.com, iksanika.com -->
+        <!-- Uncomment for iksanika only>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>fris/pay/css/braintreevzero-checkout-iksanika.css</name></action>
+        </reference-->
+    </onestepcheckout_index_index>
+
+    <opc_index_index>
+        <!-- www.iwdagency.com -->
+    </opc_index_index>
+
+    <firecheckout_index_index>
+        <!-- templates-master.com -->
+    </firecheckout_index_index>
+
+    <checkout_onestep_index>
+        <!-- www.fmeextensions.com/one-step-checkout.html -->
+    </checkout_onestep_index>
+
+    <gomage_checkout_onepage_index>
+        <!-- www.gomage.com/extensions/gomage-lightcheckout.html -->
+    </gomage_checkout_onepage_index>
+
+    <!--checkout_onepage_review>
+    </checkout_onepage_review>
+    <checkout_cart_index>
+    </checkout_cart_index-->
+</layout>

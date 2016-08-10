@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_ConfigurableSwatches>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_ConfigurableSwatches/>
+            </depends>
+        </Milandirect_ConfigurableSwatches>
+    </modules>
+</config>

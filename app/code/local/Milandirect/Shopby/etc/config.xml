@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Shopby>
+            <version>0.1.0</version>
+        </Milandirect_Shopby>
+    </modules>
+    <global>
+        <blocks>
+            <amshopby>
+                <rewrite>
+                    <catalog_layer_view>Milandirect_Shopby_Block_Catalog_Layer_View</catalog_layer_view>
+                </rewrite>
+            </amshopby>
+        </blocks>
+        <models>
+            <amshopby>
+                <rewrite>
+                    <mysql4_price17>Milandirect_Shopby_Model_Mysql4_Price17</mysql4_price17>
+                </rewrite>
+            </amshopby>
+        </models>
+    </global>
+</config>

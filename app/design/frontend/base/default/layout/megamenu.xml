@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">				
+            <action method="addCss">
+                <stylesheet>megamenu/css/megamenulibrary.css</stylesheet>
+            </action> 
+            <action method="addCss">
+                <stylesheet>megamenu/css/megamenu.css</stylesheet>
+            </action> 
+        </reference>              
+        <reference name="catalog.topnav">
+            <action method="setTemplate">
+                <template>megamenu/megamenu.phtml</template>                               
+            </action>
+            <block name="catalog.topnav.new" type="megamenu/navigationtop" template="megamenu/menu.phtml"/>
+            <block name="catalog.topnav.old" type="catalog/navigation" template="catalog/navigation/top.phtml"/>
+        </reference>
+        <reference name="after_body_start">
+            <block name="megamenu_cssgen" type="megamenu/cssgen" template="megamenu/cssgen.phtml"/>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="jsgen" template="megamenu/jsgen.phtml" />
+        </reference>
+        <!--reference name="left">
+            <block type="megamenu/megamenu" template="megamenu/megamenu-left.phtml" before="-"/>
+        </reference-->
+    </default>
+    <megamenu_index_index>
+        <reference name="content">
+            <block type="megamenu/megamenu" name="megamenu" template="megamenu/megamenu.phtml" />
+        </reference>
+    </megamenu_index_index>
+    <megamenu_index_menu>
+        <reference name="content">
+            <block type="megamenu/menu" name="megamenu" template="megamenu/menu.phtml" />
+        </reference>
+    </megamenu_index_menu>
+    <cms_index_index>
+        <reference name="content">
+            <block type="cms/block" name="megamenu-block">
+                <action method="setBlockId">
+                    <block_id>megamenu-block</block_id>
+                </action>
+            </block>
+        </reference>
+    </cms_index_index>
+</layout>

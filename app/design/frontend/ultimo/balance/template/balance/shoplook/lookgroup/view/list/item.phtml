@@ -1,0 +1,184 @@
+<?php
+$product = $this->getProduct();
+if (!$product->getId())
+{
+    return;
+}
+$type = $product->getTypeId();
+?>
+<li class="product-item stl-prod">
+    <!-- Configurable products-->
+    <div class="stl-prod-thumb">
+        <a href="<?php echo $product->getProductUrl();?>">
+            <img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(100, 120)?>" alt="<?php echo $product->getName();?>"/>
+        </a>
+    </div>
+    <div class='stl-prod-desc'>
+        <h4 class="stl-prod-ttl"><a href="<?php echo $product->getProductUrl();?>"><?php echo $product->getName();?></a></h4>
+        <div class="stl-prod-price"><?php echo Mage::helper('core')->currency($product->getPrice() * 100 / 100);?></div>
+
+        <?php if ($type == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) { ?>
+            <div class="size">
+                <?php //$simpleProducts = $product->getTypeInstance()->getUsedProducts(null, $product);
+                // See bottom comments.
+                $superAttributes = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
+
+                //                    Zend_Debug::dump($superAttributes);
+                //
+                //
+                //                    var_dump($product->getTypeInstance()->getUsedProducts(null, $product));
+                foreach ($superAttributes as $attr) { ?>
+                    <span class="stl-prod-attr-lbl label">SELECT <?php echo strtoupper($attr['label']);?></span>
+                    <div class="super-attribute-div">
+                        <?php if (isset($attr['values']) && count($attr['values']) > 0) {
+                            foreach ($attr['values'] as $superVal) {?>
+                                <?php
+                                $allIds = $product->getTypeInstance(true)->getChildrenIds($product->getId());
+                                $outOfStock = ( $this->loadByAttribute($attr['attribute_code'],$superVal['value_index'],$allIds) )?'':' is-outofstock-look'; ?>
+                                <span class="stl-prod-attr-option super-attr-span<?php echo $outOfStock; ?>" onclick="changeSuperAttribute(jQuery(this));" data-value-index="<?php echo $superVal['value_index'];?>" style="width: 25px!important;">
+                                        <?php echo $superVal['label'];?>
+                                    </span>
+                            <?php }?>
+                            <input type="hidden" class="super-attr-input" name="super_attribute[<?php echo $product->getId();?>][<?php echo $attr['attribute_id']?>]" />
+                        <?php }?>
+                    </div>
+                <?php }?>
+            </div>
+        <?php } else {?>
+            <?php if ($product->getSize()) {?>
+                <div class="size">
+                    <span class="stl-prod-attr-lbl label">SIZE</span>
+                    <span><?php echo $product->getAttributeText('size');?></span>
+                </div>
+            <?php } ?>
+        <?php } ?>
+        <div class="quantity stv-prod-qty-cont">
+            <span class="label"><?php echo $this->__('QUANTITY');?></span>
+            <input type="text" name="quantity[<?php echo $product->getId();?>]" value='1' class="stv-prod-qty quantity-input" />
+                <span class="stv-prod-qty-arrows">
+                    <a class="btn-up btn" onclick="changeQuantity(jQuery(this), 1);"></a>
+                    <a class="btn-down btn" onclick="changeQuantity(jQuery(this), -1);"></a>
+                </span>
+            <input class="add-to-cart-check" type="checkbox" name="product[]" value="<?php echo $product->getId();?>"  />
+        </div>
+
+
+
+        <ul class="look-prod-links">
+            <li class="first">
+               <a class="stl-prod-lnk go" href="<?php echo $product->getProductUrl();?>">View product details</a>
+            </li>
+            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                <li>
+                    <a class="stl-prod-wshlst go" href="<?php echo $this->helper('wishlist')->getAddUrl($product) ?>"><?php echo $this->__('Add to Wishlist') ?></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+
+    </div>
+    <div class="section-line"></div>
+</li>
+<?php
+// $superAttributes looks like this.
+//Array
+//(
+//    [0] => Array
+//        (
+//            [id] => 2
+//            [label] => Size
+//            [use_default] => 1
+//            [position] => 0
+//            [values] => Array
+//                (
+//                    [0] => Array
+//                        (
+//                            [product_super_attribute_id] => 2
+//                            [value_index] => 19
+//                            [label] => 6
+//                            [default_label] => 6
+//                            [store_label] => 6
+//                            [is_percent] => 0
+//                            [pricing_value] => 
+//                            [use_default_value] => 1
+//                        )
+//
+//                    [1] => Array
+//                        (
+//                            [product_super_attribute_id] => 2
+//                            [value_index] => 20
+//                            [label] => 8
+//                            [default_label] => 8
+//                            [store_label] => 8
+//                            [is_percent] => 0
+//                            [pricing_value] => 
+//                            [use_default_value] => 1
+//                        )
+//
+//                    [2] => Array
+//                        (
+//                            [product_super_attribute_id] => 2
+//                            [value_index] => 21
+//                            [label] => 10
+//                            [default_label] => 10
+//                            [store_label] => 10
+//                            [is_percent] => 0
+//                            [pricing_value] => 
+//                            [use_default_value] => 1
+//                        )
+//
+//                    [3] => Array
+//                        (
+//                            [product_super_attribute_id] => 2
+//                            [value_index] => 22
+//                            [label] => 12
+//                            [default_label] => 12
+//                            [store_label] => 12
+//                            [is_percent] => 0
+//                            [pricing_value] => 
+//                            [use_default_value] => 1
+//                        )
+//
+//                )
+//
+//            [attribute_id] => 265
+//            [attribute_code] => size
+//            [frontend_label] => Size
+//            [store_label] => Size
+//        )
+//
+//    [1] => Array
+//        (
+//            [id] => 1
+//            [label] => Colour
+//            [use_default] => 0
+//            [position] => 0
+//            [values] => Array
+//                (
+//                    [0] => Array
+//                        (
+//                            [product_super_attribute_id] => 1
+//                            [value_index] => 14
+//                            [label] => Jet Black
+//                            [default_label] => Jet Black
+//                            [store_label] => Jet Black
+//                            [is_percent] => 0
+//                            [pricing_value] => 
+//                            [use_default_value] => 1
+//                        )
+//
+//                )
+//
+//            [attribute_id] => 270
+//            [attribute_code] => fashion_colour
+//            [frontend_label] => Colour
+//            [store_label] => Colour
+//        )
+//
+//)
+?>
+<style>
+    .is-outofstock-look{background-image: url("<?php echo $this->getSkinUrl('images/no-active-size.png'); ?>");
+        background-repeat: no-repeat;
+        background-position: -1px -1px;
+        cursor: auto;}
+</style>

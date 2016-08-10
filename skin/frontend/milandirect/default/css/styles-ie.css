@@ -1,0 +1,39 @@
+/* Hover Fix */
+iframe.hover-fix { position:absolute; left:-1px; top:-1px; z-index:-1; background:transparent; filter:progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0); }
+.security-info{ margin-bottom:5px}
+.security-info li img{ margin:20px 0 0 15px}
+
+/* footer */
+.footer, .spcl-product-links { float:left; width:920px;}
+address.copyright { float:left; width:980px;}
+.category-products { margin-left:0;}
+.security-info { clear:both;}
+.topCurv_lft{ background-position:0 0;}
+.topCurv_rht{background-position:100% 0}
+#search_mini_form .form-search{ top:65px}
+.price-box-section .pinkboxCurvs_midBg  {line-height:100px}
+.top-cart .block-title.expanded strong { left:-4px; position:relative;}
+#anav li.over.nav-office-furniture-html ul{left:-146px!important}
+.btn-apply { margin-right:3px;}
+.empty-cart .block-content {width:206px;}
+.top-cart .block-title strong { padding-bottom:3px; background-position-y:0;}
+
+.review{width:343px !important;}
+.clearer{clear:both;}
+.widget-static-block{float:right !important; text-align:center; margin-top:3px; width:100px !important; position:relative;}
+.chat_box div.left{float:left !important;}
+.share_and_cont_box{padding-bottom:10px !important;}
+.product-panel .reviews_content tbody td {width:300px; border:1px solid #fc0000;}
+
+.slide-out-div .sidebar-btm-crv {background:url(../images/side-popup-btmcrv.png) no-repeat 0 100%!important; padding:0 0 12px;}
+.sup-text{font-size:19px !important; padding-bottom:10px; vertical-align:top;}
+.chat_box{width:330px;}
+.share_and_cont_box .chat_box .widget-static-block div span{margin:26px 0 0 35px; position:absolute;}
+.sidebar-repeat .widget-static-block{min-width:230px !important; text-align:left!important; float:left!important;}
+#search_autocomplete{left:1125px!important;}
+.review-popup .form-list li{height:25px;}
+#search_autocomplete{left:1245px;}
+.top-cart .block-content { top:33px; }
+.graybox_top_bordCurvs_bg { min-width:100px; width:100%;}/* 26-7-12*/
+.graybox_bot_bordCurvs_bg { min-width:100px; width:100%;}/* 26-7-12*/
+

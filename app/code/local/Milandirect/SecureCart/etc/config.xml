@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_SecureCart>
+            <version>1.0.0</version>
+        </Milandirect_SecureCart>
+    </modules>
+    <frontend>
+        <secure_url>
+            <checkout_cart>/checkout/cart</checkout_cart>
+            <checkout>/checkout/cart</checkout>
+        </secure_url>
+    </frontend>
+</config>

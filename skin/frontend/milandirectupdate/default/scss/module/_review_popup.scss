@@ -1,0 +1,159 @@
+/* Submit Review Popup*/
+.submit-review-popup {
+    position: fixed;
+    z-index: 100000;
+    top: 5%;
+    // margin-left: -250px;
+    margin: 0 auto;
+    left: 50%;
+    @include transform(translate(-50%,0));
+    #popupClose {
+        background: #0e83c0;
+        border-radius: 17px;
+        color: $c-white;
+        position: absolute;
+        cursor: pointer;
+        right: 0;
+        top: 0;
+        text-align: center;
+        width: 34px;
+        height: 38px;
+        margin: 10px -20px;
+        padding-left: 8px;
+        padding-top: 6px;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    .review-popup {
+        padding: 30px;
+        background: $c-white;
+        border: 3px solid #0e83c0;
+        border-radius: 4px;
+        position: relative;
+        z-index: 11;
+        @include bp(min-width, $bp-medium - 3){
+            max-width: 384px;
+        }
+        .form-list {
+            li {
+                margin: 0 0 12px !important;
+                label {
+                    float: left;
+                    width: 65px;
+                    font-weight: normal;
+                }
+                .input-box {
+                    width: 252px;
+                    clear: none;
+                    float: left;
+                    margin: 0;
+                    padding: 6px 0;
+                    input.input-text, textarea {
+                        float: none;
+                        width: 250px!important;
+                        min-height: 20px;
+                    }
+                }
+                &.email-from {
+                    padding: 10px 0 5px;
+                    font-weight: 600;
+                }
+                &.email-to{
+                    padding-top: 26px 0 5px;
+                    font-weight: 600;
+                }
+                &.email-message{
+                    margin-top: 40px;
+                    textarea{
+                        height: 60px;
+                    }
+                }
+            }
+        }
+        .buttons-set {
+            margin-bottom: 0 !important;
+            display: inline-block;
+            width: 100%;
+            .input-box {
+                float: left;
+                padding-top: 0;
+                label.required::after {
+                    display: none;
+                }
+            }
+            label {
+                width: 200px;
+                float: left;
+                font-weight: normal;
+                #checkreference {
+                    float: left;
+                }
+                span {
+                    text-align: left;
+                    width: 180px;
+                    margin: -2px 0 0 3px;
+                    display: inline-block;
+                }
+            }
+            button {
+                float: right;
+                width: 81px;
+                height: 30px;
+                border: 3px solid #0e83c0;
+                border-radius: 4px;
+                background-color: #0085c1;
+                color: $c-white;
+                font-size: 16px;
+                font-family: $f-stack-special;
+                &:hover, &:active, &:focus {
+                    color: #0085c1;
+                    background-color: $c-white;
+                }
+            }
+        }
+        .box-title {
+            h2 {
+                float: none;
+                margin-bottom: 15px;
+            }
+        }
+    }
+    &:after {
+        display: block;
+        line-height: 0;
+        font-size: 0;
+        content: ".";
+        clear: both;
+        overflow: hidden;
+    }
+}
+.popup-tooltip-corner{
+    background: url(../images/popup-ovr-corn.png) no-repeat 100% 0;
+    width: 29px;
+    height: 14px;
+    position: absolute;
+    left: 91px;
+    top: 462px;
+}
+.submit-popup-tooltip-corner{
+    background: url(../images/popup-ovr-corn.png) no-repeat 100% 0;
+    width: 29px;
+    height: 14px;
+    position: absolute;
+    left: 285px;
+    top: 380px;
+}
+
+@include bp(max-width, $bp-small) {
+    .submit-review-popup {
+        .review-popup {
+            .form-list {
+                li.email-from{
+                    float: left;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

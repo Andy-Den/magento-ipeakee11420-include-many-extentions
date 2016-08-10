@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Menuextends>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Infortis_UltraMegamenu/>
+
+            </depends>
+        </Balance_Menuextends>
+    </modules>
+</config>

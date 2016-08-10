@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Exceedz_Sales>
+            <version>0.1.0</version>
+        </Exceedz_Sales>
+    </modules>
+    <global>
+        <models>
+            <sales>
+                <rewrite>
+                    <quote>Exceedz_Sales_Model_Quote</quote>
+                    <quote_item_abstract>Exceedz_Sales_Model_Quote_Item_Abstract</quote_item_abstract>
+                </rewrite>
+            </sales>
+        </models>
+    </global>
+</config>

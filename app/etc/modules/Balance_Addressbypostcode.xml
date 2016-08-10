@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Addressbypostcode>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Balance_Addressbypostcode>
+    </modules>
+</config>

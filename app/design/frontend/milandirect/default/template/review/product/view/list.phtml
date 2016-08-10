@@ -1,0 +1,163 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+
+<?php
+$_product = Mage::registry('current_product');
+$youtubeVideoId = $_product->getData('youtube_video_id');
+$showReviewSection = false;
+$reviewsTobeShown = 4;
+if( !empty($youtubeVideoId) ) {
+	$reviewsTobeShown = 2;
+	$showReviewSection = true;
+}
+$_items = $this->getReviewsCollection()
+				->setPageSize($reviewsTobeShown)
+				->setCurPage(1)
+				->getItems();
+?>
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+<?php if( !empty( $youtubeVideoId ) ): ?>
+<td>
+ <div class="video"><iframe width="360" height="276" src="https://www.youtube.com/embed/<?php echo $youtubeVideoId; ?>" frameborder="0" allowfullscreen></iframe></div>
+
+</td>
+<td align="left" valign="top">
+</td>
+ <?php endif; ?>
+<td>
+<div class="r-head">
+<h3><?php echo $this->__('Comments & Reviews') ?> (<?php echo count($_items) ?>)</h3>
+</div>
+
+        <?php if (count($_items)):?>
+        <?php
+            $count = 1;
+            $showReviewSection = true;
+            foreach ($_items as $_review):?>
+            <?php $_itemCount=count($_items);//echo $_itemCount;?>
+
+        <?php if( empty( $attributes['youtube_video_id'] ) ):?>
+            <?php if ($_itemCount=="1"):?>
+  	            <div class="review first">
+            <?php elseif(($reviewsTobeShown-1 == $count) Or ($reviewsTobeShown == $count) Or (0 == $count)):?>
+  	            <div class="review last">
+            <?php else:?>
+  	            <div class="review">
+            <?php endif;?>
+       <?php else:?>
+	         <?php if ($_itemCount=="1"):?>
+  	            <div class="review first">
+            <?php elseif ($reviewsTobeShown == $count):?>
+  	            <div class="review last">
+            <?php else:?>
+  	            <div class="review">
+            <?php endif;?>
+        <?php endif;?>
+	   <div class="reviewer-data">
+       <p class="reviewer-name">
+		<a href="<?php echo $reviewUrl = Mage::getUrl('review/product/view', array('id'=> $_review->getId()));?>">	<?php echo $this->__('%s', $this->htmlEscape($_review->getNickname())) ?></a>
+       </p>
+       <p class="r-date">
+		<?php echo Mage::getModel('core/date')->date('D jS F, Y' , strtotime($_review->getCreatedAt()));
+		?>
+        </p>
+
+		<?php $percentage = 0; ?>
+	  	<?php foreach ($_review->getRatingVotes() as $_vote): ?>
+			<?php $percentage += $_vote->getPercent() ?>
+		<?php endforeach; ?>
+		<div class="rating-box">
+			<div class="rating" style="width:<?php echo ceil($percentage/3) ?>%;"></div>
+		</div>
+      </div>
+
+	<div class="r-comments">
+	  <p>
+	  <?php
+		  $details = nl2br($this->htmlEscape($_review->getDetail()));
+		  if (strlen($details) > 100) {
+			  $words = str_word_count($details, 2);
+			  $pos = array_keys($words);
+              if(isset($pos[20])){
+                  $details = substr($details, 0, $pos[20]) . '<a href="'.$reviewUrl .'">...</a>';
+              }else{
+                  for($i=20;$i--;){
+                      if(isset($pos[$i])){
+                          echo $i;
+                          break;
+                      }
+                  }
+              }
+
+		  }
+			echo $details;
+	  ?>
+	  </p>
+	</div>
+  </div>
+  <?php
+	if($count == $reviewsTobeShown) break;
+	  $count++;
+	  endforeach;
+  ?>
+  <?php else: ?>
+	<div class="review last">
+		<p><?php echo $this->__('Be the first to review this product') ?></p>
+	</div>
+  <?php endif; ?>
+  <?php $moreReviewUrl = Mage::getUrl('review/product/list', array(
+           'id'        => $this->getProduct()->getId(),
+           'category'  => $this->getProduct()->getCategoryId()
+        ));
+
+		$reviewUrl = Mage::getUrl('review/product/add', array(
+           'id'        => $this->getProduct()->getId(),
+           'category'  => $this->getProduct()->getCategoryId()
+        ));
+	?>
+
+
+  </td>
+</tr>
+
+</table>
+<div class="buttons-set">
+	<?php if(count($_items) > $reviewsTobeShown) :?>
+      <a href="<?php echo $moreReviewUrl ?>" title="More reviews">More reviews</a>
+   <?php endif; ?>
+  <button type="submit" class="btn-submit-review right" id="review-button" onclick="showPopup('<?php echo $reviewUrl?>');"></button>
+   </div>
+<script type="text/javascript">
+//<![CDATA[
+	var showReviewSection = "<?php echo $showReviewSection ?>";
+    if(showReviewSection == "") {
+    	jQuery("#reviews").removeClass("active");
+    	jQuery("#reviews_content").hide();
+    }
+//]]>
+</script>

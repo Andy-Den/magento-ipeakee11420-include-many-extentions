@@ -1,0 +1,201 @@
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+#menu-wrapper { padding:0; font-size:1.1em; z-index:1 !important; position: relative; }
+
+/************** ALL LEVELS  *************/ /* Style consistent throughout all nav levels */
+#menu-wrapper li { /* position:relative; */ text-align:left; color:#535353 !important; }
+#menu-wrapper li.over { z-index:999; background:#282828; color:#0E83C0 !important; padding-bottom: 5px; margin-bottom: -5px !important; }
+#menu-wrapper a,
+#menu-wrapper a:hover { display:block; /*line-height:60px;*/ text-decoration:none; color:#fff; }
+#menu-wrapper span { display:block; cursor:pointer; white-space:nowrap; }
+#menu-wrapper li ul span {white-space:normal; }
+
+
+/************ 0 LEVEL  ***************/
+#menu-wrapper li { float:left;}
+#menu-wrapper li.top_level:last-child { float:right;}
+#menu-wrapper a {float:left; font-family:'ProximaNovaRgBold';  font-size:16.4px; text-decoration:none !important; color:#535353; padding:0 12px; height:61px; line-height:74px;}
+#menu-wrapper li.select a, #menu-wrapper a:hover, #menu-wrapper a:active { background:#282828; color:#0E83C0 !important;/*color:#fff;*/}
+.milandirect_au #menu-wrapper li.top_level > a{
+    border-bottom: 1px solid #dddcdc;
+    text-align: center;
+    padding: 0;
+}
+.milandirect_au #menu-wrapper li.top_level.over > a{
+    background: #282828;
+    position: relative;
+    z-index: 999;
+    border-bottom: 0;
+    display: block;
+    padding-bottom: 7px;
+    margin-bottom: -7px;
+}
+.milandirect_au #menu-wrapper li.top_level > a > span{
+    padding: 0 12px;
+}
+.milandirect_au #menu-wrapper > ul > li.top_level{
+    margin-left: 20px;
+}
+.milandirect_au #menu-wrapper > ul > li.top_level:first-child{
+    margin: 0;
+}
+.milandirect_au #menu-wrapper li[class*="nav-sale"] > a{
+    color: #ed1f24;
+}
+/************ 1ST LEVEL ************/
+#menu-wrapper ul ul li,
+#menu-wrapper ul ul li.active { float:left; padding-bottom:1px; z-index:1; color:#fff; }
+#menu-wrapper ul ul li.over {/* color:#0E83C0 !important;}*/ background:#282828 url(../images/nav_divider.gif) repeat-x 0 100%; }
+#menu-wrapper ul ul li.last { padding-bottom:0; }
+#menu-wrapper a:hover, #menu-wrapper li a:hover, #menu-wrapper .select, #menu-wrapper li.columns li.level1 a.select, #menu-wrapper .select a, #menu-wrapper .select a:hover, #menu-wrapper ul ul li.over a {color:#0E83C0 !important;}
+/*.milandirect_au #menu-wrapper a.select{color: #ed1f24 !important; text-transform: uppercase;}*/
+#menu-wrapper .over a {color:#0E83C0!important;} /*active over color property:change request...27Jun.2012*/
+
+#menu-wrapper ul ul a,
+#menu-wrapper ul ul a:hover { float:none; padding:0; color:#0E83C0; background:none; text-decoration:underline; font-weight:normal!important }
+#menu-wrapper ul ul li a { font-weight:normal ; }
+
+/************ 2ND LEVEL ************/
+#menu-wrapper ul ul { position:absolute; top:67px; left:-10000px; background-color: #282828; padding-bottom:15px; z-index:1; border-top: 1px solid #7e7e7e;}
+#menu-wrapper ul#anav2 > li > ul {top: 116px;}
+/* Column widths */
+#menu-wrapper ul.column-count-1 { width:250px;}
+#menu-wrapper ul.column-count-2 { width:455px;}
+#menu-wrapper ul.column-count-3 { width:705px;}
+#menu-wrapper ul.column-count-4 { width:960px; min-height: 422px; box-sizing: border-box; }
+#menu-wrapper #anav2 ul.column-count-4 { min-height: 373px; }
+#menu-wrapper ul.column-count-5 {width: 1260px;}
+#menu-wrapper ul ul ul { width:auto!important; padding:0!important;}
+
+/* borders and padding */
+#menu-wrapper .column-count-2 .mega-sep li.last {width:160px;}
+#menu-wrapper .column-count-3 .mega-sep li.last {width:160px;}
+#menu-wrapper li.columns { width:194px; padding:0 23px;}
+#menu-wrapper li.columns li.level1 { padding-bottom:10px;}
+#menu-wrapper li.columns li.level1 a { border-bottom:1px solid #8a8a8a; padding:0 0 8px; margin:0 0 8px; }
+#menu-wrapper li.columns li.level1 ul a { border-bottom:none;}
+#menu-wrapper li.columns li.level2 a {padding:0 0 3px; margin:0; font-family:Arial; font-size:12px!important;}
+#menu-wrapper .mega-sep { clear:both; }
+#menu-wrapper .mega-sep .col_0{ clear: left;}
+#menu-wrapper li.columns li.level1 ul a:hover, #menu-wrapper li.columns li.level2 a:hover{text-decoration:underline !important; color:#0E83C0 !important;}
+
+/*selected pages have 'Adventure'as blue*/
+
+.cms-home #menu-wrapper li.nav-741 a, .cms-page-view #menu-wrapper li.nav-741 a, .customer-account-login #menu-wrapper li.nav-741 a, .category-new-arrivals #menu-wrapper li.nav-741 a, .blog-index-index #menu-wrapper li.nav-741 a,
+.category-online-furniture  #menu-wrapper li.nav-741 a, .category-furniture  #menu-wrapper li.nav-741 a, .category-replica-furniture #menu-wrapper li.nav-741 a,
+.category-click-frenzy  #menu-wrapper li.nav-741 a, .category-boxing-day-sale #menu-wrapper li.nav-741 a, .category-most-popular #menu-wrapper li.nav-741 a
+{ color:#0E83C0; } /*518 is dev; 741 is live*/
+
+
+/* Show menu */
+#menu-wrapper li.over > ul { left:0; z-index:1; padding:15px 0 15px; }
+#menu-wrapper li.over > ul li.over > ul { left:100px; }
+
+/* left position of drop menu*/
+#menu-wrapper li.over.nav-office-furniture-html ul{left:-139px!important} /* ie-7 hack available */
+#menu-wrapper li.over.nav-office-furniture-html ul ul{left:0!important}
+#menu-wrapper li.over.nav-homewares-html ul { left:0;}
+#menu-wrapper li.over.nav-homewares-html ul ul { left:0;}
+#menu-wrapper li.over.nav-designers-html ul { left:0;}
+#menu-wrapper li.over.nav-designers-html ul ul{ left:0;}
+
+/* #menu-wrapper li.over ul ul { left:-10000px; } */
+/* #menu-wrapper ul ul li a { background:#0A263D; } */
+/* #menu-wrapper ul ul li a:hover { background:#d5e4eb; } */
+#menu-wrapper ul ul li.level1 a { color:#eee!important; font-family:'ProximaNovaRgBold'; font-size:15px; height:auto!important; line-height:normal!important }
+#menu-wrapper ul ul li.level1 a:hover { color: #0E83C0 !important; }
+#menu-wrapper ul ul span, #menu-wrapper ul ul li.last li span { padding:3px 0 0;}
+#menu-wrapper li.columns.last{ margin-right:0!important; border-right:0!important}
+#menu-wrapper li li li li span { padding:0 0 0 12px; }
+#menu-wrapper li li li li span.category_name{padding-left: 0;}
+
+/************ 3RD+ LEVEL ************/
+#menu-wrapper ul ul ul { border: 0px; left:0; position: relative; top:0; background: none; }
+#menu-wrapper ul ul ul li { float: none; width:auto; }
+/*#menu-wrapper ul ul ul ul { margin-left: 10px; }*/
+#menu-wrapper ul ul ul ul li a { color: #FFFFFF !important; font-size: 0.95em; }
+
+/** ie6 hack */
+#menu-wrapper li.over ul.shown-sub { left:0; }
+#menu-wrapper li.over li li ul.shown-sub { left:100px; }
+
+#menu-wrapper ul ul li.level1 ul a {  }
+#menu-wrapper ul ul li.level2 ul a span{font-weight:normal!important; font-size:12px!important; line-height:18px!important; font-family:Arial, Helvetica, sans-serif;}
+#menu-wrapper ul ul li.level2 ul a {border:0!important; line-height:18px!important;padding:2px 0!important;}
+
+.great-deal{ margin:0; border:0;}
+.great-deal a, .great-deal a:hover{height:auto!important; width:auto!important; color:#fff!important; line-height:normal!important}
+.great-deal img{display:block; float:none!important; margin:10px 0}
+.great-deal .sub-text{color:#EDEDED; font-family:georgia; font-size:11px; font-style:italic; padding-bottom:10px; width: 165px;}
+.great-deal label, .great-deal .product-name {color:#eee!important; font-size:15px!important; border-bottom:0; margin-bottom:0!important; padding-bottom:3px; width: 165px;display: block;}
+.great-deal label{border-bottom:1px solid #535353; margin-top:10px;}
+.great-deal .price{color:#ededed; padding-bottom:15px;}
+
+#menu-wrapper a.button{background-position: 0 0!important border: 0 none!important; color:#fff!important; cursor:pointer; display:inline-block!important; height:28px!important; margin:0!important; padding:0 0 0 5px!important; text-decoration: none!important;}
+#menu-wrapper a.button span {padding:0 6px 1px 3px!important; color:#fff!important; background-position:100% 0!important; white-space:nowrap!important; /*text-transform:uppercase;*/ font:15px/28px 'ProximaNovaRgBold', Arial, Helvetica, sans-serif!important; height:27px!important; font-weight:bold!important; }
+#menu-wrapper a.button span{padding:0 0 1px 5px !important; color:#fff!important; background-position:0 0!important; white-space:nowrap!important; /text-transform:uppercase;/ font:15px/28px 'ProximaNovaRgBold', Arial, Helvetica, sans-serif!important; height:27px!important; font-weight:bold!important; }
+#menu-wrapper a.button span span{background-position:100% 0!important; padding:0 10px 1px 5px !important; }
+
+.sup-text{font-size:17px !important; vertical-align:top; margin-top:10px;}
+
+/*Second menu*/
+#menu-wrapper #anav2 > li > a{
+    color: #535353;
+    display: inline-block;
+    font-family: 'proxima_novalight';
+    font-size: 16.4px;
+    text-decoration: none;
+    border: none;
+    height: 56px;
+    line-height: 56px;
+}
+
+
+/*Naviagion under*/
+.milandirect_au .nav-container{
+    position: relative;
+}
+.nav-under{
+    background: #ffffff;
+    margin-top: -1px;
+    padding-left: 45px;
+}
+.nav-under ul li{
+    float: left;
+}
+.nav-under ul li a{
+    font-family:ProximaNova;
+    font-size: 16px;
+    color: #535353;
+    padding: 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+#menu-wrapper ul#anav1 > li > ul {top: 116px;}
+#menu-wrapper #anav1 ul.column-count-4 { min-height: 373px; }
+.milandirect_au #menu-wrapper #anav1 li.top_level.over > a {
+    margin-bottom: -57px;
+    padding-bottom: 57px;
+}

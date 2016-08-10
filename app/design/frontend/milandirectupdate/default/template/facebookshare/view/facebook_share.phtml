@@ -1,0 +1,10 @@
+<?php
+$currentUrl = $this->helper("core/url")->getCurrentUrl();
+$title = $this->getLayout()->getBlock('head')->getTitle();
+$summary = $this->getLayout()->getBlock('head')->getDescription();
+$image =$this->getSkinUrl('images/logo.gif');
+if($this->getRequest()->getControllerName() == 'product') {
+	$image = Mage::helper('catalog/image')->init(Mage::registry('current_product'), 'image');
+}
+?>
+<a id="facebook-share-link" onClick="window.open('http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($title);?>&p[summary]=<?php echo urlencode($summary);?>&p[url]=<?php echo urlencode($currentUrl); ?>&p[images][0]=<?php echo urlencode($image);?>', 'sharer', 'toolbar=0,status=0,width=550,height=400');" target="_parent" href="javascript: void(0)"></a>

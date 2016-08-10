@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Houzz>
+            <version>0.1.0</version>
+        </Balance_Houzz>
+    </modules>
+    <global>
+        <helpers>
+            <houzz>
+                <class>Balance_Houzz_Helper</class>
+            </houzz>
+        </helpers>
+    </global>
+</config>

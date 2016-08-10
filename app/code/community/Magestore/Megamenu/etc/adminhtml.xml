@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+		<megamenu module="megamenu" translate="title">
+			<title>Mega Menu</title>
+			<sort_order>71</sort_order>               
+			<children>
+				<megamenu module="megamenu" translate="title">
+					<title>Menu Items Management</title>
+					<sort_order>0</sort_order>
+					<action>adminhtml/megamenuadmin_megamenu</action>
+				</megamenu>
+                <template module="megamenu" translate="title">
+					<title>Menu Cache Management</title>
+					<sort_order>10</sort_order>
+					<action>adminhtml/megamenuadmin_megamenu/cache</action>
+				</template>
+				<settings module="megamenu" translate="title">
+					<title>Settings</title>
+					<sort_order>1000</sort_order>
+					<action>adminhtml/system_config/edit/section/megamenu</action>
+				</settings>
+			</children>
+		</megamenu>
+	</menu>
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<megamenu module="megamenu" translate="title">
+										<title>Megamenu</title>
+										<sort_order>71</sort_order>									
+									</megamenu>								
+								</children>
+							</config>
+						</children>
+					</system>
+					<megamenu module="megamenu" translate="title">
+						<title>Megamenu</title>
+						<sort_order>71</sort_order>               
+						<children>
+							<megamenu module="megamenu" translate="title">
+								<title>Menu Items Management</title>
+								<sort_order>0</sort_order>
+							</megamenu>
+                            <template module="megamenu" translate="title">
+                                <title>Menu Cache Management</title>
+                                <sort_order>10</sort_order>
+                            </template>
+							<settings module="megamenu" translate="title">
+								<title>Settings</title>
+								<sort_order>1000</sort_order>
+							</settings>
+						</children>
+					</megamenu>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

@@ -1,0 +1,55 @@
+<?php
+/**
+ * @var $this Balance_SuperPtype_Block_Catalog_Product_View_Type_Super
+ */
+$defaultConfigurableProduct = $this->getDefaultConfigurableProduct();
+$buttonTitle = $this->__('Add to Bag');
+?>
+<div class="add-to-cart">
+    <label for="qty"><?php echo $this->__('Quantity') ?></label>
+    <div class="clickaddto">
+        <input type="text" name="qty" id="qtyInput" maxlength="12" value="1" title="<?php echo $this->__('Quantity') ?>" class="input-text qty" />
+        <a class="gtqty" href='javascript:void(0);' onclick="changeQuantity(jQuery(this), 1);"><img src="<?php echo $this -> getSkinUrl('images/gtqty.png')?>"/> </php></a>
+        <a class="ltqty" href='javascript:void(0);' onclick="changeQuantity(jQuery(this), -1);"><img src="<?php echo $this -> getSkinUrl('images/ltqty.png')?>"/> </a>
+    </div>
+    <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+    <div class="text-note" style="display: none;"></div>
+</div>
+<script type="text/javascript">
+function changeQuantity(btn, offset)
+{
+    if (btn && btn.length > 0)
+    {
+        var input = btn.parent().find('input#qtyInput');
+        if (input.length > 0)
+        {
+            var newVal = parseInt(input.attr('value'))+parseInt(offset);
+            if (newVal < 1)
+            {
+                newVal = 1;
+            }
+            input.attr('value', newVal);
+        }
+    }
+}
+
+function getValidQty(qty)
+{
+    qty = parseInt(qty, 10);
+    if (!qty || qty < 0)
+    {
+        qty = 0;
+    }
+    return qty;
+}
+
+jQuery(document).ready(function()
+{
+    // Observe qty change
+    jQuery('input#qtyInput').change(function()
+    {
+        var input = jQuery(this);
+        input.attr('value', getValidQty(input.attr('value')));
+    });
+});
+</script>

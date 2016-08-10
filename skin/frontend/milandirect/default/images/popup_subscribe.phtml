@@ -1,0 +1,54 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="newsletter-validate-detail">
+ <div class="news-subscribe-popup">
+    <div class="form-subscribe">
+    <p style="height:40px;"></p>
+    	<div style="height:"><a href="#"><img src="images/logo-popup.png" /></a></div>
+    <div class="clearer"></div>
+    <div style="width:370px; border:1px solid #fc0000; float:left;">
+    	<!--<div class="form-subscribe-header">--><h3><strong><?php echo $this->__('GET EARLY ACCESS TO THE') ?><strong/></h3><!--</div>-->
+    <label for="newsletter"><?php echo $this->__('LATEST DEARLS, PRODUCTS,<br>NEWS AND COUPONS!') ?></label>
+    </div>
+    <div style="width:300px; border:1px solid #fc0000; float:right;">    
+		<div class="v-fix">
+			<?php echo $this->__('Name'); ?>
+			<input type="text" name="firstname" id="firstname" value="" class="input-text required-entry"><br/>
+			<?php echo $this->__('Email'); ?>
+			<input name="email" type="text" id="newsletter" value="" class="input-text required-entry validate-email"/><br/>
+		</div>		
+        <p style="height:20px; clear:both;"></p>
+        <button type="submit" title="<?php echo $this->__('Subscribe') ?>" class="button" ><span><span><?php echo $this->__('Subscribe') ?></span></span></button>        
+    </div>
+    </div>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+//]]>
+</script>

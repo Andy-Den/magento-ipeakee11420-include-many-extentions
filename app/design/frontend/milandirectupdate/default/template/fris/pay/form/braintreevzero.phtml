@@ -1,0 +1,99 @@
+<?php
+/**
+ * fris - smart commerce extensions for Magento
+ *
+ * @category  Fris
+ * @package   Fris_Pay
+ * @copyright Copyright (c) 2015 fris IT (http://fris.technology)
+ * @license   http://fris.technology/license
+ * @author    fris IT <support@fris.technology>
+ */
+if (!is_a($this, 'Fris_Pay_Block_Form_Braintreevzero')) {
+    // Outputs <script> tag for braintreevzero-checkout2.js
+    //echo $this->getCssJsHtml();
+    echo '<script type="text/javascript" src="'.$this->getSkinUrl('fris/pay/js/braintreevzero-checkout0.js').'"></script>';
+    return;
+}
+$_model = Mage::getModel('fris_pay/method_braintreevzero');
+$_session = Mage::getSingleton('customer/session');
+$_args = array();
+// Use of Vault is only available to authenticated users that have an ID.
+if ($_model && $_model->useVault() && ($_braintreeCustomerId = $_model->isExistingCustomerWithCard($_session))) {
+    // braintree.setup() takes care of vault through absensce/presence of
+    // customerId in the $_args.
+    $_args['customerId'] = $_braintreeCustomerId;
+}
+$_clientToken = Braintree_ClientToken::generate($_args);
+$_formId = 'payment_form_' . $this->getMethodCode();
+$_buttonText = $this->__('Verify');
+$_env = Braintree_Configuration::environment();
+$_verificationTime  = Mage::getStoreConfig('payment/braintreevzero/verification_time');
+$_verificationStyle = Mage::getStoreConfig('payment/braintreevzero/verification_style');
+$_timeout = (float)Mage::getStoreConfig('payment/braintreevzero/verification_timeout');
+?>
+<ul id="<?php echo $_formId; ?>" class="form-list" style="display:none;">
+    <li>
+        <div id="dropin-braintree"></div>
+        <div id="braintree-buttons-container" class="buttons-set braintree-button">
+            <input id="braintree-button-submit" type="submit" value="<?php echo $_buttonText ?>" class="button btn-stand"/>
+            <div id="braintree-tick" validate="'true">
+                <div class="validation-braintree"></div>
+            </div>
+        </div>
+    </li>
+</ul>
+<script type="text/javascript">
+
+    <?php if ($_verificationTime !== 'payment_button'): ?>
+    // Need to programmatically click Verify button, but not display it.
+    $('braintree-button-submit').hide();
+    jQuery('#onestepcheckout-form #braintree-tick').attr('validate','false');
+    <?php endif; ?>
+
+    var clientToken = '<?php echo $_clientToken; ?>';
+
+    var options = {
+        container: 'dropin-braintree',
+        onPaymentMethodReceived: braintreeNonceReceived // see braintreevzero-checkout1.js
+    };
+    braintree.setup(clientToken, 'dropin', options);
+
+    <?php if ($_model->getConfigData('fraudprotection')): ?>
+    var env;
+    var merchantId = "<?php echo Braintree_Configuration::merchantId(); ?>";
+    var kountId = '<?php echo Mage::getStoreConfig('payment/braintreevzero/kount_id'); ?>';
+    if (kountId !== '') {
+        env = BraintreeData.environments.<?php echo $_env; ?>.withId(kountId);
+    }
+    else {
+        env = BraintreeData.environments.<?php echo $_env; ?>;
+    }
+    BraintreeData.setup(merchantId, '<?php echo $_formId; ?>', env);
+    <?php endif; ?>
+
+    <?php if ($_verificationTime !== 'order_submit' && empty($_braintreeCustomerId)): ?>
+    // For Mage core page checkout
+    if ($('payment-buttons-container')) {
+        var container = $('braintree-buttons-container');
+        var backButton =
+            '<p id="braintree-button-back-link" class="back-link">' +
+            '<a onclick="checkout.back(); return false;" href="#"><small>&laquo; </small>' + Translator.translate("Back") + '</a>' +
+            '</p>';
+        container.update(backButton + container.innerHTML);
+    }
+    <?php endif; ?>
+
+    if (typeof Fris === 'undefined') {
+        Fris = {};
+    }
+    // Cannot pass more args to braintreeNonceReceived, so use global.
+    Fris.paymentFormId = '<?php echo $_formId; ?>';
+    Fris.paymentVerificationTime  = '<?php echo $_verificationTime; ?>';
+    Fris.paymentVerificationStyle = '<?php echo $_verificationStyle; ?>';
+    Fris.btVerificationTimeout = <?php echo max(3.0, $_timeout); ?>;
+    Fris.useVault = <?php echo (empty($_braintreeCustomerId)? 0 : 1); ?>;
+    // Hack for Mage-core
+    if (Fris.paymentVerificationTime === 'payment_mouseout' && (typeof Fris.CheckoutFormHandler !== 'undefined')) {
+        Fris.checkoutFormHandler = new Fris.CheckoutFormHandler(Fris.paymentVerificationTime);
+    }
+</script>

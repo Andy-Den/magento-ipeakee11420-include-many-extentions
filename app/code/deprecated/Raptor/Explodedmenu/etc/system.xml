@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<explodedmenu translate="label" module="explodedmenu">
+			<label>Exploded Menu</label>
+			<sort_order>301</sort_order>
+		</explodedmenu>
+	</tabs>
+	<sections>
+		<explodedmenu translate="label" module="explodedmenu">
+			<label>Categories</label>
+			<tab>explodedmenu</tab>
+			<sort_order>130</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<columns translate="label">
+					<label>Columns</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<categories_per_column translate="label comment">
+							<label>Categories per column</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Number of 2nd level categories per column</comment>
+							<default>3</default>
+						</categories_per_column>
+					</fields>
+				</columns>
+			</groups>
+		</explodedmenu>
+	</sections>
+</config>
+
+

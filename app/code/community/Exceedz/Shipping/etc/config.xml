@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Exceedz_Shipping>
+			<version>0.7.0</version>
+		</Exceedz_Shipping>
+	</modules>
+	<global>			<models>
+			<shipping>
+				<rewrite>
+					<carrier_tablerate>Exceedz_Shipping_Model_Carrier_Tablerate</carrier_tablerate>					
+				</rewrite>
+			</shipping>						<shipping_resource>				<rewrite>					<carrier_tablerate>Exceedz_Shipping_Model_Resource_Carrier_Tablerate</carrier_tablerate>									</rewrite>			</shipping_resource>
+		</models>
+	</global>
+</config>

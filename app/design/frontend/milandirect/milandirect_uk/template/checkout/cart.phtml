@@ -1,0 +1,110 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @see Mage_Checkout_Block_Cart
+ */
+?>
+<div class="common_spacing">
+<div id="breadcrumb" class="breadcrumbs"><?php echo $this->getLayout()->getBlock('breadcrumbs')->toHtml()?> </div>
+<div class="cart">
+    <div class="page-title title-buttons">
+        <h1><?php echo $this->__('Your Cart') ?></h1>
+        <div class="clear"></div>
+		<p class="sub-text"><?php //echo $this->__("Australia's Best Price Guaranteed!"); ?></p>
+    </div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+	<div class="Left-Column"><div class="title"><?php echo $this->__('Please confirm items in your cart and continue to checkout'); ?> </div></div>
+
+	<div class="Right-Column">
+		<form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
+            <?php echo $this->getBlockHtml('formkey') ?>
+			<fieldset>
+				<table id="shopping-cart-table" class="data-table cart-table">
+					<colgroup><col width="1">
+						<col>
+						<col width="1">
+						<col width="1">
+						<col width="1">
+						<col width="1">
+						<col width="1">
+					</colgroup>
+					<thead>
+						<tr class="first last">
+							<th rowspan="1"><?php echo $this->__('Product'); ?></th>
+							<th rowspan="1"></th>
+							<th colspan="1" class="a-center"><span class="nobr"><?php echo $this->__('Price &amp; Qty'); ?></span></th>
+							<th class="a-center" style="width:150px" rowspan="1"><?php echo $this->__('Warranty'); ?></th>
+							<th colspan="1" class="a-right last"><?php echo $this->__('Total'); ?></th>
+						</tr>
+					</thead>
+                  <tfoot>
+                    <tr>
+                        <td colspan="50" class="a-right">
+                            <button type="submit" title="<?php echo $this->__('Update Cart') ?>" class="btn-update-shop-cart"></button>
+                        </td>
+                    </tr>
+                </tfoot>
+					<tbody>
+						<?php foreach($this->getItems() as $_item): ?>
+							<?php echo $this->getItemHtml($_item); ?>
+						<?php endforeach ?>
+					</tbody>
+				</table>
+				<script type="text/javascript">decorateTable('shopping-cart-table')</script>
+			</fieldset>
+		</form>
+
+		<div class="cart-collaterals<?php if($this->getChildHtml('crosssell')) echo ' cross-inside'; ?>">
+        <div class="shippingcharges" id="shipping_charges"></div>
+			<?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
+			<?php echo $this->getChildHtml('crosssell') ?>
+		</div>
+		<div class="voucher-div check_cart checkout-container">
+			<div class="totals">
+				<?php echo $this->getChildHtml('totals'); ?>
+				<?php if(!$this->hasError()): ?>
+				<ul class="checkout-types">
+					<li class="left">
+						<div class="deals">
+							<?php echo $this->getChildHtml('coupon') ?>
+						</div>
+					</li>
+					<?php foreach ($this->getMethods('methods') as $method): ?>
+					<?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+					<li class="right"><?php echo $methodHtml; ?></li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				</ul>
+				<?php endif; ?>
+			</div>
+		</div>
+			</div>
+	</div>
+</div>

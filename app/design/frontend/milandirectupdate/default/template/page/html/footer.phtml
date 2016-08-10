@@ -1,0 +1,97 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<div class="back-to-top"><?php echo $this->__('Top')?></div>
+<div id="popupMainContainer">
+    <div id="popupMiddleContainer"></div>
+</div>
+<div id="order-popup-container">
+    <?php echo $this->getChildHtml('vieworder_popup'); ?>
+</div>
+<div id="backgroundPopup" onclick="popupStatus=1;closePopup();">
+    <div class="container-loading">
+        <img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/>
+    </div>
+</div>
+<div class="security-container">
+    <div class="security-info">
+        <div class="container">
+            <?php echo $this->getChildHtml('security_info_footer')?>
+        </div>
+    </div>
+    <?php echo $this->getChildHtml('google_trust_box'); ?>
+</div>
+<div class="live-chat">
+    <div class="live-chat-container">
+        <span class="icon-livechaticon-">
+            <span class="head"><?php echo $this->__('Have a question or comment?')?></span>
+            <span><?php echo $this->__('Our live chat team are')?> <span><?php echo $this->__('online now')?></span></span>
+        </span>
+        <span class="icon-livechaticon- mini-loaded">
+            <span><?php echo $this->__('Chat now')?></span>
+        </span>
+    </div>
+</div>
+<div class="footer-cart-service">
+    <?php echo $this->getChildHtml('cart_empty_service')?>
+</div>
+
+<?php echo $this->getChildHtml('footer-newsletter')?>
+<div class="container-footer">
+    <div class="footer-container">
+        <div class="footer">
+            <div class="left-footer">
+                <a class="footer-logo" href="<?php echo $this->getUrl('') ?>">
+                    <img src="<?php echo $this->getSkinUrl('images/footer-logo.png') ?>" alt="<?php echo $this->getSkinUrl(Mage::getStoreConfig('design/header/logo_alt')) ?>" class="large" />
+                </a>
+                <?php echo $this->getChildHtml('footer_social_links')?>
+            </div>
+            <div class="company-links">
+                <div class="title-links"><?php echo $this->__('Company')?></div>
+                <div id="footer-account-links">
+                    <?php echo $this->getChildHtml('footer-account-links');?>
+                </div>
+            </div>
+            <div class="help-center-links">
+                <?php echo $this->getChildHtml('footer_help_center_link')?>
+            </div>
+            <div class="general-links">
+                <?php echo $this->getChildHtml('footer_links_general')?>
+            </div>
+            <div class="visit-help">
+                <div class="help-center"><a href="<?php echo $this->getUrl('help-centre')?>"><?php echo $this->__('Help Center')?></a></div>
+                <div class="blog-center"><a href="<?php echo $this->getUrl('blog')?>"><?php echo $this->__('Blog')?></a></div>
+                <a class="contact-us" href="<?php echo $this->getUrl('contacts')?>"><?php echo $this->__('Contact Us')?></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="payment-copy">
+    <div class="container">
+        <div class="copyright"><?php echo $this->getCopyright() ?></div>
+        <div class="paypment-details"><?php echo $this->getChildHtml('footer_payments_method')?></div>
+    </div>
+</div>

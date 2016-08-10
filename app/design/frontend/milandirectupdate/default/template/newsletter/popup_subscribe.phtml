@@ -1,0 +1,128 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<div class="form-subscribe-popup">
+    <div class="popup-newsletter">
+        <a id="popupClose" class="popupClose" onclick="javascript:closePopup();">x</a>
+        <div class="container">
+            <form action="<?php echo $this->getUrl('newsletter/subscriber/send/', array('_secure' => $this->getRequest()->isSecure())) ?>" onsubmit="return newsletterSubscriberForm.submit(event)" method="post" name="subscribeForm" id="subscribeForm" >
+                <?php echo $this->getBlockHtml('formkey') ?>
+                <div class="block block-subscribe">
+                    <div class="block-title">
+                        <span><?php echo $this->__('Get Early Access to the') ?></span>
+                        <strong><?php echo $this->__('Latest Deals, Products, News & Coupons') ?></strong>
+                    </div>
+                    <div class="block-content">
+                        <div class="input-box">
+                            <label for="deals-name"><?php echo $this->__('Name')?></label>
+                            <input type="text" name="cm-name" onclick="if(this.value=='Enter your full name'){this.value='';}" onblur="if(this.value==''){this.value='Enter your full name';}" id="deals-name" placeholder="<?php echo $this->__('Enter your full name')?>" value="Enter your full name" class="input-text required-entry">
+                        </div>
+                        <div class="input-box">
+                            <label for="deals-email"><?php echo $this->__('Email')?></label>
+                            <input name="cm-nkrlkr-nkrlkr" value="Email address" onclick="if(this.value=='Email address'){this.value='';}" onblur="if(this.value==''){this.value='Email address';}" type="text" id="deals-email" placeholder="<?php echo $this->__('Email address')?>" class="input-text required-entry validate-email"/>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" title="<?php echo $this->__('Subscribe') ?>" class="button btn-stand"><span><span><?php echo $this->__('Subscribe') ?></span></span></button>
+                        </div>
+                    </div>
+                    <div class="privacy-policy"><?php echo $this->__('You can unsubscribe any time.'); ?> <a href="<?php echo $this->getBaseUrl('')?>privacy-policy" target="_blank"><?php echo $this->__('Privacy Policy') ?></a></div>
+                </div>
+                <div class="block-subscriber-img">
+                    <img src="<?php echo $this->getSkinUrl(Mage::getStoreConfig('design/header/logo_src')) ?>" alt="<?php echo $this->getSkinUrl(Mage::getStoreConfig('design/header/logo_alt')) ?>" class="logo-popup" />
+                    <?php echo $this->getChildHtml('newsletter_popup_image')?>
+                </div>
+            </form>
+            <ul class="messages" style="display:none" id="messages-popup"><li class="success-msg"><ul><li><span><?php echo $this->__('You have successfully subscribed to this list.') ?></span></li></ul></li></ul>
+            <div id="loading-mask-newsletter-popup" style="display: none;">
+                <div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/>
+                    <?php echo $this->__('Please wait...') ?>
+                </div>
+                <div id="loading-mask"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //<![CDATA[
+    var newsletterSubscriberForm = new VarienForm('subscribeForm');
+    var postUrl = "<?php echo $this->getUrl('newsletter/subscriber/send/') ?>";
+    newsletterSubscriberForm.submit = function(event) {
+        if (this.validator.validate()) {
+            submitNewsletterSubscribeForm();
+        }
+        return false;
+    }
+
+
+    function submitNewsletterSubscribeForm()
+    {
+        Element.show('loading-mask-newsletter-popup');
+        var request = new Ajax.Request(
+            postUrl,
+            {
+                method: 'post',
+                evalJS: 'force',
+                onComplete: function(response){
+                    //alert('subscribe successfully');
+                },
+                onFailure: function(response){
+                    alert('An error occurred while processing your request');
+                    Element.hide('loading-mask-newsletter-popup');
+                },
+                onSuccess: function(response){
+                    if (response && response.responseText){
+                        try{
+                            result = eval('(' + response.responseText + ')');
+                        }
+                        catch (e) {
+                            result = {};
+                        }
+                    }
+                    isSuccess = /You have successfully subscribed to this list$/.test(result.message);
+
+                    if(isSuccess) {
+                        Element.hide('loading-mask-newsletter-popup');
+                        $('messages-popup').show();
+                        setTimeout("closePopup()", 3000);
+                    }
+                    else{
+                        if(result.error){
+                            alert(result.error);
+                        }else{
+                            alert('An error occurred while processing request');
+                        }
+                        Element.hide('loading-mask-newsletter-popup');
+                    }
+                },
+                parameters: jQuery('#subscribeForm').serialize()
+            }
+        );
+
+    }
+    //]]>
+
+</script>
+

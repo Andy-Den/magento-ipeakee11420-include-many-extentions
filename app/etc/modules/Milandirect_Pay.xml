@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Pay>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Fris_Pay/>
+            </depends>
+        </Milandirect_Pay>
+    </modules>
+</config>

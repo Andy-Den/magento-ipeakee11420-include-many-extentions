@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <install>
+            <date><![CDATA[Wed, 14 Mar 2012 14:39:33 +0000]]></date>
+        </install>
+        <crypt>
+            <key><![CDATA[2c5011cb5b7366cd26deefa6b360d021]]></key>
+        </crypt>
+        <disable_local_modules>false</disable_local_modules>
+        <resources>
+            <db>
+                <table_prefix><![CDATA[]]></table_prefix>
+            </db>
+            <default_setup>
+                <connection>
+                    <host><![CDATA[milan-rds01.chxpvqikk4ib.ap-southeast-2.rds.amazonaws.com]]></host>
+                    <username><![CDATA[milan_web]]></username>
+                    <password><![CDATA[f7VEKnz6Xe2nRXB]]></password>
+                    <dbname><![CDATA[milan_live]]></dbname>
+                    <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
+                    <model><![CDATA[mysql4]]></model>
+                    <type><![CDATA[pdo_mysql]]></type>
+                    <pdoType><![CDATA[]]></pdoType>
+                    <active>1</active>
+                </connection>
+            </default_setup>
+        </resources>
+      	<session_save><![CDATA[files]]></session_save>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <frontName><![CDATA[zpanel]]></frontName>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

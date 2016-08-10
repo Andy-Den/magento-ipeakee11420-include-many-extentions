@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Dynamicremarketing>
+            <version>1.0.0</version>
+        </Balance_Dynamicremarketing>
+    </modules>
+    <global>
+        <blocks>
+            <dynamicremarketing>
+                <class>Balance_Dynamicremarketing_Block</class>
+            </dynamicremarketing>
+        </blocks>
+        <helpers>
+            <dynamicremarketing>
+                <class>Balance_Dynamicremarketing_Helper</class>
+            </dynamicremarketing>
+        </helpers>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <dynamicmarketing>
+                    <file>dynamicremarketing.xml</file>
+                </dynamicmarketing>
+            </updates>
+        </layout>
+    </frontend>
+</config>

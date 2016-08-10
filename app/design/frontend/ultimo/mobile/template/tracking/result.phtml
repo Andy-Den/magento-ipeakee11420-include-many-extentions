@@ -1,0 +1,64 @@
+<div class="track-my-order-wrapper">
+	<div class="page-title">
+	  <h1><?php echo $this->__('Track My Order') ?></h1>
+	</div>
+<?php $trackingCollection = $this->getTrackingInfo(); ?>
+<?php if(count($trackingCollection)) :?>
+<?php $showBottomCount = 1; foreach ($trackingCollection as $track) :?>
+
+	<?php if(Mage::app()->getStore()->getCode() == 'australia'): ?>
+		<p class="sub-text">Order: #<?php echo $this->getRequest()->getParam('orderid') ?></p>
+		<p>Your Milan Direct order has been dispatched with <?php echo $track['title'] ?> on <?php echo date('l, d F Y', strtotime($track['date_dispatched'])) ?></p>
+		<p>Your tracking number is: <?php echo $track['track_number'] ?></p>
+		<?php if(trim($track['title']) == 'Auspost') : ?>
+
+			<p>You can track your delivery at <a href="<?php echo $track['tracking_link'] ?>"><?php echo $track['tracking_link'] ?></a>.</p>
+			<p>For transit times please contact the carrier.</p>
+
+		<?php elseif(trim($track['title']) == 'EFM') :?>
+			<p>You can track your delivery by contacting EFM on 1300 769 605</p>
+			<p>If you are unable to be home to receive your delivery, you need to specify an alternate delivery address or have not received your goods within the prescribed time period, please call the above carrier.</p>
+			<p>Please ensure that there will be someone available at the nominated delivery address to sign for your items. Couriers will not leave parcels unattended and will deliver to ground floor residents and front door ONLY. Drivers will need assistance for any items over the designated 25kgs per item (as per OH&S requirements).  All deliveries take place Monday - Friday during normal business hours.</p>
+
+            <p class="sub-text-heading">Estimated Delivery Times:</p>
+				<ul class="track-box-bullet">
+                <li>&nbsp;Melbourne - Approximately 1-3 business days</li>
+				<li>&nbsp;Sydney, Adelaide - Approximately 4-5 business days</li>
+				<li>&nbsp;Brisbane, Perth - Approximately 6-7 business days</li>
+				</ul>
+			<p>All areas outside these metro locations please allow 8-10 business days.</p>
+			<p> Please note that these are estimates and our carriers will endeavour to meet these on all occasions; however please allow up to 10 business days for all deliveries.</p>
+
+		<?php elseif(trim($track['title']) == 'Toll') :?>
+			<p>You can track your delivery at <a href="<?php echo $track['tracking_link'] ?>"><?php echo $track['tracking_link'] ?></a>.</p>
+			<p>If you are unable to be home to receive your delivery, need to specify an alternate delivery address or have not received your goods within the prescribed time period, please call Toll for assistance on 1300 865 547.</p>
+			<p>Please ensure that there will be someone available at the nominated delivery address to sign for your items. Couriers will not leave parcels unattended or call ahead before making a delivery; all deliveries take place Monday - Friday during normal business hours.</p>
+
+            <p class="sub-text-heading">Estimated Delivery Times:</p>
+                <ul class="track-box-bullet">
+					<li>&nbsp;Melbourne - Approximately 1-3 business days </li>
+					<li>&nbsp;Sydney, Adelaide - Approximately 4-5 business days</li>
+					<li>&nbsp;Brisbane, Perth - Approximately 6-7 business days</li>
+				</ul>
+			<p>All areas outside these metro locations please allow 8-10 business days.</p>
+			<p>Please note that these are estimates and our carriers will endeavour to meet these on all occasions; however please allow up to 10 business days for all deliveries.</p>
+
+		<?php endif; ?>
+		<?php if(count($trackingCollection) > 1 && $showBottomCount < count($trackingCollection)) :?>
+			<p class="border-bottom">&nbsp;</p>
+		<?php endif; $showBottomCount++ ?>
+	<?php else: ?>
+		<p class="sub-text">Order: #<?php echo $this->getRequest()->getParam('orderid') ?></p>
+		<p>Your Milan Direct order has been dispatched with <?php echo $track['title'] ?> on <?php echo date('l, d F Y', strtotime($track['date_dispatched'])) ?></p>
+		<p>Your tracking number is: <?php echo $track['track_number'] ?></p>
+		<p>You can track your delivery at <a href="<?php echo $track['tracking_link'] ?>"><?php echo $track['tracking_link'] ?></a>.</p>
+		<p>Please ensure that there will be someone available at the nominated delivery address to sign for your items. Couriers will not leave parcels unattended or call ahead before making a delivery; all deliveries take place Monday - Friday during normal business hours.</p>
+		<p>If you are unable to be home to receive your delivery, you need to specify an alternate delivery address or have not received your goods within the prescribed time period, please contact the above carrier.</p>
+		<p>For transit times please contact the carrier. Delivery estimates are 1-3 business days for the UK, and up to 7 business days for the EU.</p>
+	<?php endif; ?>
+<?php endforeach; ?>
+<?php else: ?>
+<p><?php echo $this->__('Tracking information is not available for this order.') ?></p>
+<?php endif; ?>
+<p><a href="<?php echo Mage::helper('cms/page')->getPageUrl('track-my-order') ?>" title="<?php echo $this->__('Go To Track My Order') ?>"><?php echo $this->__('Go Back') ?></a></p>
+</div>

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+/**     
+ * GoMage.com
+ *
+ * GoMage Feed Pro
+ * @category     Extension
+ * @copyright    Copyright (c) 2010-2013 GoMage.com (http://www.gomage.com)
+ * @author       GoMage.com
+ * @license      http://www.gomage.com/licensing  Single domain license
+ * @terms of use http://www.gomage.com/terms-of-use
+ * @version      Release: 3.3
+ * @since        Class available since Release 1.0
+ */ 
+ -->
+<layout version="1.0">
+   <default>
+		<reference name="head">    		
+    		<action method="addJs"><script>gomage/feedpro/generator.js</script></action>
+    		
+    	</reference>
+	</default>
+    <adminhtml_gomagefeed_items_index>
+        <reference name="content">
+            <block type="gomage_feed/adminhtml_items" name="gomage_feed.admin.items" />
+        </reference>
+    </adminhtml_gomagefeed_items_index>
+    <adminhtml_gomagefeed_attributes_index>
+        <reference name="content">
+            <block type="gomage_feed/adminhtml_attributes" name="gomage_feed.admin.attributes" />
+        </reference>
+    </adminhtml_gomagefeed_attributes_index>
+    <adminhtml_gomagefeed_attributes_edit>
+    	<reference name="head">
+    		<action method="addItem"><type>skin_css</type><name>gomage/feed.css</name><params>media="screen, projection"</params></action>
+    	</reference>
+    </adminhtml_gomagefeed_attributes_edit>
+    <adminhtml_gomagefeed_attributes_new>
+    	<reference name="head">
+    		<action method="addItem"><type>skin_css</type><name>gomage/feed.css</name><params>media="screen, projection"</params></action>
+    	</reference>
+    </adminhtml_gomagefeed_attributes_new>    
+    <adminhtml_gomagefeed_items_edit>
+        <reference name="head">
+        	<action method="addItem"><type>skin_css</type><name>gomage/feed.css</name><params>media="screen, projection"</params></action>
+    		<action method="addJs"><script>gomage/feed-admin.js</script></action>
+    		<action method="addJs"><script>lib/flex.js</script></action>
+    		<action method="addJs"><script>lib/FABridge.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/uploader.js</script></action>    		 
+    	</reference>
+    	<reference name="before_body_end">
+    		<block name="gomage.feed.loader" type="core/template" template="gomage/feed/loader.phtml"/> 
+    	</reference>    	    	
+    </adminhtml_gomagefeed_items_edit>
+    <adminhtml_gomagefeed_items_new>
+        <reference name="head">
+        	<action method="addItem"><type>skin_css</type><name>gomage/feed.css</name><params>media="screen, projection"</params></action>
+    		<action method="addJs"><script>gomage/feed-admin.js</script></action>
+    		<action method="addJs"><script>lib/flex.js</script></action>
+    		<action method="addJs"><script>lib/FABridge.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/uploader.js</script></action>
+    	</reference>
+    </adminhtml_gomagefeed_items_new>    
+</layout>

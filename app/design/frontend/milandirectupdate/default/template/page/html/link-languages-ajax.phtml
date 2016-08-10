@@ -1,0 +1,12 @@
+
+<?php if(!Mage::getSingleton('customer/session')->isLoggedIn()) : ?>
+    <span class="welcome-text"><?php echo $this->__('Welcome, ')?></span>
+    <?php echo $this->getLayout()->getBlock('top.links')->toHtml(); ?>
+<?php else : ?>
+    <?php echo $this->getLayout()->getBlock('welcome')->toHtml();?>
+    <div class="links" style="margin-left: 5px">
+        <ul>
+            <li class=" last"><a href='<?php echo $this->getUrl('customer/account/logout')?>' title="Logout">Logout</a></li>
+        </ul>
+    </div>
+<?php endif; ?>

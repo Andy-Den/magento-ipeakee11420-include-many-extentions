@@ -1,0 +1,54 @@
+A> File Name : images-import.php
+
+Description : This script is used to Delete the existing image and import Product Label, Base, Small, Thumb, Gallery Image. 
+			
+			Following are the flow of code 
+				1> Checking sku is present in Database or not, if not return the "INVALID SKU" Error message
+				2> Delete all image data
+				3> If Product Label not present in sheet then script will fetch the product name of sku and assign to label variable. 
+				3> Import all type of images 
+					
+Sheet Template Name: images-delete-import.csv
+
+Steps : 
+	1) Create "sheets" folder if not created and give 777 permission to that folder.
+	
+	2> Place the Sheet in sheets Folder. 
+	
+	3) Open the Import sheet and check all the required data present in sheet or not.
+			 
+	4) Open Script in Editor and add the name of the Sheet to the Variable "$fileToRead" and check the config.php path is correct or not.
+	Ex. 
+	include('config.php');
+	$fileToRead='sheets/url_path.csv';
+	
+	5) Run the Script http://172.16.0.35/demo1_11_1/Import-Tool/Image-Import-Export/images-import.php?run=20111207
+	
+
+==========================================================================================================================================
+
+B> File Name : export-images.php
+
+Description : This script is used to Export the Image base on selected Product ID Range. 
+	
+	Following are the flow of code 
+		1> "Database connected and total product count" Display the Last Product ID.
+		2> Based on Start and End Range Script will export the Product Images ( Product Label, Base, Small, Thumb, Gallery Images )
+		3> Display the report in Browser and also generate the csv report in sheets folder.
+
+Steps : 
+	1) Create "sheets" folder if not created and give 777 permission to that folder.
+	
+	2> Open Script in Editor check the config.php path is correct or not.
+	Ex. 
+	include('config.php');
+	
+	3) Run the Script http://172.16.0.35/demo1_11_1/Import-Tool/Image-Import-Export/images-import.php?run=20111207
+	
+	4> Enter Product ID Start Range ( Script will generate the report from entered Product ID  )
+	
+	5> Enter Product ID End Range ( Script will generate the report from entered Product ID  )
+	
+	6> Download the Exported sheet from sheets folder.
+	
+	

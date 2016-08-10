@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Onsale>
+            <version>0.1.0</version>
+        </Milandirect_Onsale>
+    </modules>
+    <global>
+        <blocks>
+            <onsale>
+                <rewrite>
+                    <product_view_label>Milandirect_Onsale_Block_Product_View_Label</product_view_label>
+                    <product_list_label>Milandirect_Onsale_Block_Product_List_Label</product_list_label>
+                </rewrite>
+            </onsale>
+        </blocks>
+    </global>
+</config>

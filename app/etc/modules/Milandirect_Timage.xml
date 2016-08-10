@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Timage>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Technooze_Timage/>
+            </depends>
+        </Milandirect_Timage>
+    </modules>
+</config>

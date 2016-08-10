@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+include_once 'vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputInterface;
+//use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+$console = new Application();
+$console
+    ->register('test')
+    ->setDefinition(array(
+        new InputOption('suite',
+            's',
+            InputOption::VALUE_OPTIONAL,
+            'Test suite?'
+        )
+    ))
+    ->setDescription('Run the test.')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+        $testSuite = $input->getOption('suite');
+        $testSuite = empty($testSuite) ? 'unit' : $testSuite;
+        $output->writeln(shell_exec(sprintf("vendor/bin/phpunit --testsuite %s", $testSuite)));
+    });
+$console->run();

@@ -1,0 +1,29 @@
+# OS generated files #
+######################
+/.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# eclipse file #
+##############
+/.buildpath
+/.project
+/.settings
+
+# phpstorm #
+############
+/.idea
+
+# composer #
+############
+/vendor
+/composer.lock
+
+# composer #
+############
+/magento
+
+# composer #
+############
+/var

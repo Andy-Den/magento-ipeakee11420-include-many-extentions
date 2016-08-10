@@ -1,0 +1,163 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+$page_action = Mage::app()->getFrontController()->getAction()->getFullActionName();
+$style = '';
+$class = '';
+if(in_array($page_action, array('checkout_cart_index','checkout_onepage_index'))){
+    $style = 'style="display: none;"';
+    $class = 'handle-cart';
+}
+?>
+<div style="position:relative;display:block !important;" id="order-popup-container">
+    <?php echo $this->getChildHtml('vieworder_popup'); ?>
+</div>
+<div class="footer-container">
+
+  <div class="slide-out-div">
+    <div class="sidebar-btm-crv">
+      <div class="sidebar-repeat"> <a id="handle" class="normal <?php echo $class ?>" href="#">Content</a>
+          <div id="sidebar-cart" class="top-cart" <?php echo $style ?>><?php echo $this->getChildHtml('sidebar-cart'); ?></div>
+          <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('wide_screen_side_bar')->toHtml(); ?>
+      </div>
+    </div>
+  </div>
+
+   <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('security_info_uk')->toHtml(); ?>
+
+  <div class="clear"></div>
+
+<div class="footer">
+    <div id="footer-account-links">
+      <?php echo $this->getChildHtml('footer-account-links');?>
+        
+            </div>
+
+  <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_links_customer_service')->toHtml(); ?>
+  <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_links_general')->toHtml(); ?>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_links_shop_uk')->toHtml(); ?>
+  <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_connect')->toHtml(); ?>
+</div>
+<?php //echo $this->getChildHtml('catalog.category') ?>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+
+  if (Prototype.Browser.IE) {
+        Event.observe(window, 'load', function(){ //KB927917 fix
+                $$('span.regular-price span[class="price"]').each(function(item){
+        var html = $(item).innerHTML;
+                if(html.search('<sup>') == -1 && html.search('</sup>') == -1 && html.search('<SUP>') == -1) {
+                    html = html.replace(/^\s+/,"");
+                    var html_currency = html.sub(html.charAt(0), '<sup>&pound;</sup>');
+                    var html_price = html_currency.sub('.', '<sup>') + '</sup>';
+                    item.update(html_price);
+                }
+            });
+        });
+
+ Event.observe(window, 'load', function(){ //KB927917 fix
+             $$('p.special-price span[class="price"]').each(function(item){
+        var html = $(item).innerHTML;
+                if(html.search('<sup>') == -1 && html.search('</sup>') == -1 && html.search('<SUP>') == -1) {
+                    html = html.replace(/^\s+/,"");
+                    var html_currency = html.sub(html.charAt(0), '<sup>&pound;</sup>');
+                    var html_price = html_currency.sub('.', '<sup>') + '</sup>';
+                    item.update(html_price);
+                }
+            });
+        });
+
+
+    } else {
+        document.observe("dom:loaded", function(){
+               $$('span.regular-price span[class="price"]').each(function(item){
+        var html = $(item).innerHTML;
+                if(html.search('<sup>') == -1 && html.search('</sup>') == -1 && html.search('<SUP>') == -1) {
+                    html = html.replace(/^\s+/,"");
+                    var html_currency = html.sub(html.charAt(0), '<sup>&pound;</sup>');
+                    var html_price = html_currency.sub('.', '<sup>') + '</sup>';
+                    item.update(html_price);
+                }
+            });
+        });
+
+  document.observe("dom:loaded", function(){
+                $$('p.special-price span[class="price"]').each(function(item){
+        var html = $(item).innerHTML;
+                if(html.search('<sup>') == -1 && html.search('</sup>') == -1) {
+                    html = html.replace(/^\s+/,"");
+                    var html_currency = html.sub(html.charAt(0), '<sup>&pound;</sup>');
+                    var html_price = html_currency.sub('.', '<sup>') + '</sup>';
+                    item.update(html_price);
+                }
+            });
+        });
+    }
+//]]>
+</script>
+<?php if(Mage::app()->getFrontController()->getRequest()->getRouteName() == 'cms'): ?>
+<script type="text/javascript">
+//<![CDATA[
+var identifier = "<?php echo Mage::getSingleton('cms/page')->getIdentifier() ?>-link";
+if(jQuery('#'+identifier))
+    jQuery('#'+identifier).addClass('select');
+    jQuery('#breadcrumbs').show();
+//]]>
+</script>
+<?php endif; ?>
+<?php
+ if($this->getRequest()->getParam('store'))
+    $store = $this->getRequest()->getParam('store');
+ else
+    $store = 'other'; ?>
+<script type="text/javascript">
+//<![CDATA[
+var STORE = "<?php echo $store ?>";
+//]]>
+</script>
+
+<?php $selectedStore = Mage::app()->getStore()->getCode(); ?>
+ <script type="text/javascript">
+//<![CDATA[
+showStoreAsSelected('<?php echo $selectedStore; ?>');
+    //window.parent.location = BASE_URL;
+//]]>
+</script>
+<div style="display:none;"><?php echo $this->getChildHtml('dynamic_remarketing'); ?></div>
+</div>
+<address class="copyright">
+<?php echo $this->getCopyright() ?>
+</address>
+<div id="popupMainContainer">
+    <div id="popupMiddleContainer"></div>
+</div>
+
+<div id="backgroundPopup"></div>
+<?php echo $this->getChildHtml('cms_competition_banner_uk'); ?>

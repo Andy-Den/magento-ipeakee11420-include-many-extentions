@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Exceedz_Customer>
+			<version>1.1</version>
+		</Exceedz_Customer>
+	</modules>	
+	<global>					
+		<models>
+			<customer>
+				<rewrite>
+					<address_abstract>Exceedz_Customer_Model_Address_Abstract</address_abstract>
+				</rewrite>
+			</customer>
+		</models>
+	</global>
+</config>

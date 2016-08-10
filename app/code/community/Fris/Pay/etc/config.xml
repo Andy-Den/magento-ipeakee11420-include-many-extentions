@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Fris_Pay>
+            <version>1.8.2</version>
+        </Fris_Pay>
+    </modules>
+
+    <global>
+        <blocks>
+            <fris_pay>
+                <class>Fris_Pay_Block</class>
+            </fris_pay>
+        </blocks>
+        <helpers>
+            <fris_pay>
+                <class>Fris_Pay_Helper</class>
+            </fris_pay>
+        </helpers>
+        <models>
+            <fris_pay>
+                <class>Fris_Pay_Model</class>
+            </fris_pay>
+            <sales>
+                <rewrite>
+                    <order_payment>Fris_Pay_Model_Rewrite_Sales_Order_Payment</order_payment>
+                </rewrite>
+            </sales>
+        </models>
+    </global>
+
+    <default>
+        <payment>
+            <braintreevzero>
+                <active>1</active>
+                <model>fris_pay/method_braintreevzero</model>
+                <title>Braintree v.zero</title>
+                <environment>sandbox</environment>
+                <payment_action>authorize_capture</payment_action>
+                <capture_action>invoice</capture_action>
+                <order_status>processing</order_status>
+                <use_vault>0</use_vault>
+                <fraudprotection>0</fraudprotection>
+                <kount_id></kount_id>
+                <verification_time>order_submit</verification_time>
+                <verification_style>tick</verification_style>
+                <verification_timeout>5.0</verification_timeout>
+            </braintreevzero>
+        </payment>
+    </default>
+
+    <frontend>
+        <layout>
+            <updates>
+                <braintreevzero module="Fris_Pay">
+                    <file>fris/pay/braintreevzero.xml</file>
+                </braintreevzero>
+            </updates>
+        </layout>
+    </frontend>
+</config>

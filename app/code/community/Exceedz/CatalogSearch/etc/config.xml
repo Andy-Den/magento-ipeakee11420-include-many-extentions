@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Exceedz_CatalogSearch>
+            <version>1.1</version>
+        </Exceedz_CatalogSearch>
+    </modules>
+    <global>
+        <models>            <catalogsearch_resource>                <rewrite>                    <fulltext>Exceedz_CatalogSearch_Model_Resource_Fulltext</fulltext>                </rewrite>                       </catalogsearch_resource>
+        </models>          <blocks>                    <catalogsearch>                           <rewrite>                                    <result>Exceedz_CatalogSearch_Block_Result</result>                                   </rewrite>                                            </catalogsearch>                    </blocks>        
+    </global>    
+</config>

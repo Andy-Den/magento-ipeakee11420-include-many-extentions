@@ -1,0 +1,97 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php
+/* begin REF:MID-336, MID-337*/
+$childProductId = Mage::getSingleton('checkout/session')->getBalanceLastAddedProductId();
+if (isset($childProductId) && $childProductId) {
+    $childProduct = Mage::getModel('catalog/product')->load($childProductId);
+}
+/* end REF:MID-336, MID-337*/
+
+?>
+<div class="form-subscribe product-view-cart_popup" id="product-view-cart_popup">
+    <div class="mass-overlay" onclick="popupStatus=1;closePopup();"></div>
+    <div class="container">
+        <a id="popupClose" onclick="popupStatus = 1; closePopup();"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11" height="11" viewBox="0 0 11 11">
+                <image id="cross" width="11" height="11" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAIVBMVEUAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMAAAAg3Z12AAAACXRSTlMAL1oBTZcC1ih+bNXvAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADlJREFUCNdjEDJgYDASYPAMZmCOdGAwnWoAREBmWGQwAwOD6XQgh4GBrbKMAc6DykFVQvW1ACVMGgAmoA8YidEGcAAAAABJRU5ErkJggg=="/>
+            </svg></a>
+        <div class="view-cart-popup">
+            <div class="cart_popup" id="cart_popup">
+                <div class="messsage">
+                    <?php
+                    $plural = '';
+                    $qty_added = $this->getRequest()->getParam('qty');
+                    if($qty_added==''){
+                        $qty_added = 1;
+                    }
+                    $plural = '';
+                    if ($qty_added != 1){
+                        $plural = "s";
+                    }
+
+                    ?>
+                    <h5 class="items-display"><?php echo $qty_added; ?> <?php echo $this->__(' Item'. $plural .' added to your cart') ?></h5>
+                </div>
+                <div class="buttons-set-top">
+                    <a href="<?php echo $this->getUrl() ?>" title="Continue Shopping"><?php echo $this->__('Continue Shopping'); ?></a>
+                    <?php echo $this->__('Or');?>
+                    <button onclick="setLocation('<?php echo $this->getUrl('checkout/cart');?>')" class="button btn-subscriber" title="Proceed to Checkout" type="button"><span><span><?php echo $this->__('Checkout'); ?></span></span></button>
+                </div>
+                <div class="inner-wrapper">
+                    <ol id="pagination_container_header" class="mini-products-list">
+                        <li class="add-popup-cart">
+                            <div class="image">
+                                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(90); ?>" width="90" height="90" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                            </div>
+                            <div class="product-item">
+                                <h3 class="product-name"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h3>
+                                <?php if(isset($childProductId) && $childProductId) : ?>
+                                    <div class="product-options"><span class="label"><?php echo $this->__('Colour')?>:</span><span class="value"><?php echo $childProduct->getAttributeText('color'); ?></span></div>
+                                <?php endif;?>
+                                <div class="pro_quantity"><span><?php echo $qty_added ?> x </span>
+                                <?php if($this->getRequest()->getParam('giftcard') > 0):
+                                        echo $this->helper('checkout')->formatPrice($this->getRequest()->getParam('giftcard')); ?>
+                                <?php elseif($this->getRequest()->getParam('giftcard_amount') > 0): ?>
+                                    <?php echo $this->helper('checkout')->formatPrice($this->getRequest()->getParam('giftcard_amount')); ?>
+                                <?php endif;?>
+                                <?php echo $this->helper('checkout')->formatPrice($this->getRequest()->getParam('price')); ?>
+                                </div>
+                                <?php if($this->getRequest()->getParam('options') != "" ): ?>(<?php echo $this->getRequest()->getParam('options') ?>)<?php endif;?>
+                            </div>
+                            <div class="clear"></div>
+                        </li>
+                    </ol>
+                </div>
+                <?php echo $this->getChildHtml('upsell_products') ?>
+                <input type="hidden" name="popup_url" class="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+
+                <div class="buttons-set button-bottom">
+                    <div class="buttons-set-top">
+                    <a href="<?php echo $this->getUrl() ?>" title="Continue Shopping"><?php echo $this->__('Continue Shopping'); ?></a>
+                    <?php echo $this->__('Or');?>
+                    <button onclick="setLocation('<?php echo $this->getUrl('checkout/cart');?>')" class="button btn-subscriber" title="Proceed to Checkout" type="button"><span><span><?php echo $this->__('Checkout'); ?></span></span></button>
+                    </div>
+                </div>
+                <!--EO:: Display success popup after item added to the cart -->
+                <div class="add-to-box" id="add-to-upsell" style="display:none;"></div>
+                <div id="loading-mask-cart-upsell" style="display: none;">
+                  <div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/><br />
+                    <?php echo $this->__('Please wait...') ?></div>
+                  <div id="loading-mask"></div>
+                </div>
+                <input type="hidden" value="upsell" id="CALLBACK_FOR">
+                <script type="text/javascript">
+                    jQuery(document).ready(function(){
+                        googleAnalyticsUniversal.updatePromotions();
+                        googleAnalyticsUniversal.updateImpressions();
+                        googleAnalyticsUniversalCart.parseAddToCartCookies();
+                        googleAnalyticsUniversalCart.parseRemoveFromCartCookies();
+                        googleAnalyticsUniversalCart.subscribeProductsUpdateInCart();
+                        googleAnalyticsUniversalCart.listenMinicartReload();
+                        dataLayer.push({'ecommerce':{'impressions':0,'promoView':0}});
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

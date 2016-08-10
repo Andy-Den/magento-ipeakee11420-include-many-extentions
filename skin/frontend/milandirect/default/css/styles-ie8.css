@@ -1,0 +1,35 @@
+
+/* Hover Fix 
+iframe.hover-fix { position:absolute; left:-1px; top:-1px; z-index:-1; background:transparent; filter:progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0); }
+
+.security-info{ margin-bottom:5px}
+.security-info li img{ margin:20px 0 0 15px}
+
+/* footer IE 7 property {Temprory}
+========================
+
+.footer, .spcl-product-links { float:left; width:920px;}
+address.copyright { float:left; width:980px;}
+.category-products { margin-left:0;}
+.security-info { clear:both;}
+
+
+.topCurv_lft{ background-position:0 0;}
+.topCurv_rht{background-position:100% 0}
+
+#search_mini_form .form-search{ top:65px}
+.price-box-section .pinkboxCurvs_midBg  {line-height:100px}
+
+
+
+
+.top-cart .block-title.expanded strong { left:-4px; position:relative;}
+
+#anav li.over.nav-office-furniture-html ul{left:-146px!important}
+.btn-apply { margin-right:3px;}
+.empty-cart .block-content {width:206px;}
+.top-cart .block-title strong { padding-bottom:3px;}
+.empty-cart .tool-tips{left:-15px !important;}  */
+/* .empty-cart .tool-tips{left:-19px !important;} 
+.slide-wrap ol li.prev { background-position:0 0; left:-475px; }*/
+

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_ProductQuestions>
+            <version>1.0.0</version>
+        </Milandirect_ProductQuestions>
+    </modules>
+    <frontend>
+        <routers>
+            <innobyte_product_questions>
+                <args>
+                    <modules>
+                        <milandirect_productQuestions before="Innobyte_ProductQuestions">Milandirect_ProductQuestions</milandirect_productQuestions>
+                    </modules>
+                </args>
+            </innobyte_product_questions>
+        </routers>
+    </frontend>
+</config>

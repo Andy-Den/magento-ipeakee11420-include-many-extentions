@@ -1,0 +1,42 @@
+<?php $_product = $this->getProduct(); ?>
+<form id="product-shipping-estimate" enctype="multipart/form-data" method="post" action="<?php echo Mage::getBaseUrl().'shippingest/index'?>">
+    <input type="hidden" name="product_id" value="<?php echo $_product->getId()?>">
+    <div class="product-estimate">
+        <span class="title"><?php echo $this->__('Enter your postcode to estimate delivery')?></span>
+        <div class="fieldset content">
+            <div class="field postcode">
+                <input type="text" maxlength="4" id="post_code_est" class="input-text required-entry validate-number validate-length maximum-length-4" name="postcode" placeholder="<?php echo $this->__('Postcode')?>">
+                <button class="button btn-calculate"><span><span><?php echo $this->__('Calculate')?></span></span></button>
+            </div>
+            <div class="field response">
+                <div class="estimate-response"></div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    var productEstimate = new VarienForm('product-shipping-estimate');
+    jQuery( "#product-shipping-estimate" ).on( "submit", function( event ) {
+        event.preventDefault();
+        if(productAddToCartForm.validator.validate()){
+            if(productEstimate.validator.validate()){
+                if (typeof(spConfig)!='undefined') {
+                    var childProduct = spConfig.getMatchingSimpleProduct();
+                    if (childProduct != 'undefined') {
+                        jQuery("#product-shipping-estimate input[name=product_id]").val(childProduct);
+                    }
+                }
+                jQuery('div#loading-mask-cart').show();
+                new Ajax.Request(productEstimate.form.action, {
+                    method: 'post',
+                    parameters: {data:jQuery(this).serialize(),product:jQuery('#product_addtocart_form').serialize()},
+                    onSuccess: function(transport){
+                        var htmls = transport.responseText.evalJSON();
+                        jQuery('.product-estimate .estimate-response').html(htmls['estimate']);
+                        jQuery('div#loading-mask-cart').hide();
+                    }
+                });
+            }
+        }
+    });
+</script>

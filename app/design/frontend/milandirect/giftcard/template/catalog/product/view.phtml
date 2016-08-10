@@ -1,0 +1,213 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div class="Prd-Detl-top">
+    <div class="gry_top_bordCurvs_lft">
+        <div class="gry_top_bordCurvs_rht">
+            <div class="gry_top_bordCurvs_bg"></div>
+        </div>
+     </div>
+    <div class="gry_bordCurvs_midBg">
+    <div id="breadcrumb" class="breadcrumbs"><?php echo $this->getLayout()->getBlock('breadcrumbs')->toHtml()?> </div>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="product-view">
+    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form_1" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <?php echo $this->getBlockHtml('formkey') ?>
+       <?php $price = number_format($_product->getPrice(),2)?>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+             <input type="hidden" name="actual_price" id="actual_price" value="<?php $price; ?>" />
+        </div>
+        <div class="product-essential">
+                <div class="product-shop">
+                    <div class="product-main-info">
+                    <?php echo $this->getChildHtml('product_type_data') ?>
+                <div class="cart-section">
+                    </div>
+                    <div class="clear"></div>
+                     <p class="product-ids"><?php echo $this->__('SKU# %s', $this->htmlEscape($_product->getSku())); ?></p>
+                     <?php //echo $this->getReviewsSummaryHtml($_product, false, true)?>
+                     <?php echo $this->getChildHtml('alert_urls') ?>
+                </div>
+
+                    <?php echo $this->getChildHtml('tierprices') ?>
+                    <?php echo $this->getChildHtml('extrahint') ?>
+                 <?php if($_product->isSaleable()):?>
+				 	<div class="upsel-p">
+                    <label for="qty"><?php echo $this->__('Qty:') ?></label>
+                    <?php if(!$_product->isGrouped()): ?>
+                   		<input type="text" id="qty"  class="input-text qty validation-passed"  title="<?php echo $this->__('Qty') ?>" value="<?php echo $this->getProductDefaultQty() * 1 ?>" maxlength="12" name="qty">
+                   		<div class="inc-dec"><div class="inc" onclick="javascript:updateCartValue('qty',1);">+</div>
+                   		<div class="dec" onclick="javascript:updateCartValue('qty',-1);">-</div></div>
+                    <?php endif; ?>
+                    <button type="button" title="<?php echo $buttonTitle ?>" class="btn-addtocart"
+        			onclick="<?php if ($_product->getTypeId() == 'giftcard'): ?>productAddToCartForm1.submit(event)<?php else: ?>productAddToCartForm1.submit(event)<?php endif; ?>"></button>
+                	</div>
+                <?php endif; ?>
+
+
+                    <?php if (!$this->hasOptions()):?>
+                        <div class="add-to-box" id="add-to">
+                            <?php if($_product->isSaleable()): ?>
+                                <?php //echo $this->getChildHtml('addtocart') ?>
+                            <?php endif; ?>
+                            <?php //echo $this->getChildHtml('addto') ?>
+                        </div>
+                    <?php else:?>
+                        <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container1') ):?>
+                            <div class="options-container-small">
+                                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                            </div>
+                        <?php else: ?>
+                            <?php //echo $this->getChildHtml('addto') ?>
+                        <?php endif;?>
+                    <?php endif; ?>
+
+                    <?php echo $this->getChildHtml('other');?>
+                    <?php $stockStatus = '';//Mage::helper('amstockstatus')->show($_product); ?>
+                    <?php
+                        if(!stripos($stockStatus, 'pre order'))
+                            echo $stockStatus;
+                        else
+                            echo str_replace('pre order :','',$stockStatus);
+                    ?>
+                    <div class="clearer"></div>
+                <div class="gallary-images"><?php echo $this->getChildHtml('gallery') ?></div>
+               </div>
+                <!--EO:: Display success popup after item added to the cart -->
+                <div id="loading-mask-cart" style="display: none;">
+                    <div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/><br />
+                        <?php echo $this->__('Please wait...') ?></div>
+                    <div id="loading-mask"></div>
+                </div>
+                <div class="product-img-box">
+                	<div class="product-name">
+                    	<h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                        <p class="sub-text-viewproduct"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></p>
+                    </div>
+                    <?php echo $this->getChildHtml('media') ?>
+                </div>
+        </div>
+        <div class="clearer"></div>
+        <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container2') ):?>
+                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+        <?php endif;?>
+    </form>
+    <input type="hidden" name="popup_url" id="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+</div>
+<div class="clear"></div>
+</div>
+        <div class="gry_bot_bordCurvs_lft">
+          <div class="gry_bot_bordCurvs_rht">
+            <div class="gry_bot_bordCurvs_bg"></div>
+          </div>
+         </div>
+     </div>
+        <div class="clear"></div>
+        <div class="middle-container" style="margin-bottom:0;">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('share-and-connect')->toHtml(); ?>
+        </div>
+     <div class="product-collateral">
+     <div class="product-panelholder">
+     <dl class="product-panel">
+            <dt id="reviews" class="active" onClick="showhide('reviews');">
+               <div class="panel_head"><h2><?php echo $this->__('Customer Reviews'); ?></h2></div>
+            </dt>
+            <dd id="reviews_content">
+              <?php echo $this->getChildHtml('product_review') ?>
+            </dd>
+          </dl>
+    </div>
+    <div class="product-panelholder">
+        <dl class="product-panel">
+            <dt id="overview" class="active" onClick="showhide('overview');">
+                <div class="panel_head">
+                    <h2><?php echo $this->__('Overview & Specifications'); ?></h2>
+                </div>
+            </dt>
+            <dd id="overview_content" class="overview-content-text">
+                <?php if ($_product->getOverviewSpecifications()):?>
+                    <div class="key-features"><?php echo $_product->getOverviewSpecifications(); ?></div>
+                <?php endif;?>
+            </dd>
+        </dl>
+    </div>
+    <div class="product-panelholder last">
+        <dl class="product-panel">
+            <dt id="postage" class="" onClick="showhide('postage');">
+                 <div class="panel_head"><h2><?php echo $this->__('Postage & Warranty'); ?></h2></div>
+             </dt>
+            <?php if($_product->getPostageWarranty()):?>
+                <dd  id="postage_content" style="display:none"><p><?php echo $_product->getPostageWarranty(); ?></p></dd>
+            <?php else :?>
+                <dd  id="postage_content" style="display:none"><p><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('postage-warranty')->toHtml() ?> </p></dd>
+            <?php endif;?>
+           </dl>
+         </div>
+         </div>
+          <div class="clear"></div>
+        <?php echo $this->getChildHtml('newsletter_subscribe') ?>
+         <div class="clear"></div>
+        <?php echo $this->getChildHtml('relatedProducts') ?>
+<script type="text/javascript">
+//<![CDATA[
+    var productAddToCartForm1 = new VarienForm('product_addtocart_form_1');
+    var addToCart = new Addtocart('product_addtocart_form_1', '<?php echo $this->getAddToCartUrl($_product) ?>');
+    productAddToCartForm1.submit = function(event) {
+        element = Event.element(event);
+        addToCart.getPostUrl = this.form.action;
+        if (this.validator.validate()) {
+            $('product_addtocart_form_1').qty.value = Math.round($('product_addtocart_form_1').qty.value);
+            if($('product_addtocart_form_1').product.value == ''){
+                alert('Please select the product.');
+                return false;
+            }
+            addToCart.getAddtocart();
+        }
+    }.bind(productAddToCartForm1);
+
+//]]>
+</script>
+<script type="text/javascript">
+function getTooltipPopup()
+{
+
+    myLightWindow.activateWindow({href:'<?php echo $this->getUrl('emailcatalog')?>'});
+}
+</script>

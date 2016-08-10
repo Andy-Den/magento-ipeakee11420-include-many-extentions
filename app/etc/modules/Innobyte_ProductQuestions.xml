@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Innobyte_ProductQuestions>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends><Innobyte_Core/></depends>
+        </Innobyte_ProductQuestions>
+    </modules>
+</config> 

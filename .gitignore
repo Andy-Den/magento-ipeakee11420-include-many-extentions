@@ -1,0 +1,42 @@
+# magento db config #
+####################
+app/etc/local.xml
+skin/frontend/milandirectupdate/default/scss/.sass-cache/*
+skin/frontend/milandirectupdate/default/css/*.map
+#netbean file
+nbproject/private/private.xml
+nbproject/
+# magento folder #
+#####################
+media/*
+var/*
+!var/.htaccess
+!var/backup/*
+feeds/*.xml
+getprice-feeds/*.xml
+getshopping-feeds/*.xml
+shopbot-feeds/*.xml
+sitemaps/*.xml
+skin/frontend/ultimo
+
+# wordpress #
+#############
+#blog/wp-content/uploads/*
+#blog/wp-config.php
+
+# OS generated files #
+######################
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# eclipse file #
+##############
+.buildpath
+.project
+.settings/*
+
+# phpstorm #
+############
+.idea/*

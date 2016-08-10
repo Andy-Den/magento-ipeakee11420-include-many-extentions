@@ -1,0 +1,47 @@
+<?php
+    $store = Mage::app()->getStore();
+    $products = $this->getProducts($store);
+    $columnNumber = $this->getColumnNumber();
+    $colunnSize = $this->getColumnSize();
+    if(count($products) < $columnNumber){
+        $columnNumber = count($products);
+    }elseif($columnNumber>12){
+        $columnNumber = 12;
+    }
+    $col_index = floor(12/$columnNumber);
+    switch ($columnNumber) {
+        case 5:$col_index = 24;
+                break;
+        case 7:$col_index = 14;
+                break;  
+        case 8:$col_index = 125;
+                break;
+        case 9:$col_index = 111;
+            break; 
+        case 10:$col_index = 100;
+            break; 
+        case 11:$col_index = 909;
+                break; 
+        default:
+            break;
+    }
+?>
+<?php if(count($products)):?>
+<div class="row ms-productgrid">
+    <?php if($this->getItem()->getProductsBoxTitle()): ?><strong class="ms-boxtitle form-group col-xs-12"><?php echo $this->getItem()->getProductsBoxTitle(); ?></strong><?php endif; ?>
+    <?php $i=1; foreach($products as $product):?>
+    <div class="item col-sm-<?php echo $col_index ?> col-xs-<?php if($columnNumber != 1){ if($col_index>4) echo '6';else echo '4';}else{echo '12';}?> col-tn-<?php if($columnNumber != 1) echo '6';else echo '12';?>">  
+        <a class="product-image form-group" href="<?php echo $product->getProductUrl()?>">
+            <img title="<?php echo Mage::helper('megamenu')->htmlEscape($product->getName());?>" src="<?php echo $this->getImagePath($product, $colunnSize);?>" width="100%"/>
+        </a>
+         <a class="product-name form-group" href="<?php echo $product->getProductUrl()?>"><strong><?php echo $product->getName()?></strong></a>
+        <div class="form-group">								
+            <?php echo Mage::getBlockSingleton('catalog/product_price')->getPriceHtml($product, true)?> 
+        </div>
+    </div>
+    <?php if($i%2==0): ?><div class="hidden-lg hidden-md hidden-sm hidden-xs col-tn-12"></div><?php endif;?>
+     <?php if(($i%2==0&&$col_index>4)||($i%3==0&&$col_index<=4)): ?><div class="hidden-lg hidden-md hidden-sm col-xs-12 hidden-tn"></div><?php endif;?>
+    <?php if($i%$columnNumber==0): ?><div class="col-sm-12 form-group hidden-xs hidden-tn"></div><?php endif; ?>
+    <?php $i++; endforeach;?>   
+</div>
+<?php endif;?>

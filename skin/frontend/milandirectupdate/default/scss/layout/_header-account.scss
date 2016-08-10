@@ -1,0 +1,182 @@
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/* ============================================ *
+ * Header - Account
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Skip Link - Account
+ */
+
+// ---------------------------------------------
+
+@include bp(min-width, 980px) {
+
+    .skip-account {
+        position: absolute;
+        top: 30px;
+        right: 131px;
+        width: auto;
+        padding: 0 10px;
+        &.skip-active:before {
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 20px;
+            position: absolute;
+            content: "";
+            margin: -10px 5px;
+        }
+    }
+
+    #header-account.skip-active {
+        @include menu;
+        @include arrow-indicator($location: 'top', $position: 59px);
+        background: #FBFBFB;
+        display: block;
+        position: absolute;
+        z-index: 9999;
+        top: 110px;
+        right: 115px;
+        min-width: 143px;
+        border-radius: 3px;
+        padding: 15px 18px 14px;
+        a{
+            color: #000000;
+            margin-bottom: 7px;
+        }
+    }
+
+
+}
+
+/* -------------------------------------------- *
+ * Account Links
+ */
+
+#header-account {
+    padding: 5px 0;
+}
+.skip-account{
+    color: #0e83c0;
+    .fa{
+        line-height: 1.5em;
+        font-size: 32px;
+    }
+    span.label{
+        float: left;
+        width: 100%;
+        line-height: 1.5em;
+        font-size: 18px;
+        margin-top: -9px;
+        margin-left: 1px;
+    }
+}
+.skip-content#header-account{
+    ul{
+        li{
+            margin-bottom: 6px;
+            a{
+                letter-spacing: -0.25px;
+                font-family: $f-stack-regular;
+                &:hover{
+                    color: #0e83c0;
+                    text-decoration: underline;
+                }
+            }
+            &:last-child{
+                margin-bottom: 2px;
+            }
+        }
+    }
+}
+/* Custom css Header account On Tablet and mobile */
+@include bp(max-width, $bp-large) {
+    .skip-links {
+        .skip-link.skip-account{
+            .fa {
+                line-height: 1em;
+                font-size: 26px;
+                margin-top: 11px;
+                margin-left: 12px;
+            }
+            span.label{
+                float: none;
+                display: inline-block;
+                width: auto;
+                margin: 0 0 0 3px;
+                font-size: 17px;
+                padding-left: 4px;
+                line-height: 1.3em;
+                letter-spacing: -0.25px;
+            }
+        }
+    }
+    .skip-content.skip-active#header-account{
+        @include arrow-indicator($location: 'top', $position: 59%);
+        margin-top: 9px;
+        padding-left: 2px;
+        padding-top: 12px;
+        font-size: 16px;
+        padding-bottom: 15px;
+        border-left: none;
+        border-right: none;
+        position: absolute;
+        top: 100%;
+        z-index: 9999;
+        background: #ffffff;
+        width: 100%;
+        li{
+            a{
+                text-transform: none;
+                color: #000000;
+                border: none;
+                width: 100%;
+                display: block;
+                font-family: $f-stack-special;
+            }
+            &:nth-child(2){
+                display: none;
+            }
+            &:last-child{
+                display: block;
+            }
+        }
+    }
+}
+@include bp(max-width, $bp-small) {
+    .skip-links {
+        .skip-link.skip-account{
+            .fa {
+                font-size: 24px;
+                margin-left: -3px;
+            }
+            span.label{
+                display: none;
+            }
+        }
+    }
+}

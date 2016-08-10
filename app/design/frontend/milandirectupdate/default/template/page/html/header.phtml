@@ -1,0 +1,124 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<div class="header-language-background">
+    <div class="header-language-container">
+        <!-- Account -->
+        <?php echo $this->getChildHtml('links_language')?>
+        <div class="switches"><?php echo $this->getChildHtml('switches') ?></div>
+        <div class="links">
+            <a href="#subscribeToNewsletterFormFooter" class="links-header"><?php echo $this->__('Subscribe')?></a>
+            <a href="<?php echo $this->getUrl('blog') ?>" target="_blank" class="links-header"><?php echo $this->__('Blog')?></a>
+            <a href="http://helpcentre.milandirect.com.au" target="_blank" class="links-header"><?php echo $this->__('Help Centre')?></a>
+        </div>
+        <p class="welcome-msg"><?php echo Mage::getStoreConfig('design/header/welcome') ?></p>
+    </div>
+</div>
+<header id="header" class="page-header">
+    <div class="page-header-container">
+        <a href="<?php echo $this->getUrl('') ?>" class="button btn-stand btn-continuecheckout"><?php echo $this->__('Continue Shopping')?></a>
+        <?php if($this->getIsHomePage()) : ?>
+            <h1 class="logo">
+                <a class="logo" href="<?php echo $this->getUrl('') ?>">
+                    <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
+                    <img src="<?php echo $this->getLogoSrcSmall() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="small" />
+                </a>
+            </h1>
+        <?php else : ?>
+            <a class="logo" href="<?php echo $this->getUrl('') ?>">
+                <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
+                <img src="<?php echo $this->getLogoSrcSmall() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="small" />
+            </a>
+        <?php endif;?>
+
+        <?php // In order for the language switcher to display next to logo on smaller viewports, it will be moved here.
+        // See app.js for details ?>
+
+        <!-- Skip Links -->
+
+        <div class="skip-links">
+            <?php echo $this->getChildHtml('help-center')?>
+            <a href="#header-nav" class="skip-link skip-nav">
+                <span class="icon"></span>
+                <span class="label"><?php echo $this->__('Menu'); ?></span>
+            </a>
+
+            <a href="#header-search" class="skip-link skip-search">
+                <span class="icon"></span>
+                <span class="label"><?php echo $this->__('Search'); ?></span>
+            </a>
+            <!-- Account -->
+            <div class="header-account-link" id="header-account-link">
+                <a href="#header-account" class="skip-link skip-account">
+                    <span class="fa fa-user"></span>
+                    <span class="label"><?php echo $this->__('Account'); ?></span>
+                </a>
+                <div id="header-account" class="skip-content">
+                    <?php echo $this->getChildHtml('topLinks') ?>
+                </div>
+            </div>
+
+            <!-- Cart -->
+
+            <div class="header-minicart" id="top-cart">
+                <?php echo $this->getChildHtml('minicart_head'); ?>
+            </div>
+
+
+        </div>
+
+        <!-- Search -->
+
+        <div id="header-search" class="skip-content">
+            <?php echo $this->getChildHtml('topSearch') ?>
+        </div>
+
+
+        <!-- Navigation -->
+
+        <div id="header-nav" class="skip-content">
+            <?php echo $this->getChildHtml('topMenu') ?>
+        </div>
+        <!-- Cart -->
+
+        <!-- <div id="header-cart" class="skip-content">
+            <div class="mini-cart">
+                <div class="menu-wrapper">
+                    <div class="menu cart-menu">
+                        <div class="empty">Your cart is empty.</div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="features">
+            <?php echo $this->getChildHtml('offers_default')?>
+        </div>
+    </div>
+</header>
+<?php echo $this->getChildHtml('topContainer'); ?>

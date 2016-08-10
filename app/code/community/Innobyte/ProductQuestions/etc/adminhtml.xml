@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <Innobyte_ProductQuestions translate="title">
+                                        <title>Product Questions</title>
+                                        <sort_order>1</sort_order>
+                                    </Innobyte_ProductQuestions>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

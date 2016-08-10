@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Shippingest>
+            <version>0.0.1</version>
+        </Balance_Shippingest>
+    </modules>
+    <frontend>
+        <routers>
+            <shippingest>
+                <use>standard</use>
+                <args>
+                    <module>Balance_Shippingest</module>
+                    <frontName>shippingest</frontName>
+                </args>
+            </shippingest>
+        </routers>
+        <layout>
+            <updates>
+                <shippingest>
+                    <file>shippingest.xml</file>
+                </shippingest>
+            </updates>
+        </layout>
+    </frontend>
+    <global>
+        <blocks>
+            <balance_shippingest>
+                <class>Balance_Shippingest_Block</class>
+            </balance_shippingest>
+        </blocks>
+    </global>
+</config>

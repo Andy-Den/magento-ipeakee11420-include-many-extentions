@@ -1,0 +1,138 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php $_columnCount = 4;?>
+<?php if($this->getItems()->getSize()): ?>
+<?php $_productCount = count($this->getItems()); ?>
+<div class="box2Titles">
+<h5><?php echo $this->__('Related <br>Furniture') ?></h5>
+</div>
+<div class="category-products">
+        <?php $i=0; foreach($this->getItems() as $_item): ?>
+        <?php if ($i++%$_columnCount==0): ?>
+                <ul class="products-grid">
+        <?php endif ?>
+            <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+                   <div class="onsale-category-container-grid">
+                    <?php echo Mage::helper('onsale')->getCategoryLabelHtml($_item); ?>
+                    <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_item, 'small_image'), null, true) ?>" class="product-image">
+                        <img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($_item, 'small_image'), null, true) ?>" />
+                    </a>
+                </div>
+                 <div class="name-desc-container">
+                     <h5 class="product-name">
+                         <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->stripTags($_item->getName(), null, true) ?>">
+                         <?php if(strlen($_item->getName()) > 57):?>
+                         <?php $_name = $_item->getName(); ?>
+                    	 <?php $_name = wordwrap($_name, 57);
+                          	$_name = explode("\n", $_name);
+                          	$_name = $_name[0];
+                          	echo $_name;
+                      	 ?>
+                         <?php else :?><?php echo  $_item->getName(); ?><?php endif;?></a>
+                     </h5>
+                     <?php if (strlen($_item->getShortDescription())>100) :?>
+                     	<?php $_description = $_item->getShortDescription();?>
+                            <?php $word_limit = 15;
+                                  $words = explode(' ', $_description);
+                                  $_shortDescription = implode(' ', array_slice($words, 0, $word_limit));
+                            ?>
+                             <p><?php echo $_shortDescription.' ...';?></p>
+                     <?php else : ?>
+                         <p><?php echo $_item->getShortDescription() ?></p>
+                     <?php endif;?>
+                 </div>
+                <?php echo $this->getPriceHtml($_item, true) ?>
+                <div class="actions">
+                    <?php if($_item->isSaleable()): ?>
+                        <button onclick="setLocation('<?php echo $_item->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+                    <?php endif; ?>
+                    <?php
+                       $stockStatus = Mage::helper('amstockstatus')->show($_item);
+                    ?>
+                    <?php if ($_item->getIsSalable()): ?>
+
+                    <?php else:
+                       if(!stripos($stockStatus, 'pre order')) :
+                    ?>
+                        <button onclick="setLocation('<?php echo $_item->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+                    <?php else: ?>
+                        <button onclick="setLocation('<?php echo $_item->getProductUrl() ?>')" title="<?php echo $this->__('Pre-Order Now') ?>" class="btn-pre-ordernow"></button>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php
+                    if(!stripos($stockStatus, 'pre order'))
+                        echo $stockStatus;
+                    else
+                        echo str_replace('pre order :','',$stockStatus);
+                ?>
+                </div>
+            </li>
+        <?php if ($i%$_columnCount==0 || $i==$_productCount): ?>
+            </ul>
+        <?php endif ?>
+        <?php if($i == $_productCount) break; ?>
+        <?php endforeach ?>
+        <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+        <script type="text/javascript">decorateList('block-related', 'none-recursive')</script>
+    <script type="text/javascript">
+    //<![CDATA[
+    $$('.related-checkbox').each(function(elem){
+        Event.observe(elem, 'click', addRelatedToProduct)
+    });
+
+    var relatedProductsCheckFlag = false;
+    function selectAllRelated(txt){
+        if (relatedProductsCheckFlag == false) {
+            $$('.related-checkbox').each(function(elem){
+                elem.checked = true;
+            });
+            relatedProductsCheckFlag = true;
+            txt.innerHTML="<?php echo $this->__('unselect all') ?>";
+        } else {
+            $$('.related-checkbox').each(function(elem){
+                elem.checked = false;
+            });
+            relatedProductsCheckFlag = false;
+            txt.innerHTML="<?php echo $this->__('select all') ?>";
+        }
+        addRelatedToProduct();
+    }
+
+    function addRelatedToProduct(){
+        var checkboxes = $$('.related-checkbox');
+        var values = [];
+        for(var i=0;i<checkboxes.length;i++){
+            if(checkboxes[i].checked) values.push(checkboxes[i].value);
+        }
+        if($('related-products-field')){
+            $('related-products-field').value = values.join(',');
+        }
+    }
+    //]]>
+    </script>
+</div>
+<?php endif ?>

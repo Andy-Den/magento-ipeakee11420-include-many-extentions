@@ -1,0 +1,34 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+?>
+<?php $_filters = $this->getActiveFilters() ?>
+<?php $_removeTxt = Mage::helper('catalog')->__('Remove This Item') ?>
+<?php if (!empty($_filters)): ?>
+    <div class="currently">
+        <p class="block-subtitle"><?php echo Mage::helper('catalog')->__('Shopping by:') ?></p>
+        <ol>
+            <?php foreach ($_filters as $_filter):?>
+                <li>
+                    <span class="label"><?php echo Mage::helper('catalog')->__($_filter->getName()) ?>:</span>
+                    <?php if ($_filter->hasData('children')): ?>
+                        <?php foreach ($_filter->getData('children') as $child): ?>
+                            <div class="multiselect-child">
+                                <a href="<?php echo $child['url'] ?>" class="btn-remove btn-amasty-remove-filter"><?php echo $_removeTxt ?></a>
+                                <?php echo $child['label']  ?>
+                            </div>
+                        <?php endforeach ?>
+                    <?php else: ?>
+                        <div class="singleselect-child">
+                            <a href="<?php echo $_filter->getRemoveUrl() ?>" class="btn-remove btn-amasty-remove-filter" title="<?php echo $_removeTxt ?>"><?php echo $_removeTxt ?></a>
+                            <?php echo $_filter->getLabel() ?>
+                        </div>
+                    <?php endif ?>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+<?php endif; ?>

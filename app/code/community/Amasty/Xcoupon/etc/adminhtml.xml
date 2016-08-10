@@ -1,0 +1,42 @@
+<?xml version="1.0"?> 
+<config>
+    	<menu>
+		    <promo>
+                <children>
+                    <amxcoupon translate="title" module="amxcoupon">
+                        <title>Coupons Usage Report</title>
+                        <action>adminhtml/amxcoupon_report</action>
+                        <sort_order>300</sort_order>
+                    </amxcoupon>
+                </children>
+            </promo>
+		</menu>     
+   
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+            		    <promo>
+                            <children>
+                                <amxcoupon translate="title" module="amxcoupon">
+                                    <title>Coupons Usage Report</title>
+                                </amxcoupon>
+                            </children>
+                        </promo>
+                     </children>
+                </admin> 
+			</resources>
+		</acl>
+        <translate>
+            <modules>
+                <Amasty_Xcoupon>
+                    <files>
+                        <default>Amasty_Xcoupon.csv</default>
+                    </files>
+                </Amasty_Xcoupon>
+            </modules>
+        </translate>
+</config> 

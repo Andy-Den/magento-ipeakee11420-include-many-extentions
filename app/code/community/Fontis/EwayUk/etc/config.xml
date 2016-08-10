@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Fontis eWAY UK payment gateway
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so you can be sent a copy immediately.
+ *
+ * @category   Fontis
+ * @package    Fontis_EwayUk
+ * @copyright  Copyright (c) 2010 Fontis (http://www.fontis.com.au)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Fontis_EwayUk>
+            <version>1.0.1</version>
+        </Fontis_EwayUk>
+    </modules>
+    <global>
+        <models>
+            <ewayuk>
+                <class>Fontis_EwayUk_Model</class>
+            </ewayuk>
+        </models>
+        <blocks>
+            <ewayuk>
+                <class>Fontis_EwayUk_Block</class>
+            </ewayuk>
+        </blocks>
+        <helpers>
+            <ewayuk>
+                <class>Fontis_EwayUk_Helper</class>
+            </ewayuk>
+        </helpers>
+        <payment>
+            <cc>
+                <types>
+                    <JCB>
+                        <code>JCB</code>
+                        <name>JCB</name>
+                        <order>50</order>
+                    </JCB>
+                    <DICL>
+                        <code>DICL</code>
+                        <name>Diners Club</name>
+                        <order>60</order>
+                    </DICL>
+                </types>
+            </cc>
+        </payment>
+    </global>
+    <frontend>
+        <secure_url>
+            <ewayuk>/ewayuk/shared</ewayuk>
+        </secure_url>
+        <routers>
+            <ewayuk>
+                <use>standard</use>
+                <args>
+                    <module>Fontis_EwayUk</module>
+                    <frontName>ewayuk</frontName>
+                </args>
+            </ewayuk>
+        </routers>
+        <translate>
+            <modules>
+                <Fontis_EwayUk>
+                    <files>
+                        <default>Fontis_EwayUk.csv</default>
+                    </files>
+                </Fontis_EwayUk>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <ewayuk>
+                    <file>fontis_ewayuk.xml</file>
+                </ewayuk>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Fontis_EwayUk>
+                    <files>
+                        <default>Fontis_EwayUk.csv</default>
+                    </files>
+                </Fontis_EwayUk>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <payment>
+            <ewayuk>
+                <active>0</active>
+                <customer_id backend_model="adminhtml/system_config_backend_encrypted"/>
+                <username backend_model="adminhtml/system_config_backend_encrypted"/>
+                <currency>GBP</currency>
+                <model>ewayuk/shared</model>
+                <title>Credit Card</title>
+                <order_status>processing</order_status>
+                <allowspecific>0</allowspecific>
+            </ewayuk>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,128 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * @see Mage_Checkout_Block_Cart_Shipping
+ */
+?>
+<?php  /* REF:MID-285*/
+$free_delivery = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getFreeMethodWeight();
+if ($free_delivery > 0) {
+?>
+<div class="wrapper-shipping clearfix">
+    <div class="shipping">
+    <h2 class="left"><?php echo $this->__('Delivery Estimate') ?></h2>
+        <form action="<?php echo $this->getUrl('checkout/cart/estimatePost') ?>" method="post" id="shipping-zip-form">
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <fieldset>
+                <?php $storeCode = Mage::app()->getStore()->getCode(); ?>
+                <ul class="form-list">
+                    <li <?php if($storeCode != 'united_kingdom'): ?>class="no-display" <?php endif; ?>>
+                        <label for="country"><?php echo $this->__('Country') ?></label>
+                        <?php
+                        $countryAlloweds = Mage::getResourceModel('directory/country_collection')
+                            ->loadByStore()->loadData()
+                            ->toOptionArray(true);
+                        $estCountry = $this->getEstimateCountryId();
+                        $valid = false;
+                        foreach ($countryAlloweds as $country) {
+                            if ($estCountry == $country['value']) {
+                                $valid = true;
+                                break;
+                            }
+                        }
+                        if ($valid == false) {
+                            $estCountry = Mage::getStoreConfig('general/country/default');
+                        }
+                        ?>
+                        <?php echo Mage::getBlockSingleton('directory/data')->getCountryHtmlSelect($estCountry) ?>
+                    </li>
+                    <li>
+                        <?php
+                        $protection = $this->getRequest()->getParam('protection');
+                        $errPostCode = $this->getRequest()->getParam('postcode');
+                        $shippingAmount = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getShippingAmount();
+                        if (($this->getEstimatePostcode() != '' && $this->getEstimatePostcode() !=null) && !($shippingAmount >0)) {
+                            if (Mage::getSingleton('checkout/session')->getQuote()
+                                    ->getShippingAddress()->getShippingDescription() != 'Free Shipping') {
+                                $errPostCode = 1;
+                            }
+                        }
+                        ?>
+                        <div class="input-box">
+                            <input type="hidden" class="radio" id="s_method_tablerate_bestway" value="tablerate_bestway" name="estimate_method" placeholder="<?php echo $this->__('Enter your postcode')?>">
+                            <input class="input-text validate-postcode<?php if ($this->isZipCodeRequired()): ?> required-entry<?php endif; ?> <?php if ($this->getEstimatePostcode()== '' && $protection == 1): ?> validation-failed<?php endif; ?>" placeholder="<?php echo $this->__('Enter your postcode')?>" type="text" id="postcode" name="estimate_postcode" value="<?php echo $this->htmlEscape($this->getEstimatePostcode()) ?>"/>
+                            <?php if($this->getEstimatePostcode() == '' && $protection == 1): ?>
+                                <div id="advice-required-entry-postcode" class="validation-advice"><?php echo $this->__('Please enter postcode and click Estimate.'); ?></div>
+                            <?php elseif($errPostCode == 1): ?>
+                                <div id="advice-required-entry-postcode" class="validation-advice"><?php echo $this->__('An invalid postcode has been entered, please try again.'); ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <button type="button" onclick="coShippingMethodForm.submit()" class="btn-calculate"> <span><span><?php echo $this->__('Get Estimate')?></span></span> </button>
+                    </li>
+                </ul>
+            </fieldset>
+            <?php if($this->htmlEscape($this->getEstimatePostcode())) : ?>
+                <div class="result-price-shipping"> <span class="price"></span> <?php echo $this->__('Estimated delivery to')?> <span class="post-code"><?php echo $this->htmlEscape($this->getEstimatePostcode()) ?></span> <span class="change-delivery" onclick="changePostcodeCart()"><?php echo $this->__('change')?></span>?</div>
+            <?php endif;?>
+        </form>
+        <script type="text/javascript">
+            //<![CDATA[
+            new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+            //]]>
+        </script>
+        <script type="text/javascript">
+            //<![CDATA[
+            var coShippingMethodForm = new VarienForm('shipping-zip-form');
+            var countriesWithOptionalZip = <?php echo $this->helper('directory')->getCountriesWithOptionalZip(true) ?>;
+
+            coShippingMethodForm.submit = function () {
+                var country = $F('country');
+                var optionalZip = false;
+
+                for (i = 0; i < countriesWithOptionalZip.length; i++) {
+                    if (countriesWithOptionalZip[i] == country) {
+                        optionalZip = true;
+                    }
+                }
+                if (optionalZip) {
+                    $('postcode').removeClassName('required-entry');
+                }
+                else {
+                    $('postcode').addClassName('required-entry');
+                }
+                return VarienForm.prototype.submit.bind(coShippingMethodForm)();
+            }
+            //]]>
+        </script>
+    </div>
+</div>
+<?php }?>
+<div id="bi-freight-protection-radio" class="freight-protection clearfix">
+    <h2 class="left"><?php echo $this->__('Freight Protection') ?></h2>
+    <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping_protection'); endif; ?>
+</div>

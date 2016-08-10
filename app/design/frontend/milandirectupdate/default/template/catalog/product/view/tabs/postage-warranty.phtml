@@ -1,0 +1,10 @@
+
+<?php $postage_warranty = $this->getProduct()->getData('postage_warranty'); ?>
+<?php if ($postage_warranty) : ?>
+    <div class="product-postage-warranty-tab">
+        <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $postage_warranty, 'postage_warranty') ?>
+    </div>
+<?php endif; ?>
+<div class="product-postage-warranty-tab">
+    <?php echo $this->getChildHtml('product_postage_warranty') ?>
+</div>

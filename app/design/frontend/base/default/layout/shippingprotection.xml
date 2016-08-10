@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <checkout_cart_index>
+        <reference name="checkout.cart.shipping">
+            <block type="shippingprotection/shippingprotection" name="checkout.onepage.shipping_protection" as="shipping_protection" template="shippingprotection/shippingprotection.phtml"/>
+        </reference>
+        <reference name="checkout.cart.totals">
+            <action method="setTemplate"><template>shippingprotection/checkout/cart/totals.phtml</template></action>
+        </reference>
+    </checkout_cart_index>
+</layout>

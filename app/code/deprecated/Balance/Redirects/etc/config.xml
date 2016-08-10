@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Redirects>
+            <version>0.1.0</version>
+        </Balance_Redirects>
+    </modules>
+    <frontend>
+        <routers>
+            <cms>
+                <args>
+                    <modules>
+                        <Balance_Redirects before="Mage_Cms">Balance_Redirects</Balance_Redirects>
+                    </modules>
+                </args>
+            </cms>
+        </routers>
+    </frontend>
+    <!--
+    <global>
+        <routers>
+            <cms>
+                <rewrite>
+                    <index>
+                        <to>Balance_Redirects/index</to>
+                        <override_actions>true</override_actions>
+                        <actions>
+                            <noroute>
+                                <to>Balance_Redirects/index/noroute</to>
+                            </noroute>
+                        </actions>
+                    </index>
+                </rewrite>
+            </cms>
+        </routers>
+    </global>
+    -->
+</config>

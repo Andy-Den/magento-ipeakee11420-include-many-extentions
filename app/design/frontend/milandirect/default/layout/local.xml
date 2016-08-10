@@ -1,0 +1,218 @@
+<layout version="0.1.0">
+<!--
+Default layout, loads most of the pages
+-->
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/explodedmenu.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/startup.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/layered_navigation_filter.js</name></action>
+            <action method="addCss"><stylesheet>css/explodedmenu.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/local.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/styles.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/widgets.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/fonts.css</stylesheet></action>
+            <action method="addItem"><type>skin_js</type><name>js/window.js</name></action>
+            <action method="addCss"><stylesheet>css/sidebar.css</stylesheet></action>
+            <action method="addItem"><type>skin_css</type><name>css/fancybox/jquery.fancybox.css</name></action>            
+            <action method="addItem"><type>skin_js</type><name>js/popup.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/ajax_pagination.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/scripts.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/jquery.tabSlideOut.v1.3.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/wide_screen_sidebar.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/review.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/email_popup.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/checkboxselect.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/easypaginate.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/jquery.cookie.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/jquery.fancybox.pack.js</name></action>
+        </reference>
+
+        <reference name="header">
+            <block type="checkout/cart_sidebar" name="cart_sidebar" as="topCart" template="checkout/cart/cartheader.phtml"  ajax="true"></block>
+            <block type="checkout/cart_sidebar" name="cart_widescreen_sidebar" as="sidebarCart" template="checkout/cart/cart-sidebar.phtml"></block>
+            <block type="core/text_list" name="top.switches" as="switches" translate="label">
+                <block type="page/switch" name="store_switcher" as="store_switcher" template="page/switch/stores.phtml" ajax="true"/>
+            </block>
+        </reference>
+
+        <reference name="right">
+            <remove name="catalog.compare.sidebar"></remove>
+            <remove name="right.poll"></remove>
+            <remove name="paypal.partner.right.logo"></remove>
+            <remove name="right.reports.product.viewed"/>
+        </reference>
+
+        <reference name="top.menu">
+            <remove name="catalog.topnav" />
+            <block type="explodedmenu/navigation" name="explodedmenu.topnav" template="explodedmenu/top.phtml"/>
+        </reference>
+        <reference name="footer">
+            <action method="setCacheLifetime"><s>0</s></action>
+            <remove name="footer.newsletter"></remove>
+            <remove name="footer_links"></remove>
+            <action method="unsetChild"><name>store_switcher</name></action>
+            <block type="orderpopup/view" template="orderpopup/order-popup.phtml" name="vieworder_popup" ajax="true"/>
+            <block type="catalog/navigation" after="footer" name="catalog.category" template="catalog/category/footer_list.phtml">
+                <action method="setColumnCount"><count>4</count></action>
+                <action method="setCategoryCount"><count>8</count></action>
+            </block>
+            <block type="page/html" name="footer-account-links" template="customer/account/footer.phtml" ajax="true" nodiv="1"/>
+            <block type="core/template" name="sidebar-cart" template="checkout/sidebar.phtml" nodiv="1" >
+                <action method="unsetData"><key>cache_lifetime</key></action>
+                <action method="unsetData"><key>cache_tags</key></action>
+                <block type="checkout/cart_sidebar" name="cart-sidebar-ajax" template="checkout/cart/cart-sidebar.phtml" ajax="true">
+                    <action method="unsetData"><key>cache_lifetime</key></action>
+                    <action method="unsetData"><key>cache_tags</key></action>
+                </block>
+            </block>
+        </reference>
+    </default>
+
+    <catalog_category_layered translate="label">
+        <remove name="left.newsletter"></remove>
+    </catalog_category_layered>
+
+    <catalog_category_default translate="label">
+        <remove name="left.newsletter"></remove>
+    </catalog_category_default>
+
+    <checkout_cart_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/addtocart.js</name></action>
+        </reference>
+        <reference name="content">
+            <remove name="checkout.cart.crosssell" />
+        </reference>
+    </checkout_cart_index>
+<!--
+Product view
+-->
+    <catalog_product_view translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/addtocart.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/slider/jquery.jcarousel.min.js</name></action>
+            <action method="addCss"><stylesheet>css/slider/skin.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <remove name="product.tag.list" />
+            <!--<block type="newsletter/subscribe" name="subscribe" as="newsletter_subscribe" template="newsletter/subscribe.phtml"></block>-->
+        </reference>
+    </catalog_product_view>
+<!--
+One page checkout
+-->
+    <checkout_onepage_index translate="label">
+        <reference name="right">
+            <remove name="checkout.progress" />
+        </reference>
+        <reference name="content">
+            <remove name="checkout.onepage.login" />
+        </reference>
+    </checkout_onepage_index>
+
+<!--
+Product show Popup
+-->
+    <catalog_product_showpopup translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/addtocart.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/popupaddtocart.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="catalog/product_view" name="product.info" template="catalog/product/popupview.phtml">
+                <block type="catalog/product_list_upsell" name="product.info.upsell" as="upsell_products" template="catalog/product/list/upsell.phtml">
+                    <action method="setColumnCount"><columns>4</columns></action>
+                    <action method="setItemLimit"><type>upsell</type><limit>2</limit></action>
+                </block>
+            </block>
+        </reference>
+    </catalog_product_showpopup>
+<!--
+Newletter Subscribe show Popup
+-->
+    <newsletter_subscriber_add translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="newsletter/subscribe" name="popup.newsletter" template="newsletter/popup_subscribe.phtml"/>
+        </reference>
+    </newsletter_subscriber_add>
+<!--
+Order Popup
+-->
+    <sales_order_latest translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="sales/order_latest" name="popup_order" template="sales/order/popup_order.phtml"/>
+        </reference>
+    </sales_order_latest>
+<!--
+Review submit Popup
+-->
+    <review_product_add translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="content">
+                <block type="review/form" name="product.info.review_form" as="review_form" template="review/popup-form.phtml"/>
+        </reference>
+    </review_product_add>
+<!--
+Catalog search
+-->
+    <catalogsearch_result_index translate="label">
+        <remove name="left.newsletter"></remove>
+    </catalogsearch_result_index>
+<!--
+Customer Account
+-->
+    <customer_account>
+        <reference name="left">
+            <remove name="sale.reorder.sidebar"/>
+            <remove name="cart_sidebar"/>
+            <reference name="header">
+                <block type="checkout/cart_sidebar" name="cart_sidebar_new" as="topCart" template="checkout/cart/cartheader.phtml"></block>
+            </reference>
+        </reference>
+    </customer_account>
+<!--
+One page checkout cart
+-->
+    <checkout_onepage_cart translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="checkout/onepage_review_info" name="cart" template="checkout/onepage/review/cart-info.phtml">
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/cart-item.phtml</template></action>
+                    <block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="checkout/onepage/review/cart-totals.phtml"/>
+            </block>
+        </reference>
+    </checkout_onepage_cart>
+    <customer_account>
+        <reference name="content">
+        <remove name="newsletter"></remove>
+        </reference>
+    </customer_account>
+<!--
+Tracking Index
+ -->
+    <tracking_index_index translate="label">
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+		<reference name="content">
+            <block type="exceedz_tracking/result" name="tracking_info" template="tracking/result.phtml"/>
+        </reference>
+	</tracking_index_index>
+</layout>

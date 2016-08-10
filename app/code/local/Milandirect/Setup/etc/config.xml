@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Milandirect_Setup>
+			<version>1.0.1</version>
+		</Milandirect_Setup>
+	</modules>
+	<global>
+		<resources>
+			<milandirect_setup>
+				<setup>
+					<module>Milandirect_Setup</module>
+					<class>Mage_Eav_Model_Entity_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</milandirect_setup>
+		</resources>
+	</global>
+</config>

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Exceed
+ */
+
+?>
+<form id="frmTracker" action="<?php echo Mage::getUrl('tracking'); ?>" method="get">
+    <?php echo $this->getBlockHtml('formkey') ?>
+<ul class="trackuserbox">
+<li> <label>Order Id:</label> <input class="headerInput input-text required-entry"
+	maxlength="20" value="<?php echo $this->getRequest()->getParam('orderid'); ?>" name="orderid" type="text" /> </li>
+<li> <label>Destination Postcode:</label> <input class="headerInput" value="<?php echo $this->getRequest()->getParam('postcode'); ?>" name="postcode" type="text" /> </li>
+<li class="right"> <button class="btn-submit" title="Submit"></button> </li>
+</ul>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var dataForm = new VarienForm('frmTracker', true);
+//]]>
+</script>

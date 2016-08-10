@@ -1,0 +1,502 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+/* @var $this Mage_Catalog_Block_Product_List */
+?>
+<?php
+$_productCollection=$this->getLoadedProductCollection();
+$_helper = $this->helper('catalog/output');
+$stockHelper = Mage::helper('amstockstatus');
+$catalogHelper = Mage::helper('catalog');
+?>
+<div id="loading-mask-cart" style="display: none;">
+    <div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/><br />
+        <?php echo $this->__('Please wait...') ?></div>
+    <div id="loading-mask"></div>
+</div>
+<?php if(!$_productCollection->count()): ?>
+    <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+    <div class="category-products">
+        <?php echo $this->getToolbarHtml() ?>
+        <?php // List mode ?>
+        <?php if($this->getMode()!='grid'): ?>
+            <?php $_iterator = 0; ?>
+            <ol class="products-list" id="products-list">
+                <?php foreach ($_productCollection as $_product): ?>
+                    <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+                        <?php // Product Image ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                            <?php /* Based on the native RWD styling, product images are displayed at a max of ~400px wide when viewed on a
+                        one column page layout with four product columns from a 1280px viewport. For bandwidth reasons,
+                        we are going to serve a 300px image, as it will look fine at 400px and most of the times, the image
+                        will be displayed at a smaller size (eg, if two column are being used or viewport is smaller than 1280px).
+                        This $_imgSize value could even be decreased further, based on the page layout
+                        (one column, two column, three column) and number of product columns. */ ?>
+                            <?php $_imgSize = 300; ?>
+                            <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+                                 src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize); ?>"
+                                 alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                        </a>
+                        <?php
+                        $category = Mage::registry('current_category');
+                        if (is_object($category)) {
+                            $categoryId = $category->getId();
+                            $quickView = Mage::getBaseUrl().'quickview/index/view?pid='.$_product->getId().'&category='.$categoryId;
+                        } else {
+                            $quickView = Mage::getBaseUrl().'quickview/index/view?pid='.$_product->getId();
+                        }
+                        ?>
+                        <a href="<?php echo $quickView; ?>" data-fancybox-type="iframe" class="quickview_icon" id="quickview_<?php echo $_product->getId()?>"><span><?php echo Mage::helper('quickview/quickview')->getTitle(); ?></span></a>
+                        <?php // Product description ?>
+                        <div class="product-shop">
+                            <div class="f-fix">
+                                <div class="product-primary">
+                                    <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                                    <h2 class="product-name">
+                                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a>
+                                    </h2>
+                                    <?php if($_product->getRatingSummary()): ?>
+                                        <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                                    <?php endif; ?>
+
+                                    <?php
+                                    $_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+                                    foreach($_nameAfterChildren as $_nameAfterChildName):
+                                        $_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+                                        $_nameAfterChild->setProduct($_product);
+                                        ?>
+                                        <?php echo $_nameAfterChild->toHtml(); ?>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="product-secondary">
+                                    <?php echo $this->getPriceHtml($_product, true) ?>
+                                </div>
+                                <div class="product-secondary">
+                                    <?php if($_product->isSaleable() && !$_product->canConfigure()): ?>
+                                        <p class="action"><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                                    <?php elseif($_product->isSaleable()): ?>
+                                        <p class="action"><a title="<?php echo $this->__('View Details') ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a></p>
+                                    <?php else: ?>
+                                        <!--                            <p class="action availability out-of-stock"><span>--><?php //echo $this->__('Out of stock') ?><!--</span></p>-->
+                                        <p class="action"><a title="<?php echo $this->__('View Details') ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a></p>
+                                    <?php endif; ?>
+                                    <ul class="add-to-links">
+                                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                                        <?php endif; ?>
+                                        <!--
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                            <?php endif; ?>
+                            -->
+                                    </ul>
+                                </div>
+                                <div class="desc std">
+                                    <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+            <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+        <?php else: ?>
+
+        <?php // Grid Mode ?>
+
+        <?php $_collectionSize = $_productCollection->count() ?>
+        <?php $_columnCount = $this->getColumnCount(); ?>
+            <ul class="products-grid products-grid--max-<?php echo $_columnCount; ?>-col">
+                <?php $i=0; foreach ($_productCollection as $_product): ?>
+                    <?php /*if ($i++%$_columnCount==0): ?>
+            <?php endif*/ ?>
+                    <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+                        <div class="item-images onsale-category-container-grid">
+                            <?php if ($productLabel = $catalogHelper->getLabel($_product)): $rand = rand(); ?>
+                                <?php $position = $catalogHelper->getPosition($productLabel); ?>
+                                <div id ="category-container-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>" class="onsale-category-container <?php echo $position;?>" onclick="document.location='<?php echo $_product->getProductUrl() ?>'" style="<?php echo $catalogHelper->getImageSizeHtml($productLabel) ?> background-image: url('<?php echo $catalogHelper->getImageUrl($productLabel); ?>');
+                                    <?php if (in_array($position, array('TL', 'TR'))): ?>top: 0;<?php endif; ?>
+                                    <?php if (in_array($position, array('TC'))): ?>top: -15px;<?php endif; ?>
+                                    <?php if (in_array($position, array('BL', 'BC', 'BR'))): ?>bottom: 0;<?php endif; ?>">
+                                </div>
+                                <script type="text/javascript">
+                                    onsale.registerHorPosition($('category-container-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), '<?php if (($position == 'TC') or ($position == 'BC') or ($position == 'MC')) print 'center'; if (($position == 'TL') or ($position == 'BL') or ($position == 'ML')) print 'left'; if (($position == 'TR') or ($position == 'BR') or ($position == 'MR')) print 'right'; ?>');
+                                    <?php if (in_array($position, array('ML', 'MC', 'MR'))): ?>
+                                    onsale.registerVertPosition($('category-container-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), 'middle');
+                                    <?php endif; ?>
+                                    onsale.registerHorPosition($('category-onsale-label-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), 'center');
+                                    onsale.registerVertPosition($('category-onsale-label-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), 'middle');
+                                </script>
+                            <?php endif; ?>
+                            <!--                    --><?php //echo Mage::helper('onsale')->getCategoryLabelHtml($_product); ?>
+                            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                                <img id="product-collection-image-<?php echo $_product->getId(); ?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(265,261); ?>"
+                                     alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                            </a>
+                            <?php
+                            $category = Mage::registry('current_category');
+                            if (is_object($category)) {
+                                $categoryId = $category->getId();
+                                $quickView = Mage::getBaseUrl().'quickview/index/view?pid='.$_product->getId().'&category='.$categoryId;
+                            } else {
+                                $quickView = Mage::getBaseUrl().'quickview/index/view?pid='.$_product->getId();
+                            }
+                            ?>
+                            <a href="<?php echo $quickView; ?>" class="quickview_icon" id="quickview_<?php echo $_product->getId()?>"><span><?php echo Mage::helper('quickview/quickview')->getTitle(); ?></span></a>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                            <?php
+                            $brandAttr = $_product->getAttributeText('manufacturer');
+                            ?>
+                            <?php if ($brandAttr):?>
+                                <p class="sub-text-viewproduct"><span><?php echo $this->__('By: ');?></span><?php echo $brandAttr ?></p>
+                            <?php else: ?>
+                                <p class="sub-text-viewproduct"><span><?php echo $this->__('By: ');?></span><?php echo Mage::getStoreConfig('general/store_information/name'); ?></p>
+                            <?php endif; ?>
+                            <?php
+                            $listColor = 0;
+                            $_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+                            foreach($_nameAfterChildren as $_nameAfterChildName):
+                                $_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+                                $_nameAfterChild->setProduct($_product);
+                                ?>
+                                <?php echo $_nameAfterChild->toHtml(); ?>
+                            <?php endforeach; ?>
+                            <?php if($_product->getTypeId()=='configurable') : ?>
+                                <?php
+                                $allowMoreSize = 0;
+                                $arrayAttributeAllow = array('size', 'rug_size_config', 'print_size', 'bed_size_config');
+                                $attributes = $_product->getTypeInstance(true)
+                                    ->getConfigurableAttributes($_product);
+                                foreach ($attributes as $attribute) {
+                                    $productAttribute = $attribute->getProductAttribute();
+                                    if (in_array($productAttribute->getAttributeCode(), $arrayAttributeAllow)) {
+                                        $allowMoreSize++;
+                                    }
+                                }
+
+                                ?>
+                                <?php if ($allowMoreSize >= 1): ?>
+                                    <p class="more-size-avaiable"><?php echo $this->__('More Sizes Available'); ?></p>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <div class="actions">
+                                <?php if($_product->getTypeId()=='simple') : ?>
+                                    <?php echo $this->getPriceHtml($_product, true) ?>
+                                <?php elseif($_product->getTypeId()=='configurable'): ?>
+                                    <?php
+                                    Mage::unregister('product');
+                                    Mage::register('product', $_product);
+
+                                    $prices = array();
+                                    $originalPrices = array();
+                                    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+                                    $products = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+                                    foreach($products as $product){
+                                        $prices[] = $product->getFinalPrice();
+                                        $originalPrices[] = $product->getPrice();
+                                    }
+                                    if (!count($prices)) {
+                                        if ($_product->getPrice() != false) {
+                                            $prices[] = $_product->getFinalPrice();
+                                            $originalPrices[] = $_product->getPrice();
+                                        } else {
+                                            $prices[] =  $_product->getData('price');
+                                            $originalPrices[] = $_product->getData('price');
+                                        }
+                                    }
+                                    //compare the price
+                                    $only_old_price = '';
+                                    $only_special_price = '';
+                                    if (count($prices)) {
+                                        $min_price = min($prices);
+                                        $max_price = max($prices);
+                                    }
+                                    // Price range final
+                                    $minPriceFinal = Mage::helper('core')->currency($min_price);
+                                    $maxPriceFinal = Mage::helper('core')->currency($max_price);
+
+                                    $minPriceOrg = min($originalPrices);
+                                    $maxPriceOrg = max($originalPrices);
+
+                                    if($minPriceOrg == $maxPriceOrg){
+                                        $only_old_price = $maxPriceOrg;
+                                    }
+
+                                    if($min_price == $max_price){
+                                        $only_special_price = $max_price;
+                                    }
+
+                                    $generalPriceFinal = Mage::helper('core')->currency($only_old_price);
+                                    $specialPriceFinal = Mage::helper('core')->currency($only_special_price);
+                                    ?>
+                                    <?php if($only_old_price && $only_special_price) : ?>
+                                        <div class="price-box">
+                                            <div class="price-box-configurable product-price-<?php echo $_product->getId(); ?>-list">
+                                                <?php if ($minPriceOrg > $min_price): ?>
+                                                    <div class="onecf-price-box">
+                                                        <p class="old-price">
+                                                            <?php echo $generalPriceFinal;?>
+                                                        </p>
+                                                        <p class="special-price">
+                                                            <?php echo $minPriceFinal; ?>
+                                                        </p>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <p class="general-price">
+                                                        <?php echo $generalPriceFinal;?>
+                                                    </p>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    <?php else : ?>
+                                        <?php /* check display price range with special */ ?>
+                                        <?php if($minPriceOrg > $min_price || $maxPriceOrg > $max_price): ?>
+                                            <?php /* display special price range with old price range*/ ?>
+                                            <?php
+                                            $minPriceOrg = Mage::helper('core')->currency($minPriceOrg);
+                                            $maxPriceOrg = Mage::helper('core')->currency($maxPriceOrg);
+                                            ?>
+                                            <div class="price-box">
+                                            <?php /* check max old price = min old price */ ?>
+                                            <?php if($only_old_price) : ?>
+                                                <div class="price-box-configurable regular-price-range product-price-<?php echo $_product->getId(); ?>-list">
+                                                    <div class="old-price">
+                                                        <span class="min-price">
+                                                            <?php echo $generalPriceFinal;?>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="price-box-configurable regular-price-range product-price-<?php echo $_product->getId(); ?>-list">
+                                                    <div class="old-price">
+                                                        <span class="min-price">
+                                                            <?php echo $minPriceOrg;?>
+                                                        </span>
+                                                        <span class="line-compare">---</span>
+                                                        <span class="max-price">
+                                                            <?php echo $maxPriceOrg;?>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                            <?php /* check max special price = min special price */ ?>
+                                            <?php if($only_special_price) : ?>
+                                                <div class="price-box-configurable special-price-range product-price-<?php echo $_product->getId(); ?>-list">
+                                                    <p class="min-price">
+                                                        <?php echo $specialPriceFinal;?>
+                                                    </p>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="price-box-configurable special-price-range product-price-<?php echo $_product->getId(); ?>-list">
+                                                    <p class="min-price">
+                                                        <?php echo $minPriceFinal;?>
+                                                    </p>
+                                                    <span class="line-compare">---</span>
+                                                    <p class="max-price">
+                                                        <?php echo $maxPriceFinal;?>
+                                                    </p>
+                                                </div>
+                                            <?php endif; ?>
+                                            </div>
+                                        <?php else: /* display price range */ ?>
+                                            <div class="price-box">
+                                                <div class="price-box-configurable product-price-<?php echo $_product->getId(); ?>-list">
+                                                    <p class="min-price">
+                                                        <?php echo $minPriceFinal;?>
+                                                    </p>
+                                                    <span class="line-compare">---</span>
+                                                    <p class="max-price">
+                                                        <?php echo $maxPriceFinal;?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php endif;?>
+                                <?php //if($_product->getRatingSummary()): ?>
+                                <?php //echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                                <?php //endif; ?>
+                                <?php if ($_product->getTypeId()=='configurable'): ?>
+                                    <div id="product_price_configurable_<?php echo $_product->getId(); ?>" class="configurable-price-box">
+                                        <div class="price-box">
+                                                <span id="product-price-<?php echo $_product->getId(); ?>-list" class="regular-price">
+                                                </span>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if($_product->isSaleable()) : ?>
+                                    <?php if($_product->getTypeId()=='simple' && $_product->hasRequiredOptions()): ?>
+                                    <?php $additional['custom_option'] = 1; ?>
+                                    <form id="product_addtocart_form<?php echo $_product->getId(); ?>" action="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>">
+                                        <input type="hidden" name="popup_url" class="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+                                        <input type="hidden" name="popup_top_position" class="popup_top_position" value="0px" />
+
+                                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="productAddToCartForm<?php echo $_product->getId(); ?>.submit()"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                    </form>
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        var productAddToCartForm<?php echo $_product->getId(); ?> = new VarienForm('product_addtocart_form<?php echo $_product->getId(); ?>');
+                                        var addToCart<?php echo $_product->getId(); ?> = new Addtocart('product_addtocart_form<?php echo $_product->getId(); ?>', '<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>');
+                                        productAddToCartForm<?php echo $_product->getId(); ?>.submit = function(event) {
+                                            addToCart<?php echo $_product->getId(); ?>.getPostUrl = this.form.action;
+                                            if (this.validator.validate()) {
+                                                addToCart<?php echo $_product->getId(); ?>.getAddtocart();
+                                                return false;
+                                            }
+                                        }.bind(productAddToCartForm<?php echo $_product->getId(); ?>);
+                                        //]]>
+                                    </script>
+                                    <a title="<?php echo $this->__('View Details') ?>" class="button btn-view-details" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
+                                <?php elseif ($_product->getTypeId()=='configurable'): ?>
+                                    <form action="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>" method="post" id="product_addtocart_form<?php echo $_product->getId(); ?>" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                                        <script type="text/javascript">
+                                            var optionsPrice<?php echo $_product->getId(); ?> = new Product.OptionsPrice(<?php echo base64_decode($_product->getConfigurableOptionPrice()); ?>);
+                                        </script>
+                                        <div class="no-display">
+                                            <input type="hidden" name="popup_url" class="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+                                            <input type="hidden" name="popup_top_position" class="popup_top_position" value="0px" />
+                                            <?php echo base64_decode($_product->getConfigurableOptionHtml()); ?>
+                                        </div>
+                                        <a title="<?php echo $this->__('View Details') ?>" class="button btn-view-details" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
+                                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="productAddToCartForm<?php echo $_product->getId(); ?>.submit()" ><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                    </form>
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        var productAddToCartForm<?php echo $_product->getId(); ?> = new VarienForm('product_addtocart_form<?php echo $_product->getId(); ?>');
+                                        var addToCart<?php echo $_product->getId(); ?> = new Addtocart('product_addtocart_form<?php echo $_product->getId(); ?>', '<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>');
+                                        productAddToCartForm<?php echo $_product->getId(); ?>.submit = function(event) {
+                                            addToCart<?php echo $_product->getId(); ?>.getPostUrl = this.form.action;
+                                            if (this.validator.validate()) {
+                                                addToCart<?php echo $_product->getId(); ?>.getAddtocart();
+                                                return false;
+                                            } else {
+                                                if(jQuery(window).width() < 960){
+                                                    window.location.href = '<?php echo $_product->getProductUrl() ?>';
+                                                }
+                                                else{
+                                                    rwd.openFancybox('<?php echo Mage::getBaseUrl().'quickview/index/view?pid='.$_product->getId(); ?>','<?php echo $this->__('Please select options.'); ?>');
+                                                }
+                                            }
+                                        }.bind(productAddToCartForm<?php echo $_product->getId(); ?>);
+                                        //]]>
+                                    </script>
+                                <?php endif; ?>
+                                <?php else: ?>
+                                    <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                <?php endif; ?>
+                                <ul class="add-to-links" style="display: none">
+                                    <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                        <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                                    <?php endif; ?>
+                                    <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                        <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                                    <?php endif; ?>
+                                </ul>
+                                <!-- Get custom stock status -->
+                                <?php
+                                $stockStatus = Mage::helper('stockstatus')->getCustomStockStatusText($_product);
+                                $stockStatusId = Mage::helper('stockstatus')->getCustomStockStatusId($_product);
+                                ?>
+                                <?php if ($_product->isSaleable()):?>
+                                    <div class="product-custom-stock-status custom-stock-<?php echo $_product->getId(); ?>">
+                                        <?php if($stockStatusId): ?>
+                                            <?php $stockIconUrl = $stockHelper->getStatusIconUrl($stockStatusId); ?>
+                                            <span <?php if ($stockIconUrl!=''): ?> style="background-image: url('<?php echo $stockIconUrl; ?>');" <?php endif; ?> class="icon-stock icon-stock-<?php echo $stockStatusId?>"></span>
+                                            <span class="stock-status"><?php if($stockStatus) echo $stockStatus;?>
+                                                <?php if($_product->getPreorderCalender()):?>
+                                                    <?php echo date("d/m/Y", strtotime($_product->getPreorderCalender()));?>
+                                                <?php endif;?>
+                                    </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <?php if ($_product->getData('hide_default_stock_status')): ?>
+                                        <div class="product-custom-stock-status custom-stock-<?php echo $_product->getId(); ?>">
+                                            <?php if($stockStatusId): ?>
+                                                <?php $stockIconUrl = $stockHelper->getStatusIconUrl($stockStatusId); ?>
+                                                <span <?php if ($stockIconUrl!=''): ?> style="background-image: url('<?php echo $stockIconUrl; ?>');" <?php endif; ?> class="icon-stock icon-stock-<?php echo $stockStatusId?>"></span>
+                                                <span class="stock-status"><?php if($stockStatus) echo $stockStatus;?>
+                                                    <?php if($_product->getPreorderCalender()):?>
+                                                        <?php echo date("d/m/Y", strtotime($_product->getPreorderCalender()));?>
+                                                    <?php endif;?>
+                                        </span>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </li>
+                    <?php /*if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+            <?php endif*/ ?>
+                <?php endforeach ?>
+            </ul>
+            <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+        <?php endif; ?>
+
+        <div class="toolbar-bottom">
+            <?php echo $this->getToolbarHtml() ?>
+        </div>
+        <?php
+        $storeId = Mage::app()->getStore()->getId();
+        $category = Mage::registry('current_category');
+        if (is_object($category)):
+            ?>
+            <?php
+            $current_category = Mage::getModel('catalog/category')
+                ->setStoreId(Mage::app()->getStore()->getId())
+                ->load($category->getId());
+            $seotext = $current_category->getCustomTextBlock();
+            if($seotext) :
+                ?>
+                <div class="seo-text-category">
+                    <?php echo $seotext; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
+<?php
+//set product collection on after blocks
+$_afterChildren = $this->getChild('after')->getSortedChildren();
+foreach($_afterChildren as $_afterChildName):
+    $_afterChild = $this->getChild('after')->getChild($_afterChildName);
+    $_afterChild->setProductCollection($_productCollection);
+    ?>
+    <?php echo $_afterChild->toHtml(); ?>
+<?php endforeach; ?>

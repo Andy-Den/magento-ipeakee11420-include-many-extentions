@@ -1,0 +1,52 @@
+<?php
+    $product = Mage::registry('product');
+    $data = $this->getAskedQuestions($product->getId());
+    $questions = $data['collection'];
+?>
+<div id="questions-container" class="block-product-questions pq-view">
+    <?php if ($questions->count()): ?>
+        <?php $sortingOptions = $this->getSortingOptions(); ?>
+        <div class="pq-question-sorting">
+            <select id="pq-question-sorting" onchange="inno.product_questions.sortQuestions('<?php echo $this->getUrl('innoproductquestions/index/reload',array('product'=>$product->getId() ));?>',0,0)">
+                <?php foreach ($sortingOptions as $option) : ?>
+                    <option <?php if($this->sortBy == $option): ?> selected="selected" <?php endif; ?> value="<?php echo $option ?>"><?php echo ($option == 1 ? $this->__('Date') : $this->__('Helpfulness')) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <a onclick="inno.product_questions.sortQuestions('<?php echo $this->getUrl('innoproductquestions/index/reload',array('product'=>$product->getId() ));?>',0,1)" href="javascript:void(0)">
+                <img title="<?php echo $this->__('Set Ascending Direction')?>" id="sorting-desc" class="v-middle" src="<?php echo $this->getSkinUrl('/images/i_desc_arrow.gif') ?>" />
+                <img title="<?php echo $this->__('Set Descending Direction')?>" style="display:none" id="sorting-asc" class="v-middle" src="<?php echo $this->getSkinUrl('/images/i_asc_arrow.gif') ?>" />
+            </a>
+        </div>
+    <?php endif; ?>
+    
+    <h2 class="title"><?php echo $this->__('Questions about') ?> <span><?php echo $product->getName() ?></span></h2>
+    <div class="clearer"></div>
+    
+    <?php echo $this->getLayout()->getBlock('inno.product_questions_list')->toHtml(); ?>
+      
+    <div>
+        <?php if ($questions->count() && $data['requested'] < $data['extracted']): ?>
+            <a href="javascript://" id="more-questions-trigger" onclick="inno.product_questions.sortQuestions('<?php echo $this->getUrl('innoproductquestions/index/reload',array('product'=>$product->getId() ));?>',1)" class="left">
+                <span><?php echo $this->__('Show more questions'); ?></span>
+            </a>
+        <?php endif; ?>
+        <a href="javascript://">
+            <span id="pq-question-loader" style="display:none">
+                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif')?>"/>
+            </span>
+        </a>
+        <?php if ($this->allowProductQuestions()): ?>
+            <?php if($this->allowGuestToAskQuestions()): ?>
+                <a href="javascript://" id="pq-add-question-trigger" onclick="inno.product_questions.showQuestionForm()" class="right"><span><?php echo $this->__('Ask a question'); ?></span></a>
+            <?php else: ?>
+                <span class="right">    
+                    <?php echo $this->getLayout()->getBlock('inno.product_questions_login')->toHtml(); ?>
+                </span>
+            <?php endif; ?>
+        <?php endif; ?>
+        <div class="clearer"></div>
+    </div>
+</div>
+
+
+<?php echo $this->getLayout()->getBlock('inno.product_questions_form')->toHtml(); ?>

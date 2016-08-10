@@ -1,0 +1,9 @@
+"Country","Region/State","Zip/Postal Code","Weight (and above)","Weight Rate","Shipping Price","Markup"
+"AUS","*",800,"NT",1.48,17,1.75
+"AUS","*",2000,"NSW",0.24,6,1.8
+"AUS","*",2600,"ACT",0.61,6,1.8
+"AUS","*",3000,"VIC",0.21,6,1.8
+"AUS","*",4000,"QLD",0.44,6,1.7
+"AUS","*",5000,"SA",0.28,6,1.85
+"AUS","*",6000,"WA",0.78,6,1.8
+"AUS","*",7000,"TAS",0.88,6,1.8

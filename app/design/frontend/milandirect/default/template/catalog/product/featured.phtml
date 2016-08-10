@@ -1,0 +1,106 @@
+<?php
+$_helper = $this->helper('catalog/output');
+$products = $this->getFeaturedProduct();
+$count = 1;
+$meta_desc = Mage::registry('current_category')->getDescription();
+?>
+<div class="col2-set">
+    <div class="Cat-top">
+        <div class="gry_top_bordCurvs_lft">
+            <div class="gry_top_bordCurvs_rht">
+                <div class="gry_top_bordCurvs_bg"></div>
+            </div>
+        </div>
+        <div class="gry_bordCurvs_midBg">
+            <div id="breadcrumb" class="breadcrumbs"><?php echo $this->getLayout()->getBlock('breadcrumbs')->toHtml()?></div>
+            <div class="page-title category-title">
+                <h1><?php echo Mage::registry('current_category')->getName(); ?></h1>
+                <p class="sub-text">
+                    <?php echo Mage::helper('core/string')->truncate($meta_desc, 350); ?>
+                    <a href="#meta-desc" class="fancybox"><?php echo $this->__('Read More...') ?></a>
+                    <div id="meta-desc" style="display:none;width:650px;"><?php echo $meta_desc ?></div>
+                </p>
+            </div>
+            <div class="listing-top-category">
+                <ul>
+                <?php foreach($products as $_product) : ?>
+                <?php if ($count == '2'):?>
+                    <li class="last">
+                <?php else : ?>
+                    <li>
+                <?php endif;?>
+                        <div class="detail">
+                            <a href="<?php echo $_product->getProductUrl(); ?>" class="list-top"><?php echo $_product->getName(); ?></a>
+                                <p class="sub-text"><?php $_description = $_product->getShortDescription(); ?>
+                                    <?php if (strlen($_description) > 166): ?>
+                                        <?php $word_limit = 25;
+                                            $words = explode(' ', $_description);
+                                            $_shortDescription = implode(' ', array_slice($words, 0, $word_limit));
+                                            echo $_shortDescription.' ...';
+                                        ?>
+                                    <?php else:?>
+                                        <?php echo $_description;?>
+                                    <?php endif;?>
+                                </p>
+                            <?php echo $this->getPriceHtml($_product, true) ?>
+
+                            <div class="actions">
+                                <?php if($_product->isSaleable()): ?>
+                                    <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+                                <?php endif; ?>
+                                <?php
+                                    $stockStatus = Mage::helper('amstockstatus')->show($_product);
+                                ?>
+                                <?php if ($_product->getIsSalable()): ?>
+
+                                <?php else:
+                                    if(!stripos($stockStatus, 'pre order')) :
+                                ?>
+                                    <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+                                    <?php else: ?>
+                                        <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('Pre-Order Now') ?>" class="btn-pre-ordernow"></button>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
+                                <?php
+                                    if(!stripos($stockStatus, 'pre order'))
+                                        echo $stockStatus;
+                                    else
+                                        echo str_replace('pre order :','',$stockStatus);
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="onsale-category-container-grid">
+                        <?php echo Mage::helper('onsale')->getCategoryLabelHtml($_product); ?>
+                            <div class="image"><a href="<?php echo $_product->getProductUrl(); ?>"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(174); ?>" width="174" height="174" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a></div>
+                        </div>
+                        <!-- images/chair01-img.jpg -->
+                    </li>
+                    <?php
+                    if($count == 2) break;
+                    $count++;
+                endforeach; ?>
+               </ul>
+            </div>
+        </div>
+        <div class="gry_bot_bordCurvs_lft">
+            <div class="gry_bot_bordCurvs_rht">
+                <div class="gry_bot_bordCurvs_bg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var max = 0;
+        jQuery(".list-top").each(function(){
+            var _height = jQuery(this).height();
+            if(max <= _height) max = _height;
+        });
+        jQuery(".list-top").each(function(){
+            jQuery(this).css("min-height",max);
+
+        });
+    });
+</script>

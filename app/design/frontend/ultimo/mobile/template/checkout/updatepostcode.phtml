@@ -1,0 +1,79 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/** @var Mage_Checkout_Block_Onepage_Billing $this */
+?>
+<?php
+//get postcode:
+$pcode = $this->getAddress()->getPostcode();
+if(!$pcode) {
+    //guess
+    $pcode = Mage::helper('checkout')->getQuote()->getShippingAddress()->getPostcode();
+}
+//get address info from postcode:
+$addressInfo = Mage::helper('addressbypostcode')->getAddressByPostCode($pcode);
+
+$regionId = $this->getAddress()->getRegionId();
+if(!$regionId) {
+    $regionModel = Mage::getModel('directory/region')->loadByCode($addressInfo['state'], "AU");
+    $regionId = $regionModel->getId();
+}
+?>
+<li class="fields" id="billing-subtown">
+    <div class="field">
+        <label for="billing:city" class="required"><?php echo $this->__('Suburb/Town') ?><em>*</em></label>
+        <?php if ($addressInfo && is_array($addressInfo["suburb"])):?>
+            <div class="input-box">
+                <select id="billing:city" name="billing[city]" title="<?php echo $this->__('Suburb/Town') ?>" class="validate-select">
+                    <?php foreach($addressInfo["suburb"] as $suburb): ?>
+                        <option value="<?php echo $suburb ?>"><?php echo $suburb ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php else:?>
+            <div class="input-box">
+                <input type="text" placeholder="<?php echo $this->__('Suburb/Town') ?>" id="billing:city" name="billing[city]" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('Suburb/Town') ?>" class="input-text required-entry" />
+            </div>
+        <?php endif; ?>
+    </div>
+</li>
+
+<li class="fields" Id="billing-select-box">
+    <div class="field">
+        <label for="billing:region_id" class="required"><?php echo $this->__('State/Province') ?><em>*</em></label>
+        <div class="input-box">
+            <select id="billing:region_id" name="billing[region_id]" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
+            </select>
+            <script type="text/javascript">
+                //<![CDATA[
+                if($('billing:') != null) {
+                    $('billing:').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ? $this->getAddress()->getRegionId():533; ?>");
+                }
+                //]]>
+            </script>
+            <input type="text" id="billing:region" name="billing[region]" value="<?php echo $this->htmlEscape($regionId) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none;" />
+        </div>
+    </div>
+</li>

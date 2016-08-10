@@ -1,0 +1,82 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/** @var $this Enterprise_TargetRule_Block_Catalog_Product_Item */
+$_item = $this->getItem();
+if ($_item):
+?>
+    <?php /*if(!$_item->isComposite() && $_item->isSaleable()): ?>
+        <?php if (!$_item->getRequiredOptions()): ?>
+            <input type="checkbox" class="checkbox related-checkbox" id="related-checkbox<?php echo $_item->getId() ?>" name="related_products[]" value="<?php echo $_item->getId() ?>" />
+        <?php endif; ?>
+    <?php endif; */?>
+    <div class="item-info">
+		<div class="onsale-category-container-grid">
+				<?php echo Mage::helper('onsale')->getCategoryLabelHtml($_item); ?>
+					<a href="<?php echo $this->getProductUrl($_item) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->resize(150) ?>" width="150" height="150" alt="<?php echo $this->escapeHtml($_item->getName()) ?>" title="<?php echo $this->escapeHtml($_item->getName()) ?>" /></a>
+		</div>
+		<div class="clear"></div>
+        <div class="product-details">
+
+            <h3 class="product-name"><a href="<?php echo $this->getProductUrl($_item) ?>"><?php echo $this->escapeHtml($_item->getName()) ?></a></h3>
+
+			<p class="sub-text"><?php echo $_item->getShortDescription(); ?></p>
+
+            <?php echo $this->getPriceHtml($_item, true, '-related') ?>
+
+			<div class="actions">
+                <?php if($_item->isSaleable()): ?>
+                    <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->__('More Information') ?>" class="button"><span><span><?php echo $this->__('More Information') ?></span></span></a>
+                <?php endif; ?>
+				<?php
+					//$product = Mage::getModel('catalog/product')->load($_item->getId());
+					$stockStatus = '';//Mage::helper('amstockstatus')->show($product);
+				?>
+				<?php if ($_item->getIsSalable()): ?>
+
+				<?php else:
+					if(!stripos($stockStatus, 'pre order')) :
+				?>
+					<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->__('More Information') ?>" class="button"><span><span><?php echo $this->__('More Information') ?></span></span></a>
+					<?php else: ?>
+						<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->__('Pre-Order Now') ?>" class="button-red"><span><span><?php echo $this->__('Pre-Order Now') ?></span></span></a>
+					<?php endif; ?>
+				<?php endif; ?>
+
+				<?php
+					if(!stripos($stockStatus, 'pre order'))
+						echo $stockStatus;
+					else
+						echo str_replace('pre order :','',$stockStatus);
+				?>
+            </div>
+
+            <?php /*if ($this->helper('wishlist')->isAllow()) : ?>
+                <p><a href="<?php echo $this->getAddToWishlistUrl($_item) ?>"><?php echo $this->__('Add to Wishlist') ?></a></p>
+            <?php endif; */?>
+
+        </div>
+    </div>
+<?php endif;?>

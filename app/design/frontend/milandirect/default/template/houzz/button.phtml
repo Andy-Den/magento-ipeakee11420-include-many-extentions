@@ -1,0 +1,22 @@
+<?php 
+if(Mage::app()->getFrontController()->getAction()->getFullActionName() == 'catalog_product_view'):
+$_product = $this->getProduct();
+$_hzid = Mage::getStoreConfig('houzz/setting/hzid_code');
+$_is_button_count = (Mage::getStoreConfig('houzz/setting/show_button_count')) ? '1' : '0';
+$_locale = str_replace('_', '-', Mage::app()->getLocale()->getLocaleCode());
+$_image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog/product' . $_product->getImage();
+$category_name = '';
+if(is_object(Mage::registry('current_category'))){ 
+    $category_name = Mage::registry('current_category')->getName(); 
+} else {
+	$categoryIds = $_product->getCategoryIds();
+    if(count($categoryIds) ){
+        $firstCategoryId = $categoryIds[0];
+        $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
+        $category_name = $_category->getName();
+    }
+}
+?>
+<a class="houzz-share-button" data-url="<?php echo $this->escapeHtml($_product->getProductUrl()) ?>" data-hzid="<?php echo $_hzid ?>" data-locale="<?php echo $_locale ?>" data-img="<?php echo $this->escapeHtml($_image) ?>" data-title="<?php echo $this->escapeHtml($_product->getName()) ?>" data-desc="<?php echo $this->escapeHtml($_product->getDescription()) ?>" data-category="<?php echo $this->escapeHtml($category_name) ?>" data-showcount="<?php echo $_is_button_count ?>" href="https://www.houzz.com.au">Houzz</a>
+<script>(function(d,s,id){if(!d.getElementById(id)){var js=d.createElement(s);js.id=id;js.async=true;js.src="//www.houzz.com.au/js/widgets.js?"+(new Date().getTime());var ss=d.getElementsByTagName(s)[0];ss.parentNode.insertBefore(js,ss);}})(document,"script","houzzwidget-js");</script>
+<?php endif; ?>

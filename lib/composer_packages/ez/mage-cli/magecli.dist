@@ -1,0 +1,59 @@
+#!/usr/bin/env php
+<?php
+
+$ds = DIRECTORY_SEPARATOR;
+$rootDir = dirname(__FILE__);
+$mageRootDir = $rootDir.$ds.'magento';
+
+// Include composer packages.
+$composerLoader = require_once $rootDir.$ds.'vendor'.$ds.'autoload.php';
+
+// Include all the classes.
+use Symfony\Component\Console\Application as SymfonyConsole;
+use Ez\MageCli\Application as EzMageCliConsole;
+use Ez\MageBridge\MageBridge;
+use Ez\MageBridge\Config as MageConfig;
+
+// Configurations for the finders.
+$mageConfig = new MageConfig();
+$mageConfig->updateConfig(
+    array(
+        'general' => array(
+            'mage_root_dir' => $mageRootDir,
+        )
+    )
+);
+$mageBridge = new MageBridge($mageConfig);
+$mageBridge->includeMage();
+$findersConfig = array(
+    array(
+        'type' => 'dir',
+        'options' => array(
+            'classes_cache_filename' => $mageRootDir.$ds.'var'.$ds.'dir_command_classes',
+            'classes_finder_options' => array(
+                'dirs' => array(
+                    $mageRootDir.$ds.'shell'.$ds.'commands' => 'Ez_MageCli_Command'
+                )
+            )
+        )
+    ),
+    array(
+        'type' => 'mageExtension',
+        'options' => array(
+            'classes_cache_filename' => $mageRootDir.$ds.'var'.$ds.'mage_extensions_command_classes',
+            'classes_finder_options' => array(
+                'mage_bridge' => $mageBridge,
+                'extension_names' => '*'
+            )
+        )
+    )
+);
+
+// Make sure composer loader will be used before Magento loader.
+$composerLoader->register(true);
+$ezMageCliConsole = new EzMageCliConsole(
+    new SymfonyConsole(),
+    $findersConfig
+);
+$ezMageCliConsole->run();
+

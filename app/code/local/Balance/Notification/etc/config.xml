@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Notification>
+            <version>0.1.0</version>
+        </Balance_Notification>
+    </modules>
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <notification translate="title" module="notification">
+                                            <title><![CDATA[Balance: Notification]]></title>
+                                            <sort_order>2000</sort_order>
+                                        </notification>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <global>
+        <resources>
+            <notification_setup>
+                <setup>
+                    <module>Balance_Notification</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </notification_setup>
+            <notification_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </notification_write>
+            <notification_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </notification_read>
+        </resources>
+        <helpers>
+            <notification>
+                <class>Balance_Notification_Helper</class>
+            </notification>
+        </helpers>
+
+        <template>
+            <email>
+                <preoder_stock_email>
+                    <label>Preorder stock updates</label>
+                    <file>preoder_stock_updates.html</file>
+                    <type>html</type>
+                </preoder_stock_email>
+            </email>
+        </template>
+    </global>
+    <default>
+        <notification>
+            <general>
+                <email>dev@balanceinternet.com.au,charlotte@milandirect.com.au,mdcameronm@gmail.com,mdmanda@gmail.com,mdmainguyen@gmail.com</email>
+            </general>
+        </notification>
+    </default>
+</config>

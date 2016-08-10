@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Competitionbanner>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Balance_Competitionbanner>
+    </modules>
+</config>

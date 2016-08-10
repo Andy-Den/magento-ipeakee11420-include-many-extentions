@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <promo>
+            <children>
+                <onsale translate="title">
+                    <title>On Sale</title>
+                    <sort_order>140</sort_order>
+                    <children>
+                        <reward_rules translate="title">
+                            <title>Manage Rules</title>
+                            <sort_order>30</sort_order>
+                            <action>adminhtml/awonsale_rule</action>
+                        </reward_rules>
+                        <points_configuration translate="title">
+                            <title>Configuration</title>
+                            <sort_order>100</sort_order>
+                            <action>adminhtml/system_config/edit/section/onsale</action>
+                        </points_configuration>
+                    </children>
+                </onsale>
+            </children>
+        </promo>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children> 
+                    <promo>
+                        <children>        
+                            <onsale translate="title">
+                                <title>On Sale</title>
+                                <sort_order>140</sort_order>
+                                <children>
+                                    <reward_rules translate="title">
+                                        <title>Manage Rules</title>
+                                        <sort_order>30</sort_order>
+                                        <action>adminhtml/awonsale_rule</action>
+                                    </reward_rules>
+                                    <points_configuration translate="title">
+                                        <title>Configuration</title>
+                                        <sort_order>100</sort_order>
+                                        <action>adminhtml/system_config/edit/section/onsale</action>
+                                    </points_configuration>
+                                </children>
+                            </onsale>
+                        </children> 
+                    </promo>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <onsale translate="title">
+                                        <title>aheadWorks - On Sale</title>
+                                    </onsale>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

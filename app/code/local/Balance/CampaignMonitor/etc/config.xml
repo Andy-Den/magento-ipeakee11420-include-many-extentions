@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<config>
+
+    <modules>
+        <Balance_CampaignMonitor>
+            <version>0.6</version>
+        </Balance_CampaignMonitor>
+    </modules>
+
+    <global>
+        <models>
+            <campaignmonitor>
+                <class>Balance_CampaignMonitor_Model</class>
+            </campaignmonitor>
+        </models>
+
+        <events>
+            <balance_newsletter_subscriber_added>
+                <observers>
+                    <balance_campaignmonitor_add_subscriber_to_list>
+                        <type>singleton</type>
+                        <class>campaignmonitor/customer_observer</class>
+                        <method>addSubscriberToList</method>
+                    </balance_campaignmonitor_add_subscriber_to_list>
+                </observers>
+            </balance_newsletter_subscriber_added>
+
+            <customer_save_before>
+                <observers>
+                    <balance_campaignmonitor_observer>
+                        <type>singleton</type>
+                        <class>campaignmonitor/customer_observer</class>
+                        <method>check_subscription_status</method>
+                    </balance_campaignmonitor_observer>
+                </observers>
+            </customer_save_before>
+            <customer_delete_before>
+                <observers>
+                    <balance_campaignmonitor_observer_2>
+                        <type>singleton</type>
+                        <class>campaignmonitor/customer_observer</class>
+                        <method>customer_deleted</method>
+                    </balance_campaignmonitor_observer_2>
+                </observers>
+            </customer_delete_before>
+        </events>
+
+        <rewrite>
+            <balance_campaignmonitor_admin>
+                <from><![CDATA[#^/admin/newsletter_subscriber/massUnsubscribe#]]></from>
+                <to>/campaignmonitor/adminhook</to>
+            </balance_campaignmonitor_admin>
+        </rewrite>
+    </global>
+
+    <frontend>
+        <routers>
+            <campaignmonitor>
+                <use>standard</use>
+                <args>
+                    <module>Balance_CampaignMonitor</module>
+                    <frontName>campaignmonitor</frontName>
+                </args>
+            </campaignmonitor>
+        </routers>
+    </frontend>
+</config>

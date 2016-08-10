@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_SeoToolKit
+ */
+-->
+<config>
+    <modules>
+        <Amasty_SeoToolKit>
+            <version>1.4.0</version>
+        </Amasty_SeoToolKit>
+    </modules>
+
+    <global>
+        <helpers>
+            <amseotoolkit>
+                <class>Amasty_SeoToolKit_Helper</class>
+            </amseotoolkit>
+        </helpers>
+
+        <models>
+            <amseotoolkit>
+                <class>Amasty_SeoToolKit_Model</class>
+            </amseotoolkit>
+        </models>
+        <events>
+            <controller_front_init_before>
+                <observers>
+                    <amasty_amseotoolkit_model_observer>
+                        <type>singleton</type>
+                        <class>amseotoolkit/observer</class>
+                        <method>redirect301</method>
+                    </amasty_amseotoolkit_model_observer>
+                </observers>
+            </controller_front_init_before>
+        </events>
+    </global>
+</config>

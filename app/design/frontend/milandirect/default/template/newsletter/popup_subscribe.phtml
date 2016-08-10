@@ -1,0 +1,148 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+
+<form action="<?php echo $this->getUrl('newsletter/subscriber/send/', array('_secure' => $this->getRequest()->isSecure())) ?>" onsubmit="return newsletterSubscriberForm.submit(event)" method="post" name="subscribeForm" id="subscribeForm" >
+    <?php echo $this->getBlockHtml('formkey') ?>
+  <div class="form-subscribe form-subscribe-popup">
+  <!--<a id="popupClose" onclick="javascript:closePopup();"></a>-->
+  <div class="subscribe-popup">
+  <div class="bg-chairimg">
+    <div class="logo"><img src="<?php echo $this->getSkinUrl('images/small-logo-popup.png') ?>" alt="<?php echo $this->__('Logo')?>" /></div>
+    <div class="clearer"></div>
+    <div class="popup_wrapper">
+    <div class="news-subscribe-popup">
+      <div class="get-started"><?php echo $this->__('GET EARLY ACCESS TO THE') ?></div>
+      <div class="lable-text"><?php echo $this->__('LATEST DEALS, PRODUCTS,<br>NEWS AND COUPONS!') ?></div>
+
+    </div>
+    <div class="news-subscribe-login">
+      <ul class="messages" style="display:none" id="messages"><li class="success-msg"><ul><li><span><?php echo $this->__('You have successfully subscribed to this list.') ?></span></li></ul></li></ul>
+      <div class="clearer"></div>
+      <div class="v-fix">
+        <ul class="form-list">
+          <li>
+            <label><?php echo $this->__('Name:'); ?></label>
+            <div class="input-box">
+              <input type="text" name="cm-name" id="name" value="" class="input-text required-entry">
+            </div>
+          </li>
+          <li>
+            <label><?php echo $this->__('Email:'); ?></label>
+            <div class="input-box">
+              <input name="cm-nkrlkr-nkrlkr" type="text" id="nkrlkr-nkrlkr" value="" class="input-text required-entry validate-email"/>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="buttons-set button-subscribe-popup">
+        <button type="button" title="<?php echo $this->__('Subscribe') ?>" class="btn-signup btn-newsletter-signup right" title="<?php echo $this->__('Sign Up') ?>" onclick="newsletterSubscriberForm.submit(event);trackSignup('Newsletter Sign up','Sign Up','Header',true)">
+        </button>
+        <div class="privacy"> <a href="<?php echo $this->getBaseUrl('')?>privacy-policy" target="_blank"><?php echo $this->__('Privacy Policy') ?></a>
+        <div class="clearer"></div>
+          <p>You can unsubscribe any time.</p>
+        </div>
+        <input type="hidden" id="CALLBACK_FOR" value="newsletter" />
+      </div>
+    </div>
+
+        <div class="sgnfor">
+            <p class="suf">Sign up for:</p>
+            <ul class="sign-up-for">
+                <li><?php echo $this->__('Price drops')?></li>
+                <li><?php echo $this->__('Coupon codes')?></li>
+                <li><?php echo $this->__('Competitions')?></li>
+                <li><?php echo $this->__('New product releases')?></li>
+                <li><?php echo $this->__('Industry news & insights')?></li>
+            </ul>
+        </div>
+  </div>
+  </div>
+  </div>
+  <div id="loading-mask-newsletter" style="display: none;">
+  	<div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/><br />
+    	<?php echo $this->__('Please wait...') ?></div>
+    	<div id="loading-mask"></div>
+    </div>
+  </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var newsletterSubscriberForm = new VarienForm('subscribeForm');
+    var postUrl = "<?php echo $this->getUrl('newsletter/subscriber/send/') ?>";
+    newsletterSubscriberForm.submit = function(event) {
+        if (this.validator.validate()) {
+        	submitNewsletterSubscribeForm();
+        }
+        return false;
+    }
+
+
+    function submitNewsletterSubscribeForm()
+    {
+    	Element.show('loading-mask-newsletter');
+    	var request = new Ajax.Request(
+    			postUrl,
+               {
+                   method: 'post',
+                   evalJS: 'force',
+                   onComplete: function(response){
+                       //alert('subscribe successfully');
+                   },
+                   onFailure: function(response){
+                       alert('An error occurred while processing your request');
+                       Element.hide('loading-mask-newsletter');
+                   },
+                   onSuccess: function(response){
+                       if (response && response.responseText){
+                           try{
+                               result = eval('(' + response.responseText + ')');
+                           }
+                           catch (e) {
+                        	   result = {};
+                           }
+                       }
+                       isSuccess = /You have successfully subscribed to this list$/.test(result.message);
+
+                       if(isSuccess) {
+                    	   Element.hide('loading-mask-newsletter');
+                    	   $('messages').show();
+						   setTimeout("closePopup()", 3000);
+                       }
+                       else{
+                    	   alert('An error occurred while processing request');
+                    	   Element.hide('loading-mask-newsletter');
+                       }
+                   },
+                   parameters: jQuery('#subscribeForm').serialize()
+               }
+       );
+
+    }
+//]]>
+
+</script>
+

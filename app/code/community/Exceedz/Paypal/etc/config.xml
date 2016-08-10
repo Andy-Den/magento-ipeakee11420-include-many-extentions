@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Exceedz_Paypal>
+			<version>1.6.0.1</version>
+		</Exceedz_Paypal>
+	</modules>
+	<global>			<models>
+			<paypal>
+				<rewrite>
+					<api_standard>Exceedz_Paypal_Model_Api_Standard</api_standard>
+				</rewrite>
+			</paypal>            
+		</models>					
+	</global>    
+</config>

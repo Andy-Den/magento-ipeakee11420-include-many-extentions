@@ -1,0 +1,5 @@
+SKU,Custom_Title,Type,Is_Require,Option_Price,Option_Price_Type,Value_Title,Value_Sku,Value_Price,Value_Price_Type,Max_Characters,Value_Setup_Price,Value_Setup_Price_Type,Sort_Order,Option_Sort_Order,File_Extension,Image_Size_X,Image_Size_Y
+INF004,Warranty,radio,1,,fixed,"1YR Warranty,2YR Warranty,3YR Warranty",,"0,50,86",fixed,0,,,0,0,,,
+INF003 ,Warranty,radio,1,,fixed,"1YR Warranty,2YR Warranty,3YR Warranty",,"0,50,86",fixed,0,,,0,0,,,
+INF002,Warranty,radio,1,,fixed,"1YR Warranty,2YR Warranty,3YR Warranty",,"0,50,86",fixed,0,,,0,0,,,
+INF001,Warranty,radio,1,,fixed,"1YR Warranty,2YR Warranty,3YR Warranty",,"0,50,86",fixed,0,,,0,0,,,

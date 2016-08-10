@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Sales>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Inecom_Sap/>
+                <Mage_Sales/>
+                <Balance_ConfigurableSimplePriceOverride/>
+                <Idev_OneStepCheckout/>
+                <Exceedz_Sales/>
+            </depends>
+        </Milandirect_Sales>
+    </modules>
+</config>

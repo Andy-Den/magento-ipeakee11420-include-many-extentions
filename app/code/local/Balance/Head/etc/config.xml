@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Balance_Head>
+      <version>0.1.0</version>
+    </Balance_Head>
+  </modules>
+  <global>
+    <helpers>
+      <head>
+        <class>Balance_Head_Helper</class>
+      </head>
+    </helpers>
+	<blocks>
+	  <head>
+		<class>Balance_Head_Block</class>
+	  </head>
+        <!-- page>
+                <rewrite>
+                        <html_head before="Mage_Head_Block_Page_Html_Head">Balance_Head_Block_Page_Html_Head</html_head>
+                </rewrite>
+        </page -->
+	</blocks>
+	<models>
+	  <head>
+		<class>Balance_Head_Model</class>
+		<resourceModel>head_mysql4</resourceModel>
+	  </head>
+	</models>
+	<resources>
+	  <categoryattribute1421805009_setup>
+		<setup>
+		  <module>Balance_Head</module>
+		  <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </categoryattribute1421805009_setup>
+	  <categoryattribute1421805009_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </categoryattribute1421805009_write>
+	  <categoryattribute1421805009_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </categoryattribute1421805009_read>
+	</resources>
+  </global>
+</config> 

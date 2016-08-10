@@ -1,0 +1,73 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php
+/* begin REF:MID-336, MID-337*/
+$childProductId = Mage::getSingleton('checkout/session')->getBalanceLastAddedProductId();
+if (isset($childProductId) && $childProductId) {
+    $_product = Mage::getModel('catalog/product')->load($childProductId);
+}
+/* end REF:MID-336, MID-337*/
+
+?>
+<div class="form-subscribe product-view-cart_popup" id="product-view-cart_popup">
+  <a id="popupClose" onclick="javascript:closePopup();"></a>
+<div class="view-cart-popup">
+
+<div class="cart_popup" id="cart_popup">
+    <div class="buttons-set-top">
+        <button onclick="setLocation('<?php echo $this->getUrl() ?>')" class="btn-continue-shopping" title="Continue Shopping" type="button"><span><span><?php echo $this->__('Continue Shopping'); ?></span></span></button>
+        <?php echo $this->__('Or');?>&nbsp;
+        <button onclick="setLocation('<?php echo $this->getUrl('checkout/cart');?>')" class="btn-checkout" title="Proceed to Checkout" type="button"></button>
+    </div>
+<div class="inner-wrapper">
+    <ol id="pagination_container_header" class="mini-products-list">
+        <li class="add-popup-cart">
+            <?php
+                $plural = '';
+                $qty_added = $this->getRequest()->getParam('qty');
+                $plural = '';
+                if ($qty_added != 1){
+                    $plural = "s";
+                }
+
+            ?>
+            <h5 class="items-display"><?php echo $qty_added; ?> <?php echo $this->__(' item'. $plural .' added to your cart') ?></h5>
+            <div class="image">
+                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(90); ?>" width="90" height="90" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+            </div>
+            <div class="product-item">
+                <h3 class="product-name"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h3>
+                <div class="pro_quantity"><span><?php echo $this->getRequest()->getParam('qty') ?> x </span>
+                <?php if($this->getRequest()->getParam('giftcard') > 0):
+                        echo $this->helper('checkout')->formatPrice($this->getRequest()->getParam('giftcard')); ?>
+                <?php elseif($this->getRequest()->getParam('giftcard_amount') > 0): ?>
+                    <?php echo $this->helper('checkout')->formatPrice($this->getRequest()->getParam('giftcard_amount')); ?>
+                <?php endif;?>
+                <?php echo $this->helper('checkout')->formatPrice($this->getRequest()->getParam('price')); ?>
+                </div>
+                <?php if($this->getRequest()->getParam('options') != "" ): ?>(<?php echo $this->getRequest()->getParam('options') ?>)<?php endif;?>
+            </div>
+            <div class="clear"></div>
+        </li>
+    </ol>
+</div>
+
+<?php echo $this->getChildHtml('upsell_products') ?>
+<input type="hidden" name="popup_url" id="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+
+<div class="buttons-set">
+    <button onclick="setLocation('<?php echo $this->getUrl() ?>')" class="btn-continue-shopping" title="Continue Shopping" type="button"><span><span><?php echo $this->__('Continue Shopping'); ?></span></span></button>
+    <?php echo $this->__('Or');?>&nbsp;
+    <button onclick="setLocation('<?php echo $this->getUrl('checkout/cart');?>')" class="btn-checkout" title="Proceed to Checkout" type="button"></button>
+</div>
+<!--EO:: Display success popup after item added to the cart -->
+<div class="add-to-box" id="add-to-upsell" style="display:none;"></div>
+<div id="loading-mask-cart-upsell" style="display: none;">
+  <div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/><br />
+    <?php echo $this->__('Please wait...') ?></div>
+  <div id="loading-mask"></div>
+</div>
+<input type="hidden" value="upsell" id="CALLBACK_FOR">
+</div>
+</div>
+</div>

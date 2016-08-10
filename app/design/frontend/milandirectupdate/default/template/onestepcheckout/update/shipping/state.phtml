@@ -1,0 +1,32 @@
+<?php
+//get postcode:
+$pcode = $this->getAddress()->getPostcode();
+if(!$pcode) {
+    //guess
+    $pcode = Mage::helper('checkout')->getQuote()->getShippingAddress()->getPostcode();
+}
+//get address info from postcode:
+$addressInfo = Mage::helper('addressbypostcode')->getAddressByPostCode($pcode);
+
+$regionId = $this->getAddress()->getRegionId();
+if(!$regionId) {
+    $countryCode = Mage::getStoreConfig('general/country/default');
+    $regionModel = Mage::getModel('directory/region')->loadByCode($addressInfo['state'], $countryCode);
+    $regionId = $regionModel->getId();
+}
+$helper = Mage::helper('onestepcheckout/checkout');
+$dataHelper = Mage::helper('onestepcheckout');
+?>
+<?php $shippingFields['region_id'] = '
+    <div class="input-box input-region">
+        <label for="shipping:region">'.$this->__('State').' <span class="required">*</span></label><br/>
+        <select id="shipping:region_id" name="shipping[region_id]" title="'.$this->__('State/Province').'" class="validate-select" style="display:none">
+            <option value="">'.$this->__('Please select').'</option>
+        </select>
+        <script type="text/javascript">
+            $("shipping:region_id").setAttribute("defaultValue",  "'.$dataHelper->clearDash($regionId).'");
+        </script>
+        <input type="text" id="shipping:region" name="shipping[region]" value="'.$dataHelper->clearDash($regionId).'"  title="'.$this->__('State/Province').'" class="required-entry input-text" style="display:none" />
+    </div>';
+?>
+<?php echo $shippingFields['region_id']; ?>

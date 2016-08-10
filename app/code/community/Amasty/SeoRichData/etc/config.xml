@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_SeoRichData
+ */
+-->
+<config>
+    <modules>
+        <Amasty_SeoRichData>
+            <version>1.2.7</version>
+        </Amasty_SeoRichData>
+    </modules>
+
+    <global>
+        <blocks>
+            <amseorichdata>
+                <class>Amasty_SeoRichData_Block</class>
+            </amseorichdata>
+        </blocks>
+
+        <helpers>
+            <amseorichdata>
+                <class>Amasty_SeoRichData_Helper</class>
+            </amseorichdata>
+        </helpers>
+
+        <models>
+            <amseorichdata>
+                <class>Amasty_SeoRichData_Model</class>
+            </amseorichdata>
+        </models>
+    </global>
+
+    <frontend>
+        <events>
+            <controller_front_send_response_before>
+                <observers>
+                    <amseorichdata>
+                        <type>singleton</type>
+                        <class>amseorichdata/observer</class>
+                        <method>sendResponseBefore</method>
+                    </amseorichdata>
+                </observers>
+            </controller_front_send_response_before>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <amseorichdata>
+                        <type>singleton</type>
+                        <class>amseorichdata/observer</class>
+                        <method>handleBlockOutput</method>
+                    </amseorichdata>
+                </observers>
+            </core_block_abstract_to_html_after>
+            <catalog_controller_product_init>
+                <observers>
+                    <amseorichdata>
+                        <type>singleton</type>
+                        <class>amseorichdata/observer</class>
+                        <method>onControllerProductInit</method>
+                    </amseorichdata>
+                </observers>
+            </catalog_controller_product_init>
+        </events>
+
+        <layout>
+            <updates>
+                <amseorichdata>
+                    <file>amasty/amseorichdata/amseorichdata.xml</file>
+                </amseorichdata>
+            </updates>
+        </layout>
+
+        <translate>
+            <modules>
+                <Amasty_SeoRichData>
+                    <files>
+                        <default>Amasty_SeoRichData.csv</default>
+                    </files>
+                </Amasty_SeoRichData>
+            </modules>
+        </translate>
+    </frontend>
+
+    <adminhtml>
+        <events>
+            <adminhtml_init_system_config>
+                <observers>
+                    <amseorichdata>
+                        <type>singleton</type>
+                        <class>amseorichdata/observer</class>
+                        <method>onAdminhtmlInitSystemConfig</method>
+                    </amseorichdata>
+                </observers>
+            </adminhtml_init_system_config>
+        </events>
+    </adminhtml>
+
+    <default>
+        <amseorichdata>
+            <product>
+                <container_selector>.product-view</container_selector>
+                <name_selector>.product-view .product-name</name_selector>
+                <description_selector>.short-description .std</description_selector>
+                <container_price_selector>.price-box</container_price_selector>
+            </product>
+            <organization>
+                <container_selector>.header-container</container_selector>
+                <name_selector>.header-container .logo strong</name_selector>
+                <logo_selector>.header-container .logo img</logo_selector>
+                <url_selector>.header-container .logo</url_selector>
+            </organization>
+            <rating>
+                <totals>3</totals>
+            </rating>
+            <breadcrumbs>
+                <container_selector>ul</container_selector>
+                <item_selector>li</item_selector>
+                <url_selector>li a</url_selector>
+                <title_selector>li a, li strong</title_selector>
+            </breadcrumbs>
+            <twitter>
+                <enabled>0</enabled>
+                <twitter_account></twitter_account>
+                <max_description_length>200</max_description_length>
+                <image_height>200</image_height>
+                <image_width>200</image_width>
+            </twitter>
+        </amseorichdata>
+    </default>
+
+</config>

@@ -1,0 +1,288 @@
+<?php
+/**
+ * @var $this Balance_SuperPtype_Block_Catalog_Product_View_Type_Super
+ */
+$product = $this->getProduct();
+if (!($product instanceof Mage_Catalog_Model_Product) || !$product->getId())
+{
+    return;
+}
+if (!$this->hasConfigurableProducts())
+{
+    return;
+}
+if (!$this->hasDefaultConfigurableProduct())
+{
+    return;
+}
+$configurableProducts = $this->getConfigurableProducts();
+//foreach ($configurableProducts as $p)
+//{
+//    assist($p->getData());
+////    die;
+//}
+//die;
+$defaultConfigurableProduct = $this->getDefaultConfigurableProduct();
+//assist($defaultConfigurableProduct->getData());
+$configurableColours = $this->getConfigurableColours();
+//assist($configurableColours);
+$simpleProducts = $this->getSimpleProducts();
+//$colourDescriptionOptions = $this->getColourDescriptionOptions();
+//assist($simpleProducts);
+//die;
+//if (count($simpleProducts) == 0)
+//{
+//    return;
+//}
+?>
+<style>
+div.super-attribute-div
+{
+    margin-top: 5px;
+}
+span.super-attr-span
+{
+    display: inline-block;
+    padding: 2px;
+    /*width: 28px;*/
+    height: 23px;
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 5px;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+    line-height: 25px;
+}
+span.super-attr-span:hover
+{
+    cursor: pointer;
+}
+span.super-attr-span.out-of-stock:hover
+{
+    cursor: default;
+    opacity: 1;
+}
+span.super-attr-span.selected
+{
+    background-color: #000;
+    color: #FFF;
+}
+div.size-container
+{
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+div.colour-select-container
+{
+    margin-top: 5px;
+}
+div.clear
+{
+    clear: both;
+}
+.super-attribute span.label
+{
+    color: #999;
+    font-size: 10px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-right: 5px;
+    letter-spacing: 1px;
+}
+</style>
+<div class="colour-container super-attribute" id='super-colour-container'>
+    <span class="label">COLOUR</span>
+    <div class='colour-select-container'>
+        <select id='colour-select'>
+            <?php foreach ($configurableProducts as $confProd){
+                if (!$confProd->isAvailable())
+                {
+                    continue;
+                }
+                if ($defaultConfigurableProduct->getId() == $confProd->getId()){?>
+                    <option value="<?php echo $confProd->getId();?>" selected='selected' label="<?php echo $configurableColours[$confProd->getId()]['option_label'];?>"></option>
+                <?php }else{?>
+                    <option value="<?php echo $confProd->getId();?>" label="<?php echo $configurableColours[$confProd->getId()]['option_label'];?>"></option>
+                <?php }?>
+            <?php }?>
+        </select>
+        <?php foreach ($configurableProducts as $confProd){
+            if (!$confProd->isAvailable())
+            {
+                continue;
+            }?>
+            <div id="configurable-product-post-url-<?php echo $confProd->getId();?>" style='display: none;' class='configurable-product-post-url'><?php echo $this->getSubmitUrl($confProd);;?></div>
+        <?php }?>
+    </div>
+    <div class='clear'></div>
+</div>
+<div class="size-container super-attribute" id='super-size-container'>
+    <span class="label">SELECT SIZE</span>
+    <?php foreach ($configurableProducts as $confProd){
+        if (!$confProd->isAvailable())
+        {
+            continue;
+        }?>
+        <?php
+        // See bottom comments.
+        $superAttributes = $confProd->getTypeInstance(true)->getConfigurableAttributesAsArray($confProd);
+//        assist($superAttributes);
+        foreach ($superAttributes as $attr){?>
+            <div class="super-attribute-div" pid="<?php echo $confProd->getId();?>">
+                <?php if (isset($attr['values']) && count($attr['values']) > 0){
+                    foreach ($attr['values'] as $superVal){
+                        if ($this->isSizeAvailable($superVal['value_index'], $confProd->getId())){?>
+                        <span class="super-attr-span" value-index="<?php echo $superVal['value_index'];?>" superattr="super_attribute[<?php echo $attr['attribute_id'];?>]" ><?php echo $superVal['label'];?></span>
+                        <?php }else{?>
+                            <span class="super-attr-span out-of-stock" value-index="<?php echo $superVal['value_index'];?>" superattr="super_attribute[<?php echo $attr['attribute_id'];?>]" ><?php echo $superVal['label'];?></span>
+                        <?php }?>
+                    <?php }?>
+                <?php }?>
+<!--                <input class="super-attr-input" name="super_attribute[--><?php //echo $confProd->getId();?><!--][--><?php //echo $attr['attribute_id'];?><!--]"/>-->
+                <input class="super-attr-input" name="super_attribute[<?php echo $attr['attribute_id'];?>]" style='display: none;'/>
+                <div class='clear'></div>
+            </div>
+        <?php }?>
+    <?php }?>
+</div>
+
+<?php echo $this->getChildHtml('additional-sizechart') ?>
+
+<script>
+function updateColourLabel()
+{
+    var colourSelect = jQuery('#colour-select');
+    var colourLabel = colourSelect.prev();
+    if (colourLabel.length > 0)
+    {
+        colourSelect.find('option').each(function(index, ele)
+        {
+            ele = jQuery(ele);
+            if (ele.attr('selected'))
+            {
+                colourLabel.html(ele.attr('label'));
+            }
+        })
+    }
+}
+
+function switchSize(sizeSpan)
+{
+    jQuery('.super-attr-input').attr('disabled', 'disabled');
+    var corresInput = sizeSpan.parent().find('input.super-attr-input');
+    if (corresInput.length > 0)
+    {
+        jQuery('.super-attr-span').removeClass('selected');
+        sizeSpan.addClass('selected');
+        corresInput.attr('value', sizeSpan.attr('value-index'));
+        corresInput.attr('disabled', null);
+    }
+}
+
+function switchConfigurableProduct(configurableProductId)
+{
+    // Update configurable product id input value.
+    jQuery('#product-id-input').attr('value', configurableProductId);
+    // Update price
+    updatePrice(configurableProductId);
+    var configurableSizes = jQuery('.super-attribute-div');
+    configurableSizes.hide();
+    configurableSizes.removeClass('active');
+    updateColourLabel();
+    // Update super attribute input field.
+    var attrInput = jQuery('#super-attr-input');
+    attrInput.attr('name', "super_attribute["+configurableProductId+"]");
+    attrInput.attr('value', null);
+    // Clear selected size.
+    jQuery('.super-attr-span').removeClass('selected');
+    // disabled size input.
+    jQuery('.super-attr-input').attr('disabled', 'disabled');
+//    jQuery('#configurable-product-id-input').attr('value', configurableProductId);
+    configurableSizes.each(function(index, ele)
+    {
+        ele = jQuery(ele);
+        if (ele.attr('pid') == configurableProductId)
+        {
+            ele.show();
+            ele.addClass('active');
+        }
+    });
+    // Update form post url
+    jQuery('#product_addtocart_form').attr('action', jQuery('#configurable-product-post-url-'+configurableProductId).html())
+    // Switch price
+    if (typeof switchPriceBlock == 'function')
+    {
+        switchPriceBlock(configurableProductId);
+    }
+    // Switch wishlist button
+    if (typeof switchWishListButton == 'function')
+    {
+        switchWishListButton(configurableProductId);
+    }
+}
+
+function updateMediaImages(configurableProductId)
+{
+    jQuery.ajax(
+    {
+        url: '<?php echo Mage::getBaseUrl(); ?>balance_superptype/product/media/pid/'+configurableProductId,
+        type: 'GET',
+        async: true,
+        success: function(response)
+        {
+            jQuery('#media-gallery-container').html(response);
+        },
+        error: function(response)
+        {
+//            jQuery('#lookgroup-product-list-overlay').hide();
+        }
+    });
+}
+
+function updatePrice(configurableProductId)
+{
+    var prices = jQuery('div.price-wrapper');
+    prices.hide();
+    prices.each(function(index, ele)
+    {
+        ele = jQuery(ele);
+        if (ele.attr('pid') == configurableProductId)
+        {
+            ele.show();
+        }
+    });
+
+}
+
+jQuery(document).ready(function()
+{
+    // Update colours and sizes
+    var configurableColours = jQuery('div.configurable-product-post-url');
+    // If no configurable product (colour) is avaible (which means the whole super product is not salable), hide colour select, size select, qty, add to cart btn...
+    if (configurableColours.length == 0)
+    {
+        jQuery('#super-colour-container').hide();
+        jQuery('#super-size-container').hide();
+        jQuery('.add-to-cart').hide();
+    }
+
+    jQuery('#product-id-input').attr('value', <?php echo $defaultConfigurableProduct->getId();?>);
+    switchConfigurableProduct(<?php echo $defaultConfigurableProduct->getId();?>);
+    updatePrice(<?php echo $defaultConfigurableProduct->getId();?>);
+    jQuery('#colour-select').change(function()
+    {
+        var configurableProductId = jQuery(this).attr('value');
+        // Update media images.
+        updateMediaImages(configurableProductId);
+        switchConfigurableProduct(configurableProductId);
+    });
+    jQuery('.super-attr-span').click(function()
+    {
+        if (!jQuery(this).hasClass('out-of-stock'))
+        {
+            switchSize(jQuery(this));
+        }
+    });
+});
+</script>

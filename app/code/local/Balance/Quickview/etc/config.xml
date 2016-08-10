@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Quickview>
+            <version>1.0.0</version>
+        </Balance_Quickview>
+    </modules>
+    <global>
+        <blocks>
+            <quickview>
+                <class>Balance_Quickview_Block</class>
+            </quickview>
+        </blocks>
+        <helpers>
+            <quickview>
+                <class>Balance_Quickview_Helper</class>
+            </quickview>
+        </helpers>
+
+        <models>
+            <quickview>
+                <class>Balance_Quickview_Model</class>
+            </quickview>
+        </models>
+    </global>
+    <frontend>
+        <routers>
+            <quickview>
+                <use>standard</use>
+                <args>
+                    <module>Balance_Quickview</module>
+                    <frontName>quickview</frontName>
+                </args>
+            </quickview>
+        </routers>
+        <layout>
+            <updates>
+                <quickview>
+                    <file>balance/quickview.xml</file>
+                </quickview>
+            </updates>
+        </layout>
+    </frontend>
+</config>

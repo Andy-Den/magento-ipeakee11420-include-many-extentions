@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Milandirect_Stockstatus>
+            <version>0.1.0</version>
+        </Milandirect_Stockstatus>
+    </modules>
+    <global>
+        <helpers>
+            <stockstatus>
+                <class>Milandirect_Stockstatus_Helper</class>
+            </stockstatus>
+            <amstockstatus>
+                <rewrite>
+                    <data>Milandirect_Stockstatus_Helper_Data</data>
+                </rewrite>
+            </amstockstatus>
+        </helpers>
+    </global>
+</config>

@@ -1,0 +1,115 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<?php
+    $_helper    = $this->helper('catalog/output');
+    $_category  = $this->getCurrentCategory();
+    $_imgHtml   = '';
+?>
+<div class="page-title category-title">
+    <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
+        <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
+    <?php endif; ?>
+    <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
+</div>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+    <ul class="subcat">
+    <?php
+    $_subcat = $_category->getChildrenCategories();
+
+    if ($_subcat && method_exists($_subcat, 'addAttributeToSelect')) {
+        $_subcat->addAttributeToSelect('thumbnail');
+    }
+
+    $dir = new Varien_Io_File();
+    $dir->mkdir(BP . "/media/catalog/category/resized/subcat", '0777');
+        $i=1;
+        $_num = count($_subcat);
+        foreach($_subcat as $_subcategory){
+            $_subcategory->load($_subcategory->getId());
+            if($_subcategory->getIncludeInMenu()){
+                $imageThumb = Mage::getDesign()->getSkinUrl('images/catalog/product/placeholder/image.jpg');
+                $thumb = Mage::getModel('catalog/category')->load($_subcategory->getId())->getThumbnail();
+                $class = ($i % 2 == 0)?"odd":"";
+                if($_num % 2 ==0){
+                      if( $i == $_num || $i==$_num-1){
+                            $last = ' last';
+                      }
+                }else{
+                    if($i==$_num){
+                        $last = ' last';
+                    }
+                }
+                if (! $thumb){
+                    $thumb = Mage::getDesign()->getSkinUrl('images/catalog/product/placeholder/image.jpg');
+                }else{
+                    $imageUrl = Mage::getBaseDir('media').DS."catalog".DS."category".DS.$thumb;
+
+                    $imageResized = Mage::getBaseDir('media').DS."catalog".DS."product".DS."cache".DS."cat_thumb_resized".DS.$thumb;
+                    if (!file_exists($imageResized) && file_exists($imageUrl) || file_exists($imageUrl) && filemtime($imageUrl) > filemtime($imageResized)) {
+                        $imageObj = new Varien_Image($imageUrl);
+                        $imageObj->constrainOnly(true);
+                        $imageObj->keepAspectRatio(true);
+                        $imageObj->keepFrame(false);
+                        $imageObj->resize(110);
+                        $imageObj->save($imageResized);
+                    }
+
+                    if(file_exists($imageResized)){
+                        $imageThumb =  Mage::getBaseUrl('media' )."catalog/product/cache/cat_thumb_resized/".$thumb;
+                    }
+                }
+                ?>
+
+                <li class="<?php echo $class.@$last?>">
+                    <a href="<?php echo $_subcategory->getUrl() ?>"><img src="<?php echo $imageThumb;?>" alt="<?php echo $_subcategory->getName() ?>" width="100px"/></a>
+                    <a href="<?php echo $_subcategory->getUrl(); ?>" class="catname" title="<?php echo $_subcategory->getName(); ?>"><?php echo $_subcategory->getName() ?></a>
+                </li>
+        <?php
+                $i++;
+            }
+        }
+    ?>
+    </ul>
+
+<?php if($this->isContentMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+
+<?php elseif($this->isMixedMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+    <?php echo $this->getProductListHtml() ?>
+<?php else: ?>
+    <?php echo $this->getProductListHtml() ?>
+<?php endif; ?>

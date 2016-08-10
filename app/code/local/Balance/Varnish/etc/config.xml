@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Varnish>
+            <version>0.0.1</version>
+        </Balance_Varnish>
+    </modules>
+    <global>
+        <models>
+            <varnish>
+                <class>Balance_Varnish_Model</class>
+                <resourceModel>varnish_resource_mysql4</resourceModel>
+            </varnish>
+            <varnish_resource_mysql4>
+                <class>Balance_Varnish_Model_Resource_Mysql4</class>
+            </varnish_resource_mysql4>
+
+            <review_resource>
+                <rewrite>
+                    <review>Balance_Varnish_Model_Resource_Review</review>
+                </rewrite>
+            </review_resource>
+
+
+        </models>
+        <helpers>
+            <varnish>
+                <class>Balance_Varnish_Helper</class>
+            </varnish>
+        </helpers>
+        <events>
+            <!-- purge product cache after stock upate -->
+            <cataloginventory_stock_item_save_after>
+                <observers>
+                    <Balance_Varnish>
+                        <class>varnish/observer</class>
+                        <method>purgeCatalogProductByStock</method>
+                    </Balance_Varnish>
+                </observers>
+            </cataloginventory_stock_item_save_after>
+
+            <!-- register shutdown function to handle core url rewrite raw exit -->
+            <controller_front_init_routers>
+                <observers>
+                    <Balance_Varnish>
+                        <class>varnish/observer</class>
+                        <method>registerShutdownFunction</method>
+                    </Balance_Varnish>
+                </observers>
+            </controller_front_init_routers>
+        </events>
+    </global>
+    <adminhtml>
+        <events>
+            <!-- disable page caching for all admin requests -->
+            <controller_action_predispatch_adminhtml>
+                <observers>
+                    <varnish>
+                        <class>varnish/observer</class>
+                        <method>disablePageCaching</method>
+                    </varnish>
+                </observers>
+            </controller_action_predispatch_adminhtml>
+            <!-- purge category cache after save -->
+            <catalog_category_save_after>
+                <observers>
+                    <varnish>
+                        <class>varnish/observer</class>
+                        <method>purgeCatalogCategory</method>
+                    </varnish>
+                </observers>
+            </catalog_category_save_after>
+            <!-- purge product cache after save -->
+            <catalog_product_save_after>
+                <observers>
+                    <varnish>
+                        <class>varnish/observer</class>
+                        <method>purgeCatalogProduct</method>
+                    </varnish>
+                </observers>
+            </catalog_product_save_after>
+            <!-- purge cms page cache after save -->
+            <cms_page_save_after>
+                <observers>
+                    <varnish>
+                        <class>varnish/observer</class>
+                        <method>purgeCmsPage</method>
+                    </varnish>
+                </observers>
+            </cms_page_save_after>
+            <!-- purge product afte saving review -->
+            <review_product_save_after>
+                <observers>
+                    <varnish>
+                        <type>singleton</type>
+                        <class>varnish/observer</class>
+                        <method>purgeCatalogProductByReview</method>
+                    </varnish>
+                </observers>
+            </review_product_save_after>
+        </events>
+    </adminhtml>
+    <frontend>
+        <events>
+            <!-- add cache headers -->
+            <controller_action_postdispatch>
+                <observers>
+                    <varnish>
+                        <class>varnish/observer</class>
+                        <method>setCacheControlHeaders</method>
+                    </varnish>
+                </observers>
+            </controller_action_postdispatch>
+            <http_response_send_before>
+                <observers>
+                    <varnish>
+                        <class>varnish/observer</class>
+                        <method>sanitizeCacheControlHeader</method>
+                    </varnish>
+                </observers>
+            </http_response_send_before>
+        </events>
+    </frontend>
+    <default>
+        <system>
+            <varnish>
+                <enabled>0</enabled>
+                <servers>localhost</servers>
+                <port>80</port>
+                <ttl>14400</ttl>
+                <purge_catalog_category>0</purge_catalog_category>
+                <purge_catalog_product>0</purge_catalog_product>
+                <purge_cms_page>0</purge_cms_page>
+                <debug>0</debug>
+            </varnish>
+            <varnish_crawler>
+                <enabled>0</enabled>
+                <design_exceptions>0</design_exceptions>
+                <multicurrency>0</multicurrency>
+                <threads_num>1</threads_num>
+                <include_homepage>1</include_homepage>
+                <include_category>1</include_category>
+                <include_product>1</include_product>
+                <include_cms>1</include_cms>
+                <adapter>varnish/adapter_default</adapter>
+                <set_currency_cookie>1</set_currency_cookie>
+                <interval>0.5</interval>
+            </varnish_crawler>
+        </system>
+    </default>
+</config>

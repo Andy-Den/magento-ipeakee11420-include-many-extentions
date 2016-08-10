@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Mobiledetect>
+            <version>0.1.0</version>
+        </Balance_Mobiledetect>
+    </modules>
+
+    <!-- frontend>
+        <routers>
+            <customer>
+                <args>
+                    <modules>
+                        <Balance_Mobiledetect before="Mage_Customer">Balance_Mobiledetect</Balance_Mobiledetect>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
+    </frontend -->
+
+    <global>
+        <helpers>
+            <mobiledetect>
+                <class>Balance_Mobiledetect_Helper</class>
+            </mobiledetect>
+        </helpers>
+    </global>
+</config>

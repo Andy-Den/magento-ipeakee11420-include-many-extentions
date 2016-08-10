@@ -1,0 +1,27 @@
+<?php 
+$productIds = $this->getLatestOrderedProducts();
+	foreach($productIds as $productId) :
+			echo "<BR> product id==".$productId;
+			$_product = Mage::getModel('catalog/product')->load($productId);
+			echo "<BR> product name==".$_product->getName();
+			echo "<BR> product url==".$_product->getProductUrl(); 
+			echo "<BR> created at==".$_product->getCreatedAt(); 
+	endforeach;		
+//echo $collection->getSelect()->__toString();
+?>
+
+<div class="tooltip-popup" id="email-to-friends" style="display: block;top:0px;"> 
+<iframe src="#" width="400px" height="250px;"></iframe>
+</div>
+<!--
+<div class="tooltip-popup" id="email-to-friends" style="display: block;top:0px;"> 
+	<span class="corner-top"></span> 
+	<span class="corner-bottom"> 
+		<a class="cross-button right" onclick="addToCart.closePopup();" title="Close" href="javascript:void(0)"></a>
+		<h3 id="emailToFriends">Email To Friends</h3>
+		<div class="tooltip-pop-content" style="color: rgb(0, 0, 0);">
+			<iframe src="#" width="400px" height="250px;"></iframe>		
+		</div>		
+	</span> 
+</div>
+-->

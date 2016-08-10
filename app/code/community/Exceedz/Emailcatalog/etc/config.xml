@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Exceedz_Emailcatalog>
+            <version>0.1.0</version>
+        </Exceedz_Emailcatalog>
+    </modules>
+    <frontend>
+        <routers>
+            <emailcatalog>
+                <use>standard</use>
+                <args>
+                    <module>Exceedz_Emailcatalog</module>
+                    <frontName>emailcatalog</frontName>
+                </args>
+            </emailcatalog>
+        </routers>
+        <layout>
+            <updates>
+                <emailcatalog>
+                    <file>emailcatalog.xml</file>
+                </emailcatalog>
+            </updates>
+        </layout>
+    </frontend>
+    <global>
+        <blocks>
+            <emailcatalog>
+                <class>Exceedz_Emailcatalog_Block</class>
+            </emailcatalog>
+        </blocks>
+        <helpers>
+            <emailcatalog>
+                <class>Exceedz_Emailcatalog_Helper</class>
+            </emailcatalog>
+        </helpers>
+        
+        <!-- AB: Template Node Added for Email Template -->
+        <template>
+            <email>
+                <emailcatalog_email_email_template translate="label" module="emailcatalog">
+                    <label>Email Catalog</label>
+                    <file>email_catalog.html</file>
+                    <type>html</type>
+                </emailcatalog_email_email_template>
+            </email>
+        </template>
+    </global>
+    
+    <default>
+        <emailcatalog>
+            <general>
+                <active>1</active>
+            </general>
+            <email>
+                <email_identity>general</email_identity>
+                <email_template>emailcatalog_email_email_template</email_template>
+            </email>
+        </emailcatalog>
+    </default>
+</config>

@@ -1,0 +1,738 @@
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/* ============================================ *
+ * CMS Pages
+ * ============================================ */
+
+// ----------------------------------------------
+// Content for static pages
+.cms-warranty-information {
+    .wrapper
+    {
+        .std ul li {
+            background: url(../images/bkg_bulletsm.gif) no-repeat 0 7px;
+            text-indent: 10px;
+        }
+    }
+}
+
+.cms-no-route {
+    .std {
+        h3 {
+            @include pageTitle;
+        }
+        ul {
+            li {
+                font-family: $f-stack-regular;
+                font-style: normal;
+                color: #000000;
+                a {
+                    color: #000000;
+                    text-decoration: underline;
+                }
+            }
+        }
+        p {
+            margin-bottom: 0;
+            line-height: 1em;
+            font-family: $f-stack-regular;
+            font-style: normal;
+            color: #000000;
+            font-size: 14px;
+            a {
+                color: #000000;
+                text-decoration: underline;
+            }
+        }
+        strong {
+            color: #000000;
+            font-family: $f-stack-serif;
+            font-weight: 300;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 17px;
+            margin-bottom: -3px;
+        }
+    }
+}
+
+.cms-page-view {
+    .std {
+        h3 {
+            @include pageTitle;
+        }
+        ul {
+            list-style: none;
+            li {
+                font-family: $f-stack-regular;
+                font-style: normal;
+                color: #000000;
+                a {
+                    color: #000000;
+                    text-decoration: underline;
+                }
+            }
+        }
+        p {
+            margin-bottom: 0;
+            line-height: 1em;
+            font-family: $f-stack-regular;
+            font-style: normal;
+            color: #000000;
+            font-size: 14px;
+            a {
+                color: #000000;
+                text-decoration: underline;
+            }
+        }
+        strong {
+            color: #000000;
+            font-family: $f-stack-serif;
+            font-weight: 300;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 17px;
+            margin-bottom: -3px;
+        }
+    }
+}
+.cms-page-view.cms-help-centre{
+    .security-info {
+        .container{
+            border-top: none;
+        }
+    }
+}
+@include bp(max-width, $bp-small) {
+    .cms-page-view {
+        .std {
+            strong {
+                margin-top: 0;
+            }
+            ul {
+                li {
+                    margin-left: 18px;
+                }
+            }
+            img{
+                max-width: 100%;
+            }
+        }
+    }
+    .blog-post-view{
+        img{
+            max-width: 100%;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Accordition
+
+#accordion {
+    @include accordion;
+
+    li {
+        position: relative;
+        overflow: hidden;
+
+        .plusimage h2 {
+            margin-right: $gap;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Sitemap
+
+.page-sitemap {
+    .links {
+        display: block;
+        text-align: right;
+        margin: 0 20px 0 0;
+
+        a {
+            position: relative;
+        }
+    }
+
+    .sitemap {
+        padding: 0 20px;
+        margin: 15px 0;
+        font-size: $f-size-xs;
+
+        li {
+            margin: 3px 0;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Contact page
+
+.contacts-index-index {
+    h1 {
+        border: none;
+    }
+}
+
+#contactForm {
+    padding-left: 40px;
+
+    h2 {
+        display: none;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+
+    .fieldset .legend + .required {
+        margin: 0;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+
+    #contactForm {
+        padding-left: 0;
+    }
+}
+
+// Style Help Center Page
+
+.faq-list {
+    float: left;
+    width: 100%;
+    .page-title {
+        padding-bottom: 24px;
+        padding-left: 1px;
+        h1 {
+            border-bottom: 3px solid #e7e7e7;
+            color: #000000;
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 23px;
+            padding-bottom: 7px;
+            text-transform: none;
+            margin-left: -1px;
+        }
+    }
+    br {
+        display: none;
+    }
+    dl {
+        float: left;
+        width: 100%;
+        br {
+            display: block;
+        }
+        dt {
+            float: left;
+            width: 100%;
+            border-bottom: 1px solid #dddddd;
+            label {
+                float: left;
+                font-family: $f-stack-special;
+                color: #000000;
+                font-size: 24px;
+                line-height: 72px;
+                padding-left: 1px;
+                letter-spacing: -0.6px;
+            }
+            span {
+                float: right;
+                line-height: 72px;
+                cursor: pointer;
+                &:after {
+                    content: $fa-var-angle-down;
+                    font-family: $f-stack-icon;
+                    font-size: 24px;
+                    color: #0e83c0;
+                    margin-right: 21px;
+                    line-height: 1.1em;
+                    vertical-align: top;
+                    display: inline-block;
+                    margin-top: 23px;
+
+                }
+            }
+            span.active {
+                &:after {
+                    content: $fa-var-angle-up;
+                }
+            }
+            &:first-child {
+                border-top: 1px solid #dddddd;
+            }
+        }
+        dd {
+            border-bottom: 1px solid #dddddd;
+            float: left;
+            width: 100%;
+            padding-bottom: 6px;
+            .faq-second {
+                float: left;
+                width: 100%;
+                ul {
+                    float: left;
+                    width: 50%;
+                    list-style: none;
+                    padding-left: 2px;
+                    padding-top: 4px;
+                    li {
+                        float: left;
+                        width: 100%;
+                        display: block;
+                        margin-left: 0;
+                        padding-top: 24px;
+                        p {
+                            font-family: $f-stack-regular;
+                            margin: 0;
+                            color: $c-gray;
+                            max-width: 480px;
+                            margin-top: 3px;
+                            margin-left: 0;
+                            font-style: normal;
+                            line-height: 1.5em;
+                        }
+                        .quesition-title {
+                            font-family: $f-stack-serif;
+                            font-size: 16px;
+                            letter-spacing: 0;
+                            margin-bottom: 5px;
+                            color: #000000;
+                            line-height: 1.3em;
+                        }
+                        a {
+                            color: $c-gray;
+                        }
+                    }
+                }
+                .left {
+                    li {
+                        .quesition-title {
+                            max-width: 440px;
+                        }
+                    }
+                }
+                .right {
+                    padding-left: 5px;
+                    li {
+                        .quesition-title {
+                            max-width: 455px;
+                        }
+                        p {
+                            max-width: 495px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include bp(max-width, $bp-small) {
+    .faq-list {
+        dl {
+            dd {
+                .faq-second {
+                    ul {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Milan desktop about page
+.cms-about-milan {
+    .about-milan-tab {
+        display: inline-block;
+        max-width: 100%;
+        margin-top: 15px;
+        .about-head-text {
+            width: 100%;
+            max-width: 485px;
+            display: inline-block;
+            vertical-align: top;
+            padding-right: 30px;
+            box-sizing: border-box;
+            .sub-text {
+                font-size: 16px;
+                line-height: 22px;
+                color: $c-gray;
+                border-bottom: none;
+            }
+            div {
+                display: block;
+                font-size: 14px;
+                line-height: 22px;
+                font-family: $f-stack-regular;
+                text-align: left;
+                padding-bottom: 18px;
+                .hightlight {
+                    text-decoration: underline;
+                    text-decoration-color: #a1a1a1;
+                }
+                strong {
+                    font-family: $f-stack-special;
+                    font-size: 16px;
+                    line-height: 22px;
+                    color: $c-gray;
+                    display: block;
+                    padding-bottom: 10px;
+                }
+            }
+        }
+        .right-gallery {
+            width: 100%;
+            max-width: 595px;
+            display: inline-block;
+            vertical-align: top;
+            padding-top: 5px;
+            float: right;
+            .milan-factory, .milan-ramler, .milan-cars {
+                width: 100%;
+                display: inline-block;
+                vertical-align: top;
+                padding-bottom: 10px;
+            }
+            .milan-factory {
+                img {
+                    width: 100%;
+                }
+            }
+            .milan-ramler {
+                img {
+                    &:first-child {
+                        width: 62.65%;
+                        padding-right: 10px;
+                        box-sizing: border-box;
+                        float: left;
+                    }
+                    &:last-child {
+                        width: 37.35%;
+                    }
+                }
+            }
+            .milan-cars {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+        .bottom-gallery {
+            width: 100%;
+            max-width: 1180px;
+            display: inline-block;
+            margin-top: 50px;
+            img {
+                display: inline-block;
+                width: 33.33%;
+                max-width: 394px;
+                float: left;
+            }
+        }
+    }
+    .why-not-tab, .behind-the-scenes-tab {
+        width: 100%;
+        .title-tab {
+            border-bottom: 1px solid #dddddd;
+            border-top: 1px solid #dddddd;
+            .titlTxt {
+                font-size: 24px;
+                font-family: $f-stack-special;
+                color: $c-black;
+                padding: 25px 0;
+                cursor: pointer;
+            }
+            span {
+                float: right;
+                line-height: 75px;
+                position: relative;
+                &.active {
+                    &:after {
+                        content: $fa-var-angle-up;;
+                    }
+                }
+                &:after {
+                    position: absolute;
+                    content: $fa-var-angle-down;
+                    font-size: 24px;
+                    font-family: $f-stack-icon;
+                    width: 20px;
+                    height: 20px;
+                    color: #0e83c0;
+                    right: 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .Our-philosophy-text {
+            padding-top: 15px;
+            border-top: 1px solid #dddddd;
+            .Our-philosophy-left-text {
+                p {
+                    color: $c-gray;
+                    padding: 10px 0;
+                }
+            }
+        }
+    }
+    .why-not-tab {
+        .title-tab {
+            border-bottom: none;
+        }
+    }
+    .behind-the-scenes-tab {
+        .Our-philosophy-text {
+            max-width: 425px;
+        }
+    }
+    @include bp(max-width, 1024px) {
+        .about-milan-tab {
+            .about-head-text {
+                padding-right: 0;
+                max-width: 100%;
+                width: 41.1%;
+            }
+            .right-gallery {
+                max-width: 100%;
+                width: 50.42%;
+                float: right;
+            }
+        }
+    }
+    @include bp(max-width, $bp-large + 1) {
+        .about-milan-tab {
+            .about-head-text {
+                padding-right: 0;
+                width: 100%;
+            }
+            .right-gallery {
+                float: none;
+                width: 100%;
+            }
+            .bottom-gallery {
+                margin-top: 0;
+            }
+        }
+    }
+    @include bp(max-width, $bp-small + 1) {
+        .why-not-tab, .behind-the-scenes-tab {
+            .title-tab {
+                .titlTxt {
+                    font-size: 20px;
+                    padding: 15px 0;
+                }
+                span {
+                    &:after {
+                        margin: -6px 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// New and Media page
+.cms-new-and-media {
+    .page-title {
+        display: block;
+        > h1 {
+            border-bottom: 3px solid #e7e7e7;
+        }
+        .sub-text {
+            color: $c-gray;
+            display: block;
+            max-width: 1090px;
+            line-height: 24px;
+            padding-bottom: 15px;
+        }
+    }
+    .silde-overview {
+        display: inline-block;
+        width: 100%;
+        max-width: 1180px;
+        .box-view {
+            width: 23.7%;
+            margin-left: 1.7333%;
+            float: left;
+            &:first-child {
+                margin-left: 0;
+            }
+            &:last-child {
+                float: right;
+            }
+            .actions {
+                position: relative;
+                img {
+                    width: 100%;
+                }
+                .btn-read-box {
+                    border: 2px solid $c-white;
+                    color: $c-white;
+                    position: absolute;
+                    bottom: 40px;
+                    width: 78.6%;
+                    z-index: 1;
+                    left: 10.7%;
+                }
+            }
+            p {
+                font-family: $f-stack-special;
+                line-height: 20px;
+                color: $c-black;
+                max-width: 234px;
+                width: 100%;
+                padding-top: 10px;
+            }
+            a {
+                cursor: pointer;
+            }
+        }
+        @include bp(max-width, $bp-medium) {
+            .box-view {
+                .actions {
+                    .btn-read-box {
+                        min-width: 0;
+                    }
+                }
+            }
+        }
+        @include bp(max-width, $bp-medium - 3) {
+            .box-view {
+                width: 100%;
+                text-align: center;
+                padding-bottom: 10px;
+                p {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+    .list-news {
+        padding-top: 50px;
+        width: 100%;
+        tr {
+            vertical-align: top;
+            border-top: 2px solid #e7e7e7;
+            td {
+                padding: 20px 0;
+                &:nth-child(1) {
+                    width: 16.3%;
+                }
+                &:nth-child(2) {
+                    width: 34.3%;
+                }
+                &:nth-child(3) {
+                    width: 49.6%;
+                }
+                .logo {
+                    padding-left: 0;
+                }
+                p {
+                    line-height: 22px;
+                    padding-bottom: 20px;
+                }
+                a {
+                    cursor: pointer;
+                }
+            }
+            th {
+                font-size: 18px;
+                line-height: 34px;
+                color: $c-black;
+                font-family: $f-stack-special;
+                padding: 30px 0;
+                &:nth-child(1) {
+                    width: 16.3%;
+                }
+                &:nth-child(2) {
+                    width: 34.3%;
+                }
+                &:nth-child(3) {
+                    width: 49.6%;
+                }
+            }
+        }
+        @include bp(max-width, $bp-xsmall + 1) {
+            tr {
+                display: block;
+                width: 100%;
+                text-align: center;
+                &:first-child {
+                    display: none;
+                }
+                td {
+                    padding: 10px 0;
+                    width: 100%;
+                    display: block;
+                    .logo {
+                        width: 100%;
+                        float: none;
+                        img {
+                            width: 100%;
+                        }
+                    }
+                    &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+                        width: 100%;
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.main-container {
+    .main {
+        .col-main{
+            .std{
+                div#messages{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+.cms-commercial-orders {
+    .std > div {
+        width: 100% !important;
+        table {
+            @include bp(max-width, $bp-large + 1){
+                width: 100% !important;
+                td, img {
+                    width: 100%;
+                    float: left;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,128 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+
+<!--<script>-->
+<!--    jQuery(document).ready(function(){-->
+<!--        jQuery("#header").sticky({ topSpacing: 0 });-->
+<!--    });-->
+<!--</script>-->
+<div class="header-container">
+    <div class="grey-bar">
+        <div class="switches"><?php echo $this->getChildHtml('switches') ?></div>
+        <?php echo $this->getChildHtml('topLinks') ?>
+    </div>
+    <div class="header" id="header">
+        <div class="inner">
+            <div class="branding">
+                <?php if ($this->getIsHomePage()): ?>
+                    <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"/></a></h1>
+                <?php else: ?>
+                    <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"/></a>
+                <?php endif ?>
+                <?php echo $this->getChildHtml('headerCallout') ?>
+            </div>
+            <div class="quick-access">
+                <!--<div class="checkout-link"><?php //echo $this->getChildHtml('checkoutLinks') ?></div>-->
+                <div id="top-cart"><?php echo $this->getChildHtml('topCart') ?></div>
+    <!--            <p class="payment-logo">-->
+    <!--                <image alt="payment logo" src="--><?php //echo $this->getSkinUrl('images/pay-logo.png') ?><!--"/>-->
+    <!--            </p>-->
+    <!--            <div class="header-panel">-->
+    <!--                <p class="welcome-msg" id="welcome">--><?php //echo $this->getChildHtml('welcome') ?><!--</p>-->
+    <!--                --><?php ////echo $this->getChildHtml('accountLinks') ?>
+    <!--            </div>-->
+                <?php echo $this->getChildHtml('topSearch') ?>
+            </div>
+        </div>
+    </div>
+    <div class="nav-container">
+        <div class="topCurv_lft">
+            <div class="topCurv_rht">
+                <div class="topCurv_bg">
+                    <?php echo $this->getChildHtml('topMenu') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php echo $this->getChildHtml('topContainer') ?>
+</div>
+<?php
+// Code use for store switching
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
+    || $_SERVER['SERVER_PORT'] == 443
+) {
+
+    $baseUnsecure = Mage::getUrl('', array('_secure' => true));
+} else {
+    $baseUnsecure = Mage::getBaseUrl();
+}
+
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
+    || $_SERVER['SERVER_PORT'] == 443
+) {
+
+    $baseUrl = Mage::getUrl('', array('_secure' => true));
+} else {
+    $baseUrl = Mage::getBaseUrl();
+}
+
+
+$setReload = 'no';
+if ($this->getRequest()->getParam('store')) {
+    $baseUrl = Mage::getModel('core/store')->getStoreUrlByCode(ucwords(str_replace('_', ' ', $this->getRequest()->getParam('store'))), false);
+    if (Mage::app()->getStore()->getCode() != 'default' && Mage::app()->getStore()->getCode() != $this->getRequest()->getParam('store'))
+        $setReload = 'yes';
+}
+?>
+<script type="text/javascript">
+    var BASE_URL = '<?php echo $baseUrl; ?>';
+    var BASE_UNSECURE_URL = '<?php echo $baseUnsecure; ?>';
+    var SKIN_URL = '<?php echo $this->helper('core/js')->getJsSkinUrl('') ?>';
+    var PAGE_RELOAD = '<?php echo $setReload; ?>';
+</script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery.sticky.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery.masonry.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/modernizr-transitions.js'); ?>"></script>
+
+<script>
+    jQuery(function(){
+
+        var $container = jQuery('.top_level .mega-sep');
+
+        $container.imagesLoaded(function(){
+            $container.masonry({
+                itemSelector: '.columns',
+                columnWidth: 0,
+                isAnimated: !Modernizr.csstransitions
+            });
+        })
+
+    });
+</script>

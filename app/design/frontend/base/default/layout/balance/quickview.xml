@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>balance/quickview/css/quickview.css</stylesheet></action>
+            <action method="addItem"><type>skin_js</type><name>balance/quickview/js/quickview.js</name></action>
+        </reference>
+	</default>		
+	<quickview_index_view>
+        <reference name="head">
+            <action method="addJs"><script>varien/product.js</script></action>
+            <action method="addJs"><script>varien/configurable.js</script></action>
+            <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/><!--<if/><condition>can_load_calendar_js</condition>--></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
+        </reference>
+		<update handle="catalog_product_view"/>
+        
+        <reference name="root">
+            <action method="setTemplate"><template>balance/quickview/page/product.phtml</template></action>
+        </reference>
+		<reference name="product.info">
+			<action method="setTemplate"><template>balance/quickview/catalog/product/view.phtml</template></action>
+		</reference>
+        <reference name="product.info.media">
+            <action method="setTemplate">
+                <template>balance/quickview/catalog/product/view/media.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+			<remove name="product.info.upsell"/>
+        </reference>		
+        <remove name="footer"/>
+    </quickview_index_view>
+</layout>

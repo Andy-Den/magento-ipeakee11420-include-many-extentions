@@ -1,0 +1,141 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+
+    $_helper = $this->helper('catalog/output');
+
+    function cutWord($sentence, $limit, $padding){
+
+        $strArry = explode(" ", $sentence);
+        $output = "";
+
+        foreach ($strArry as $shortStr) {
+                if (strlen( $output . ' ' . $shortStr . $padding ) <= $limit ) {
+                    $output .=  ' ' . $shortStr;
+                } else {
+                    $output .= $padding;
+                    break;
+                }
+        }
+        return $output;
+    }
+?>
+
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+<?php echo $this->getToolbarHtml() ?>
+<?php echo $this->getAdditionalHtml() ?>
+<div class="category-products">
+<?php // Grid Mode ?>
+<?php $_collectionSize = $_productCollection->count() ?>
+<?php $_columnCount = $this->getColumnCount(); ?>
+<?php $i=0; foreach ($_productCollection as $_product): ?>
+    <?php if ($i++%$_columnCount==0): ?>
+    <ul class="products-grid">
+    <?php endif ?>
+        <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+           <div class="onsale-category-container-grid">
+                <?php echo Mage::helper('onsale')->getCategoryLabelHtml($_product); ?>
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+            </div>
+            <div class="name-desc-container">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="product-title">
+                    <?php if(strlen($_product->getName())>60):?>
+                        <?php
+                            $_name = $_product->getName();
+                            $limit = 57;
+                            $padding=" ...";
+                            echo cutWord($_name, $limit, $padding);
+                        ?>
+
+                    <?php else :?>
+                        <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
+                    <?php endif;?></a>
+
+                    <?php if ($_product->getShortDescription()):?>
+                        <?php if(strlen($_product->getShortDescription())>45):?>
+                            <?php
+
+                                $_description = $_product->getShortDescription();
+                                $limit = 45;
+                                $padding=" ...";
+
+                                $_shortDescription =  cutWord($_description, $limit, $padding);
+
+                            ?>
+                             <p><?php echo $_shortDescription;?></p>
+                        <?php else:?>
+                            <p><?php echo $_product->getShortDescription(); ?></p>
+                        <?php endif?>
+                    <?php endif;?>
+            </div>
+            <?php echo $this->getPriceHtml($_product, true) ?>
+            <div class="actions">
+                <?php if($_product->isSaleable()): ?>
+                   <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+                <?php endif; ?>
+                <?php
+                    $stockStatus = Mage::helper('amstockstatus')->show($_product);
+                ?>
+                <?php if ($_product->getIsSalable()): ?>
+
+                <?php else:
+                    if(!stripos($stockStatus, 'Sold Out')) :
+                ?>
+                    <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+                    <?php else: ?>
+                        <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('Pre-Order Now') ?>" class="btn-pre-ordernow"></button>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <?php
+                    if(!stripos($stockStatus, 'Sold Out'))
+                        echo $stockStatus;
+                    else
+                        //echo str_replace('pre order :','',$stockStatus);
+                         echo $stockStatus;
+                ?>
+            </div>
+        </li>
+    <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+    </ul>
+    <?php endif ?>
+    <?php endforeach ?>
+    <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+</div>
+<?php echo $this->getToolbarHtml() ?>
+<?php endif; ?>
+

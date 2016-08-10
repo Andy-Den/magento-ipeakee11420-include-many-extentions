@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Catalog>
+            <version>0.0.1</version>
+        </Milandirect_Catalog>
+    </modules>
+    <global>
+        <blocks>
+            <criteotags>
+                <rewrite>
+                    <tags_cart>Milandirect_Criteotags_Block_Tags_Cart</tags_cart>
+                    <tags_category>Milandirect_Criteotags_Block_Tags_Category</tags_category>
+                    <tags_home>Milandirect_Criteotags_Block_Tags_Home</tags_home>
+                    <tags_product>Milandirect_Criteotags_Block_Tags_Product</tags_product>
+                    <tags_success>Milandirect_Criteotags_Block_Tags_Success</tags_success>
+                </rewrite>
+            </criteotags>
+        </blocks>
+    </global>
+</config>

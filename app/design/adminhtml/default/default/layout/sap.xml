@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_sap_import_index>
+        <reference name="content">
+            <block type="sap/adminhtml_import" name="sap" />
+        </reference>
+    </adminhtml_sap_import_index>
+
+    <adminhtml_sap_order_index>
+        <reference name="content">
+            <block type="sap/adminhtml_order" name="sap" />
+        </reference>
+    </adminhtml_sap_order_index>
+</layout>

@@ -1,0 +1,67 @@
+<?php
+/**
+ * @var $this Balance_SuperPtype_Block_Catalog_Product_View_Type_Super
+ */
+$product = $this->getProduct();
+if (!($product instanceof Mage_Catalog_Model_Product) || !$product->getId())
+{
+    return;
+}
+if (!$this->hasConfigurableProducts())
+{
+    return;
+}
+if (!$this->hasDefaultConfigurableProduct())
+{
+    return;
+}
+$configurableProducts = $this->getConfigurableProducts();
+$defaultConfigurableProduct = $this->getDefaultConfigurableProduct();
+?>
+<style>
+.price-box .price-wrapper
+{
+    display: none;
+}
+</style>
+<div class="price-box">
+    <?php foreach ($configurableProducts as $p){
+        if ($p->getSpecialPrice() && $p->getSpecialPrice() != $p->getPrice()){?>
+            <div class='price-wrapper' pid="<?php echo $p->getId();?>">
+                <p class="old-price">
+                    <span class="price-label">WAS</span>
+                    <span class="price" id="old-price-<?php echo $p->getId();?>"><?php echo $p->getPrice();?></span>
+                </p>
+                <p class="special-price">
+                    <span class="price-label">NOW</span>
+                    <span class="price" id="product-price-<?php echo $p->getId();?>"><?php echo $p->getSpecialPrice();?></span>
+                </p>
+            </div>
+        <?php }else{ ?>
+            <div class='price-wrapper' pid="<?php echo $p->getId();?>">
+                <span class="regular-price" id="product-price-<?php echo $p->getId();?>">
+                    <span class="price"><?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol().$p->getPrice();?></span>
+                </span>
+            </div>
+        <?php }?>
+    <?php }?>
+</div>
+<script>
+function switchPriceBlock(pid)
+{
+    var blocks = jQuery('.price-box .price-wrapper');
+    if (blocks.length != 0)
+    {
+        blocks.hide();
+        blocks.each(function(index, ele)
+        {
+            ele = jQuery(ele);
+            if (ele.attr('pid') == pid)
+            {
+                ele.show();
+                return false;
+            }
+        });
+    }
+}
+</script>

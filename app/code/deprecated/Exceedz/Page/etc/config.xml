@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Exceedz_Page>
+			<version>1.1</version>
+		</Exceedz_Page>
+	</modules>
+	<global>			<blocks>					<page>							<rewrite>									<html_head>Exceedz_Page_Block_Html_Head</html_head>                    				</rewrite>											</page>					</blocks>					
+	</global>
+</config>

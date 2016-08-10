@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Wishlist>
+            <version>0.1.0</version>
+        </Milandirect_Wishlist>
+    </modules>
+    <global>
+        <models>
+            <wishlist>
+                <rewrite>
+                    <item>Milandirect_Wishlist_Model_Item</item>
+                </rewrite>
+            </wishlist>
+        </models>
+    </global>
+</config>

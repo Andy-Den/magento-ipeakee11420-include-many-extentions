@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_ConnectFurniture>
+            <version>0.1.0</version>
+        </Balance_ConnectFurniture>
+    </modules>
+    <global>
+        <blocks>
+            <connectfurniture>
+                <class>Balance_ConnectFurniture_Block</class>
+            </connectfurniture>
+        </blocks>
+        <helpers>
+            <connectfurniture>
+                <class>Balance_ConnectFurniture_Helper</class>
+            </connectfurniture>
+        </helpers>
+        <models>
+            <connectfurniture>
+                <class>Balance_ConnectFurniture_Model</class>
+            </connectfurniture>
+        </models>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <connectfurniture before="Mage_Adminhtml">Balance_ConnectFurniture_Adminhtml</connectfurniture>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <crontab>
+        <jobs>
+            <export_connectfurniture_feed>
+                <schedule>
+                    <cron_expr>* 1 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>connectfurniture/observer::exportFeed</model>
+                </run>
+            </export_connectfurniture_feed>
+        </jobs>
+    </crontab>
+</config>

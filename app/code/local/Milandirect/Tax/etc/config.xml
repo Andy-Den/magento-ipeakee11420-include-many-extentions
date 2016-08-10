@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Tax>
+            <version>0.1.0</version>
+        </Milandirect_Tax>
+    </modules>
+    <global>
+        <models>
+            <tax>
+                <rewrite>
+                    <sales_total_quote_tax>Milandirect_Tax_Model_Sales_Total_Quote_Tax</sales_total_quote_tax>
+                </rewrite>
+            </tax>
+        </models>
+    </global>
+</config>

@@ -1,0 +1,12 @@
+<?php
+// Use default configurable product.
+$product = Mage::getBlockSingleton('balance_superptype/catalog_product_view_type_super')->getDefaultConfigurableProduct();
+if (!($product instanceof Mage_Catalog_Model_Product) || !$product->getId())
+{
+    return;
+}
+$_fabric = $product->getFabric();
+?>
+<?php if ($_fabric): ?>
+<?php echo $this->helper('catalog/output')->productAttribute($product, $_fabric, 'fabric') ?>
+<?php endif; ?>

@@ -1,0 +1,31 @@
+{
+    "name": "ez/data-structure",
+    "type": "library",
+    "description": "DataStructure",
+    "keywords": ["ez", "data structure"],
+    "homepage": "https://bitbucket.org/dereksangshi2000/ez-data-structure",
+    "license": "MIT",
+    "authors": [
+        {"name": "Derek Li", "email": "dereksangshi2000@gmail.com.au"}
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "ez/util": "1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "symfony/console": "~2.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://satis.internal.balancenet.com.au"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Ez\\DataStructure\\": "src/" }
+    },
+    "archive": {
+        "exclude": ["!vendor", "tests", "*phpunit.xml", ".travis.yml", "build.xml", "build.properties", "composer.phar"]
+    }
+}

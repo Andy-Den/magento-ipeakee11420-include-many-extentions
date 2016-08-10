@@ -1,0 +1,44 @@
+#product-question-wrapper { width: 100%; height: 100%; min-height: 100px; z-index: 9999; position: fixed; top: 0; left: 0; background: transparent url(../../../images/innobyte/product_questions/bg-50.png) center center repeat; }
+#product-question-content { width: 260px; margin: 10% auto 0; padding: 20px; position: relative; background: #eee; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -o-border-radius: 5px; box-shadow: 0 0 30px #000; -moz-box-shadow: 0 0 30px #000; -webkit-box-shadow: 0 0 30px #000; -o-box-shadow: 0 0 30px #000; }
+#product-question-wrapper .pq-close { width: 16px; height: 16px; display: block; position: absolute; top: 5px; right: 5px;background: transparent url(../../../images/innobyte/product_questions/close.png) 0 0 no-repeat; text-indent: -9999px; cursor: pointer; opacity: 0.7; }
+#product-question-wrapper .pq-close:hover { opacity: 1; }
+#product-question-wrapper .buttons-set { margin: auto; }
+#product-question-wrapper .pq-question .box-title { margin:0 0 10px 0; }
+#product-question-wrapper .pq-question .box-title h2 { border-bottom: solid 1px #ccc; }
+#product-question-wrapper .message { height: 24px; padding-left: 34px; background: transparent url(../../../images/innobyte/product_questions/ajax-loader.gif) left center no-repeat; line-height: 24px; }
+#product-question-wrapper .messages li { margin: 0 !important; }
+#product-question-wrapper .response { font-size: 12px; font-weight: bold; font-style: italic; }
+.col-main .block-product-questions { margin-top: 15px; }
+.col-main .block-product-questions .block-title { margin: 0;; }
+.col-main .block-product-questions .block-content { border: 1px solid #ddd; border-top: none; }
+.block-product-questions  { margin: 0 0 15px 0; }
+.block-product-questions ul { margin: 0; padding: 0; list-style: none; line-height: 1.4em; }
+.block-product-questions .block-content { padding: 10px 10px 5px 10px !important; }
+.block-product-questions .block-content p { margin-bottom: 0; padding-bottom: 0; }
+.block-product-questions li { margin-bottom: 20px; padding-bottom: 2px; overflow: hidden; border-bottom: dotted 1px #ccc; }
+.block-product-questions.pq-view li { margin-bottom: 10px; }
+.block-product-questions li.last { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.block-product-questions.pq-view li.last { margin-bottom: 2px; padding-bottom: 2px; border-bottom: dotted 1px #ccc; }
+.block-product-questions .pq-product-name { font-weight: bold; }
+.block-product-questions .pq-add-date { margin-top: 5px; text-align: right; font-size: 0.8em; color: #999; }
+.block-product-questions .pq-author { margin-top: 5px; font-size: 0.9em; color: #999; }
+.block-product-questions .pq-question { margin-top: 10px; }
+.block-product-questions .pq-answer { margin-top: 7px; }
+.block-product-questions .pq-question,
+.block-product-questions .pq-answer { color: #555; }
+.block-product-questions .pq-answer label { padding-right: 3px; float: left; font-weight: bold; }
+.block-product-questions .pq-question { font-weight: bold; }
+.block-product-questions.pq-list .pq-product-image { margin-bottom: 10px; display: block; }
+.block-product-questions.pq-grid li { overflow: hidden; }
+.block-product-questions.pq-grid .pq-product-image { width: 173px; margin-right: 20px; float: left; display: block; }
+.block-product-questions.pq-grid .pq-add-date { clear: left; }
+.block-product-questions .pq-question-sorting { float: right; }
+.block-product-questions .pq-question-sorting select { padding: 0; }
+.block-product-questions .pq-vote-down,
+.block-product-questions .pq-vote-up { width: 18px; height: 18px; margin-left: 5px; display: block; float: left; background: transparent url(../../../images/innobyte/product_questions/rating-thumbs.png) 0 0 no-repeat; text-indent: -9999px; }
+.block-product-questions .pq-vote-down { background-position: -28px 0; }
+.block-product-questions .pq-vote-up:hover { background-position: 0 -28px; }
+.block-product-questions .pq-vote-down:hover { background-position: -28px -28px; }
+.block-product-questions .pq-question-vote { margin-top: 2px; line-height: 20px; color: #999; }
+.block-product-questions .pq-question-votes { padding-left: 10px; float: left; font-weight: bold; }
+.block-product-questions .pq-your-vote { font-size: 11px; }

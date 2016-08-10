@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <SCP translate="label" module="configurablesimplepriceoverride">
+            <label>Balance</label>
+            <sort_order>1000000</sort_order>
+        </SCP>
+    </tabs>
+    <sections>
+        <SCP_options translate="label" module="configurablesimplepriceoverride">
+            <label>Configurable/Simple Price Override</label>
+            <tab>SCP</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+               
+                <product_page translate="label">
+                    <label>Configurable/Simple Price Override - Product Page</label>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <change_name>
+                            <label>Dynamically update displayed product name</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Takes affect once all configurable options have been selected</comment>
+                        </change_name>
+                        <change_description>
+                            <label>Dynamically update displayed product description</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Takes affect once all configurable options have been selected</comment>
+                        </change_description>
+                        <change_short_description>
+                            <label>Dynamically update displayed product short description</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Takes affect once all configurable options have been selected</comment>
+                        </change_short_description>
+                        <change_attributes>
+                            <label>Dynamically update displayed product 'additional information'</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>67</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Takes affect once all configurable options have been selected</comment>
+                        </change_attributes>
+                        <change_image>
+                            <label>Dynamically update displayed product picture</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Takes affect once all configurable options have been selected</comment>
+                        </change_image>
+                        <change_image_fancy>
+                            <label>Update gallery images as well as main image?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Uses ajax to pull in the correct related product images too</comment>
+                        </change_image_fancy>
+                        <show_price_ranges_in_options>
+                            <label>Show price ranges in Configurable Product Option dropdowns</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_price_ranges_in_options>
+                    </fields>
+                </product_page>
+                
+                  <general_page translate="label">
+                    <label>General Opions</label>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable_option>
+                            <label>Enable/Disable Module</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enable / Disable Module Globally</comment>
+                        </enable_option>
+                       
+                    </fields>
+                </general_page>
+                
+            </groups>
+        </SCP_options>
+    </sections>
+</config>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Stockstatus>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Milandirect_Stockstatus>
+    </modules>
+</config>

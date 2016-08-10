@@ -1,0 +1,8 @@
+<?php
+$guestMessage = $this->getGuestMessage();
+?>
+<?php if (!$guestMessage) : ?>
+    <?php echo $this->__('Please <a href="%s">Sign up</a> or <a href="%s">Login</a> to ask a question', Mage::getUrl('customer/account/create'), Mage::getUrl('customer/account/login')); ?>
+<?php else : ?>
+    <?php echo $guestMessage; ?>
+<?php endif; ?>

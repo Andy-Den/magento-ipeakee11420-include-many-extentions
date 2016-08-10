@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Router>
+            <version>1.0.0</version>
+        </Balance_Router>
+    </modules>
+    <global>
+        <models>
+            <balance_router>
+                <class>Balance_Router_Model</class>
+            </balance_router>
+        </models>
+        <helpers>
+            <balance_router>
+                <class>Balance_Router_Helper</class>
+            </balance_router>
+        </helpers>
+        <blocks>
+            <balance_router>
+                <class>Balance_Router_Block</class>
+            </balance_router>
+        </blocks>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <redirect_simple_to_configurable>
+                        <type>singleton</type>
+                        <class>Balance_Router_Model_Observer_ActionPreDispatch</class>
+                        <method>redirectSimpleToConfigurable</method>
+                    </redirect_simple_to_configurable>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <balance_router>
+                                            <title>Balance Router Integration</title>
+                                            <sort_order>9999</sort_order>
+                                        </balance_router>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <balance_router>
+            <general>
+                <router_enabled>1</router_enabled>
+            </general>
+            <product_redirect>
+                <simple_to_configurable_enabled>1</simple_to_configurable_enabled>
+            </product_redirect>
+        </balance_router>
+    </default>
+</config>
+

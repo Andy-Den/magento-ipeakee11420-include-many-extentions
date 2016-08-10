@@ -1,0 +1,120 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Your order has been received.') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
+
+<?php if ($this->getOrderId()):?>
+<?php if ($this->getCanViewOrder()) :?>
+    <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
+<?php  else :?>
+    <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
+<?php endif;?>
+    <p><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track its progress.') ?></p>
+<?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
+    <p>
+        <?php echo $this->__('Click <a href="%s" onclick="this.target=\'_blank\'">here to print</a> a copy of your order confirmation.', $this->getPrintUrl()) ?>
+        <?php echo $this->getChildHtml() ?>
+    </p>
+<?php endif;?>
+<?php endif;?>
+
+<?php if ($this->getAgreementRefId()): ?>
+    <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+<?php endif;?>
+
+<?php if ($profiles = $this->getRecurringProfiles()):?>
+<p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+<ul class="disc">
+<?php foreach($profiles as $profile):?>
+<?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
+    <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
+<?php endforeach;?>
+</ul>
+<?php endif;?>
+<a href="<?php echo $this->getUrl() ?>" class="button btn-stand"><?php echo $this->__('Continue Shopping') ?></a>
+
+<?php
+$lastOrderId = Mage::getSingleton("checkout/session")->getLastOrderId();
+$order = Mage::getSingleton("sales/order");
+$order->load($lastOrderId);
+$items = $order->getAllVisibleItems();
+?>
+<script type="text/javascript">
+    var cf_merchant = "19592a988d144d8bb23d0cbe16af4e8b";
+    var cf_order = "<?php print($order->getIncrementId()); ?>";
+    var cf_amount = <?php print($order->subtotal + $order->discount_amount); ?>;
+    var cf_coupon = "<?php print(htmlspecialchars($order->getCouponCode())); ?>";
+    var cf_currency = "<?php print(htmlspecialchars($order->order_currency_code)); ?>";
+    var cf_items = new Array();
+    <?php for ($i = 0; $i < count($items); $i++) { ?>
+    cf_items.push(
+        { sku: "<?php print(htmlspecialchars($items[$i]->getSku())); ?>", price: <?php print(number_format($items[$i]->getPrice(), 2)); ?>, quantity: <?php print((int)$items[$i]->getQtyOrdered()); ?> }
+    );
+    <?php } ?>
+</script>
+<script src="https://t.cfjump.com/Track.js" type="text/javascript"></script>
+<?php
+// Obtain order variables with Magento functions
+$orderId = $this->getOrderId();
+$order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+$customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
+$address = $order->getShippingAddress();
+?>
+<!-- START Google Trusted Stores Order -->
+<div id="gts-order" style="display:none;" translate=”no”>
+
+    <!-- start order and merchant information -->
+    <span id="gts-o-id"><?php echo $orderId; ?></span>
+    <!--<span id="gts-o-domain">MERCHANT_ORDER_DOMAIN</span>-->
+    <span id="gts-o-email"><?php echo htmlentities($customer->getEmail()); ?></span>
+    <span id="gts-o-country"><?php echo htmlentities($address->getCountryId()); ?></span>
+    <!--<span id="gts-o-currency">CURRENCY</span>-->
+    <span id="gts-o-total"><?php echo $order->getGrandTotal(); ?></span>
+    <span id="gts-o-discounts"><?php echo $order->getDiscountAmount(); ?></span>
+    <span id="gts-o-shipping-total"><?php echo $order->getShippingAmount(); ?></span>
+    <span id="gts-o-tax-total"><?php echo $order->getTaxAmount(); ?></span>
+    <!--<span id="gts-o-est-ship-date">ORDER_EST_SHIP_DATE</span>
+    <span id="gts-o-est-delivery-date">ORDER_EST_DELIVERY_DATE</span>
+    <span id="gts-o-has-preorder">HAS_BACKORDER_PREORDER</span>
+    <span id="gts-o-has-digital">HAS_DIGITAL_GOODS</span> --!>
+    <!-- end order and merchant information -->
+
+    <!-- start repeated item specific information -->
+    <?php foreach ($order->getAllItems() as $item): ?>
+        <span class="gts-item">
+            <span class="gts-i-name"><?php echo htmlentities($item->getName()); ?></span>
+            <span class="gts-i-price"><?php echo $item->getBasePrice(); ?></span>
+            <span class="gts-i-quantity"><?php echo (int)$item->getQtyOrdered(); ?></span>
+        </span>
+    <?php endforeach; ?>
+    <!-- end repeated item specific information -->
+
+</div>
+<!-- END Trusted Stores -->

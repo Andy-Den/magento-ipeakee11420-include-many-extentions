@@ -1,0 +1,288 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php $stockStatus = Mage::helper('amstockstatus')->show($_product); ?>
+<script type="text/javascript">
+    //var optionsPrice = new Product.OptionsPrice(<?php //echo $this->getJsonConfig() ?>);
+</script>
+<div class="Prd-Detl-top">
+<div class="gry_top_bordCurvs_lft">
+          <div class="gry_top_bordCurvs_rht">
+            <div class="gry_top_bordCurvs_bg"></div>
+          </div>
+        </div>
+        <div class="gry_bordCurvs_midBg">
+        <div id="breadcrumb" class="breadcrumbs"><?php echo $this->getLayout()->getBlock('breadcrumbs')->toHtml()?></div>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="product-view">
+    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+        <div class="product-essential">
+
+                <div class="product-shop">
+                    <div class="product-main-info">
+
+                        <div class="price-box-section">
+                          <div class="pinkbox_top_bordCurvs_lft">
+                            <div class="pinkbox_top_bordCurvs_rht">
+                              <div class="pinkbox_top_bordCurvs_bg"></div>
+                            </div>
+                          </div>
+                          <div class="pinkboxCurvs_midBg">
+                            <?php echo $this->getChildHtml('product_type_data') ?>
+                            <span class="sub-text">+Delivery</span>
+                          </div>
+                          <div class="pinkbox_bot_bordCurvs_lft">
+                            <div class="pinkbox_bot_bordCurvs_rht">
+                              <div class="pinkbox_bot_bordCurvs_bg"></div>
+                            </div>
+                          </div>
+                        </div>
+                <div class="mid-col">
+                    <?php if (!$this->hasOptions()):?>
+                            <div class="add-to-box" id="add-to">
+                                <?php if($_product->isSaleable()): ?>
+                                    <?php //echo $this->getChildHtml('addtocart') ?>
+                                <?php endif; ?>
+                                <?php //echo $this->getChildHtml('addto') ?>
+                            </div>
+                        <?php else:?>
+                            <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container1') ):?>
+                                <div class="options-container-small">
+                                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                                </div>
+                            <?php else: ?>
+                                <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container2') ):?>
+                                    <div class="options-container-small">
+                                        <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                                    </div>
+                                <?php endif;?>
+                            <?php endif;?>
+                        <?php endif; ?>
+                    <div class="clear"></div>
+                </div>
+                <div class="cart-section">
+                   <div class="qty-box">
+                      <div class="graybox_top_bordCurvs_lft">
+                        <div class="graybox_top_bordCurvs_rht">
+                          <div class="graybox_top_bordCurvs_bg"></div>
+                        </div>
+                      </div>
+                      <div class="grayboxCurvs_midBg">
+                        <label for="qty"><strong><?php echo $this->__('Quanity'); ?></strong></label>
+                        <input name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty" type="text">
+                      </div>
+                      <div class="graybox_bot_bordCurvs_lft">
+                        <div class="graybox_bot_bordCurvs_rht">
+                          <div class="graybox_bot_bordCurvs_bg"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="add-to" class="add-to-box">
+                      <div class="add-to-cart">
+                        <?php if($_product->isSaleable() || stripos($stockStatus, 'pre order')) : ?>
+                            <button onclick="productAddToCartForm.submit(event)" class="button btn-cart" title="Add to Cart" type="button">
+                                <span>
+                                    <span><?php echo $this->__('Add to') ?><br>
+                                            <?php echo $this->__('Cart'); ?>
+                                    </span>
+                                </span>
+                            </button>
+                        <?php else : ?>
+                            <button class="button btn-cart-disable" title="Add to Cart" type="button">
+                                <span>
+                                    <span><?php echo $this->__('Add to') ?><br>
+                                            <?php echo $this->__('Cart'); ?>
+                                    </span>
+                                </span>
+                            </button>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="product-description">
+                        <p><?php echo $_product->getDescription(); ?></p>
+                    </div>
+                       <p class="product-ids"><?php echo $this->__('SKU# %s', $this->htmlEscape($_product->getSku())); ?></p>
+
+                    <?php
+                        if(!stripos($stockStatus, 'pre order'))
+                            echo $stockStatus;
+                        else
+                            echo str_replace('pre order :','',$stockStatus);
+                    ?>
+                    <div class="gallary-images"><?php echo $this->getChildHtml('gallery') ?></div>
+                    <?php echo $this->getChildHtml('other');?>
+                    <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+                    <?php echo $this->getChildHtml('alert_urls') ?>
+                    </div>
+                    <?php echo $this->getChildHtml('tierprices') ?>
+                    <?php echo $this->getChildHtml('extrahint') ?>
+
+
+                    <?php if (!$this->hasOptions()):?>
+                        <div class="add-to-box" id="add-to">
+                            <?php if($_product->isSaleable()): ?>
+                                <?php //echo $this->getChildHtml('addtocart') ?>
+                            <?php endif; ?>
+                            <?php //echo $this->getChildHtml('addto') ?>
+                        </div>
+                    <?php else:?>
+                        <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container1') ):?>
+                            <div class="options-container-small">
+                                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                            </div>
+                        <?php else: ?>
+                            <?php //echo $this->getChildHtml('addto') ?>
+                        <?php endif;?>
+                    <?php endif; ?>
+                </div>
+                <div class="product-img-box">
+                     <div class="product-name">
+                            <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                            <?php if ($_product->getShortDescription()):?>
+                                <p class="sub-text-viewproduct"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></p>
+                            <?php endif; ?>
+                       </div>
+                    <?php echo $this->getChildHtml('media') ?>
+                </div>
+        </div>
+        <div class="clearer"></div>
+        <?php if ($_product->isSaleable() && $this->hasOptions() && $this->getChildChildHtml('container2') ):?>
+            <div class="options-container-big">
+                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+            </div>
+        <?php endif;?>
+    </form>
+    <input type="hidden" name="popup_url" id="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+    <input type="hidden" name="popup_top_position" id="popup_top_position" value="0px" />
+</div>
+<div class="clear"></div>
+</div>
+
+<div class="gry_bot_bordCurvs_lft">
+          <div class="gry_bot_bordCurvs_rht">
+            <div class="gry_bot_bordCurvs_bg"></div>
+          </div>
+        </div>
+        <?php echo $this->getChildHtml('product_additional_data') ?>
+     </div>
+        <div class="clear"></div>
+
+
+<!--EO:: Display success popup after item added to the cart -->
+<div id="loading-mask-cart" style="display: none;">
+  <div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/><br />
+    <?php echo $this->__('Please wait...') ?></div>
+  <div id="loading-mask"></div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    var addToCart = new Addtocart('product_addtocart_form', '<?php echo $this->getAddToCartUrl($_product) ?>');
+    productAddToCartForm.submit = function(event) {
+        element = Event.element(event);
+        addToCart.getPostUrl = this.form.action;
+        if (this.validator.validate()) {
+            $('product_addtocart_form').qty.value = Math.round($('product_addtocart_form').qty.value);
+            if($('product_addtocart_form').product.value == ''){
+                alert('Please select the product.');
+                return false;
+            }
+            addToCart.getAddtocart();
+        }
+    }.bind(productAddToCartForm);
+
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var parentTD;
+var newDiv;
+var navigationDiv;
+var i = 1;
+var currentElement = null;
+
+$$('input.qty').each(function(el){
+    parentTD = el.parentNode;
+
+    newDiv = document.createElement('div');
+    Element.extend(newDiv);
+    newDiv.addClassName('quanity-spin');
+    newDiv.id = i++;
+    newDiv.update(parentTD.innerHTML).innerHTML; //set new input inside new div
+    parentTD.update().innerHTML; //erase old input
+    parentTD.appendChild(newDiv); //show new div
+
+    navigationDiv = document.createElement('div');
+    Element.extend(navigationDiv);
+    navigationDiv.update('<p class="up">+</p><p class="dn">-</p>').innerHTML;
+    newDiv.appendChild(navigationDiv);
+});
+
+$$('p.up').each(function(el){
+    el.observe('click',function(event){
+        currentElement = el.parentNode.previous();
+        i = 0; //In case we get in to infinite loop
+        while(currentElement.type != 'text' && i < 5){
+            currentElement = currentElement.previous();
+            i++;
+        }
+        currentElement.value = parseInt(currentElement.value) + 1;
+    });
+});
+
+$$('p.dn').each(function(el){
+    el.observe('click',function(event){
+        currentElement = el.parentNode.previous();
+        i = 0; //In case we get in to infinite loop
+        while(currentElement.type != 'text' && i < 5){
+            currentElement = currentElement.previous();
+            i++;
+        }
+        if(parseInt(currentElement.value) > 1){
+            currentElement.value = parseInt(currentElement.value) - 1;
+        }
+    });
+});
+//]]>
+</script>

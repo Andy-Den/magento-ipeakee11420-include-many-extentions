@@ -1,0 +1,39 @@
+<?php if (count($this->getGalleryImages()) > 0): ?>
+    <?php if(count($this->getGalleryImages()) > 4):?>
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+            jQuery('#mycarousel').jcarousel();
+            });
+    <?php endif;?>
+</script>
+<?php 
+$_lightboxConfig = Mage::getStoreConfig('easy_lightbox/general');
+
+if (strstr($_lightboxConfig['popupImageSize'], '_')) {
+	$popupImageSize = explode('_', $_lightboxConfig['popupImageSize'], 2);
+} else {
+	$popupImageSize = array(0, 0);
+}
+
+?>
+<div class="more-views">
+    <ul id="mycarousel" class="jcarousel-skin-tango">
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+	<?php
+	$subtitle = $this->htmlEscape($_image->getLabel());
+	if(($_lightboxConfig['productName'] != 0) && empty($subtitle)):
+	        $subtitle  = $this->getProduct()->getName();
+	endif;
+	?>
+    <li>
+        <a href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize($popupImageSize[0], $popupImageSize[1]); ?>"
+            rel="lightbox[rotation]"
+            title="<?php echo $subtitle; ?>"
+            onclick="return false;"
+        ><img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(68); ?>" width="68" height="68" alt="<?php echo $subtitle; ?>"
+        /></a>
+    </li>
+    <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>

@@ -1,0 +1,267 @@
+/* ---   Create By Billy Trinh 
+        Create at 13/05/2015 ----*/
+
+
+/* ---- Style for Top Menu version PC ---*/
+.ms-megamenu{box-sizing: border-box;text-align: left;}
+.ms-featured{padding-left:20px;}
+.ms-megamenu img{display: inline;vertical-align: middle;max-width: 100%;}
+.ms-megamenu .ms-topmenu{
+    position: relative;
+    background: #2f2f2f;
+    float: left;
+    width: 100%;
+    z-index: 1001;
+}
+.ms-megamenu .ms-level0{   
+}
+.ms-level0.item_relative{position: relative;}
+.ms-megamenu .ms-level0.active{
+    background: #3b3b3b;
+}
+.ms-megamenu .ms-label{
+    color:#fff;
+    font-size: 15px;
+    opacity: 0.9;
+    filter:alpha(opacity=90);
+    outline: none !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    line-height: 1.5;
+}
+.ms-topmenu .ms-label{
+    float:left;
+    padding:15px;
+}
+.ms-megamenu .ms-iconmega{
+    vertical-align: top;
+    position: relative;
+}
+.ms-megamenu .ms-submenu{
+    display: none;
+    position: absolute;
+    top:50px;
+    z-index: 10000;
+    padding:15px;
+    background:#fff;
+    border:1px solid #ddd;
+    max-width: 100%;
+    border-top: 0;
+}
+.ms-header,.mb-header{
+    float: left;
+    width: 100%;
+    padding:10px 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.ms-footer,.mb-footer{
+    float: left;
+    width: 100%;
+    padding:10px 0;
+    border-top: 1px solid #ddd;
+    margin-top: 15px;
+}
+.col-category .level1{
+    font-weight: 700;
+}
+.col-category .level2{font-weight: 400;}
+.ms-topmenu .col-category .sub-level3,.ms-leftmenu .col-category .sub-level3{
+    display: none;
+    position: absolute;
+    left: 100px;
+    width: 16em;
+    background-color: #fff;
+    z-index: 10001;
+    padding: 10px;
+    min-width: 12em;
+    -webkit-box-shadow: 0 3px 10px rgba(0,0,0, 0.15);
+    box-shadow: 0 3px 10px rgba(0,0,0, 0.15);
+}
+.level2  small{
+    font-size: 50%;
+    top: -2px;
+}
+.level2.active .level2{
+    text-indent: 5px;
+    -moz-transition: all ease-in-out 100ms;
+    -webkit-transition: all ease-in-out 100ms;
+    -o-transition: all ease-in-out 100ms;
+    transition: all ease-in-out 100ms;
+}
+.mb-version .col-category .sub-level3{
+    width: 100%;
+    float: left;
+    z-index: 10001;
+    padding:0 10px;
+}
+/*------- Product -------------------*/
+.ms-megamenu .f-product .product-image{}
+.ms-megamenu .f-product .product-image img{width:100%;}
+.mb-content .item,
+.mb-content .col-productlist,
+.mb-content .col-category,
+.mb-featured .f-product,
+.mb-featured .f-category{padding-top: 10px;padding-bottom: 10px;}
+
+/* ------ Contact form  ------------------*/
+.ms-contact .ms-title{
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    padding: 0 0 5px;
+    float: left;
+    width: 100%;
+}
+.ms-contact label em{color: red;}
+
+/*---------------------Mobile version-------------------------*/
+.megamenu-mobile{display: none;text-align: left;}
+.ms-megamenu .anchor_mbmenu{
+    background: rgb(7, 70, 102);
+    padding: 8px 0;
+}
+.ms-megamenu .anchor_mbmenu .anchor_mbmenu_text{
+    outline: 0;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+}
+.megamenu-mobile .mb-topmenu{display:none;  position: relative;float:left;width:100%;}
+.ms-megamenu .mb-submenu{
+    position: absolute;
+    left: 100%;
+    top:0;
+    z-index: -1;
+    background: #fff;
+    display:none;
+    float:left;
+    width: 100%;
+}
+.ms-megamenu .mb-submenu.blind{
+    position: static;
+}
+.ms-megamenu .mb-label{
+    padding:12px 25px 8px;
+    background: #FFFFFF;
+    border: 1px solid #ddd;
+    border-top: 0;
+    color: #2f2f2f;
+    text-decoration: none;
+    outline: none;
+}
+.ms-megamenu .mb-label.flag{
+    background: #EBEDED;
+}
+.ms-megamenu .mb-label.mb-return{border: 0;}
+.ms-megamenu .mb-label span{float:left;}
+.ms-megamenu .mb-click span{float: right;  margin-right: -15px;}
+.ms-megamenu .active .mb-submenu{
+    display: inline;
+    z-index: 1001;
+}
+.ms-megamenu .mb-submain{
+    padding:15px;
+    border: 1px solid #ddd;
+    border-top: 0;
+}
+/*---- Fix for magento 1.9---*/
+#header-nav{display: block;}
+.skip-nav{display: none;}
+
+/* ----- Left Menu ---------*/
+.item_relative{position: relative;}
+.ms-leftmenu{
+    position: relative;
+    z-index: 1000;
+    text-align: left;
+}
+.ms-leftmenu .msl-level0{
+    float:left;
+    width:100%;
+}
+.ms-leftmenu .msl-submenu{
+    display: none;
+    position: absolute;
+    top: 0px;
+    left:239px;
+    z-index: 10000;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.ms-leftmenu .msl-label{
+    padding: 12px 25px 8px;
+    background: #FFFFFF;
+    border: 1px solid #ddd;
+    border-top: 0;
+    color: #2f2f2f;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    line-height: 1.5;
+}
+.ms-leftmenu .msl-label.first{
+    border-top: 1px solid #ddd;
+}
+.ms-leftmenu .msl-label.flag{
+    background: #EBEDED;
+}
+.ms-leftmenu .msl-label span.small{float: right;  margin-right: -15px;}
+/*---------------------Mobile version for Left menu -------------------------*/
+.lmegamenu-mobile{display: none;}
+.ms-megamenu .anchor_lmbmenu{
+    background: rgb(7, 70, 102);
+    padding: 8px 0;
+}
+.ms-megamenu .anchor_lmbmenu .anchor_lmbmenu_text{
+    outline: 0;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+}
+.lmegamenu-mobile .lmb-leftmenu{display:none;position: relative;text-align:left;float:left;width:100%;}
+.ms-megamenu .lmb-submenu{
+    position: absolute;
+    left: 100%;
+    top:0;
+    z-index: -1;
+    background: #fff;
+    display:none;
+    float:left;
+    width: 100%;
+}
+.ms-megamenu .lmb-submenu.blind{
+    position: static;
+}
+.ms-megamenu .lmb-label{
+    padding:12px 25px 8px;
+    background: #FFFFFF;
+    border: 1px solid #ddd;
+    border-top: 0;
+    color: #2f2f2f;
+    text-decoration: none;
+    outline: none;
+}
+.ms-megamenu .lmb-label.flag{
+    background: #EBEDED;
+}
+.ms-megamenu .lmb-label.lmb-return{border: 0;}
+.ms-megamenu .lmb-label span{float:left;}
+.ms-megamenu .lmb-click span{float: right;  margin-right: -15px;}
+.ms-megamenu .active .lmb-submenu{
+    display: inline;
+    z-index: 1001;
+}
+.ms-megamenu .mb-submain{
+    padding:15px;
+    border: 1px solid #ddd;
+    border-top: 0;
+}
+/*@media (max-width: 460px) {
+     .mb-content .col-productlist, .mb-content .col-category{
+        padding-top:0;
+        padding-bottom: 0;
+    }
+}*/

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Menuextends>
+            <version>0.1.0</version>
+        </Balance_Menuextends>
+    </modules>
+    <global>
+        <blocks>
+            <menuextends>
+                <class>Balance_Menuextends_Block</class>
+            </menuextends>
+        </blocks>
+    </global>
+</config>

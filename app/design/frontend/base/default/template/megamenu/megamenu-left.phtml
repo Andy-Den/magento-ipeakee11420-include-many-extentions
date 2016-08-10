@@ -1,0 +1,23 @@
+<?php 
+/**
+ * template
+ */
+?>
+<?php if (Mage::getStoreConfig('megamenu/general/enable')): ?>
+<?php    
+    Mage::helper('megamenu')->getCssgen();
+   $session = Mage::getSingleton('core/session');
+   if($session->getData('megamenuleft_html')){
+       echo $session->getData('megamenuleft_html');
+   }else{
+       $store = Mage::app()->getStore()->getId();
+       $block = $this->getLayout()->createBlock('cms/block')->setBlockId('megamenuleft_'.$store);
+       if(!$block->getBlockId() || $block->toHtml() == null){
+           Mage::helper('megamenu')->saveCacheHtml($store);
+           $block = $this->getLayout()->createBlock('cms/block')->setBlockId('megamenuleft_'.$store);
+       }
+       echo $block->toHtml(); 
+   }
+?>
+<script language="javascript" src="<?php echo $this->getJsUrl('megamenu/leftmegamenu.js'); ?>"></script>
+<?php endif;?>

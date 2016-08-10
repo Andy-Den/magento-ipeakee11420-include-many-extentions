@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Themesetup>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Milandirect_Themesetup>
+    </modules>
+</config>

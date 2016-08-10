@@ -1,0 +1,107 @@
+
+#braintree-buttons-container {
+}
+
+#braintree-button-submit {
+}
+
+#braintree-button-submit.bt-validation-passed {
+    font-weight: bold;
+    /*content: "ok!";*/
+}
+
+/* Default: green tick */
+#braintree-tick {
+    display: none;
+}
+body.checkout-onestep-index #onestepcheckout-form #braintree-tick.bt-validation-passed, /* FME */
+#braintree-tick.bt-validation-passed {
+    display: inline-block;
+    margin-left: 7px;
+    margin-right: 0;
+    height: 22px;
+    width: 22px;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+}
+.tick-circle {
+    height: 22px;
+    width: 22px;
+    background-color: green;
+    border-radius: 11px;
+    position: absolute;
+    left: 0;
+    top: 12px;
+}
+.tick-stem {
+    background-color: white;
+    height: 9px;
+    width: 3px;
+    position: absolute;
+    left: 11px;
+    top: 18px;
+}
+.tick-kick {
+    background-color: white;
+    height: 3px;
+    width: 3px;
+    position: absolute;
+    left: 8px;
+    top: 24px;
+}
+
+.onestepcheckout-index-index #braintree-button-submit {
+    vertical-align: top;
+}
+.onestepcheckout-index-index #braintree-tick,
+.onestepcheckout-index-index #braintree-tick .tick-circle,
+.onestepcheckout-index-index #braintree-tick .tick-stem,
+.onestepcheckout-index-index #braintree-tick .tick-kick {
+    height: 0;
+}
+
+/* For Idev onestepcheckout.com, normal skin */
+#onestepcheckout-form #braintree-tick.bt-validation-passed {
+    background: transparent url("../../../onestepcheckout/images/onestepcheckout-numbers-4.png") no-repeat;
+    background-position-y: 2px;
+    height: 38px;
+    width: 28px;
+    transform: none;
+    -ms-transform: none;
+}
+/* For Idev onestepcheckout.com, Magento skin */
+#onestepcheckout-form .onestepcheckout-skin-magento #braintree-tick.bt-validation-passed {
+    background: transparent url("../../../onestepcheckout/images/skin-magento/onestepcheckout-numbers-4.png") no-repeat;
+    margin-top: 7px;
+    height: 18px;
+    width: 18px;
+    transform: none;
+    -ms-transform: none;
+}
+
+/* For Magestore */
+#one-step-checkout-form #braintree-tick.bt-validation-passed {
+    background: #f39801 url("../../../images/onestepcheckout/order_title.png") -17px -11px no-repeat;
+    /* Or use same color as Verify button: */
+    /* background-color:  #2e8ab8; */
+    height: 33px;
+    width: 33px;
+    transform: none;
+    -ms-transform: none;
+}
+
+/* For IWD, which colors Verify button white on white background! */
+.opc-wrapper-opc #braintree-button-submit {
+  background-color: #00909e;
+}
+.opc-wrapper-opc #braintree-button-submit:hover {
+  background-color: #39b9c6;
+}
+.opc-wrapper-opc #braintree-button-submit.bt-validation-passed {
+  color: white;
+}
+
+/* GoMage */
+#gcheckout-payment-methods-available #braintree-button-submit {
+  color: white;
+}

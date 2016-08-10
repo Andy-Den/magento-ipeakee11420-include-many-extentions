@@ -1,0 +1,87 @@
+<?php
+	$_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if($_productCollection->count()): ?>
+
+<div class="box2Titles">
+<label class="titlTxt"><?php echo $this->__('Most Popular') ?></label>
+<br>
+<p><a title="<?php echo $this->__('View More') ?>" href="<?php echo $this->getBaseUrl(); ?>most-popular"><?php echo $this->__('View More') ?></a></p>
+</div>
+
+<div class="category-products">
+<?php $_collectionSize = $_productCollection->count() ?>
+<?php $_columnCount = $this->getColumnCount(); ?>
+<?php $_productCount = $this->getProductsCount(); ?>
+<?php $i=0; foreach ($_productCollection as $_product): ?>
+    <?php if ($i++%$_columnCount==0): ?>
+    <ul class="products-grid">
+    <?php endif ?>
+        <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+            <div class="onsale-category-container-grid">
+				<?php echo Mage::helper('onsale')->getCategoryLabelHtml($_product); ?>
+				<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+				<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+				</a>
+			</div>
+            <div class="name-desc-container">
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" class="product-title">
+			    <?php if(strlen($_product->getName())>57):?>
+                    <?php $_name = $_product->getName(); ?>
+                    <?php $_name = wordwrap($_name, 57);
+                          $_name = explode("\n", $_name);
+                          $_name = $_name[0];
+                          echo $_name;
+                     ?></a>
+               <?php else :?>
+                        <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
+               <?php endif;?>
+               <?php if ($_product->getShortDescription()):?>
+                        <?php if(strlen($_product->getShortDescription())>100):?>
+                            <?php $_description = $_product->getShortDescription();?>
+                            <?php $word_limit = 15;
+                                  $words = explode(' ', $_description);
+                                  $_shortDescription = implode(' ', array_slice($words, 0, $word_limit));
+                            ?>
+                             <p><?php echo $_shortDescription.' ...';?></p>
+                        <?php else:?>
+                            <p><?php echo $_product->getShortDescription(); ?></p>
+                        <?php endif?>
+                    <?php endif;?>
+            </div>
+            <?php echo $this->getPriceHtml($_product, true) ?>
+            <div class="actions">
+                <?php if($_product->isSaleable()): ?>
+                    <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+                <?php endif; ?>
+				<?php
+					$stockStatus = Mage::helper('amstockstatus')->show($_product);
+				?>
+				<?php if ($_product->getIsSalable()): ?>
+
+				<?php else:
+					if(!stripos($stockStatus, 'pre order')) :
+				?>
+					<button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('More Information') ?>" class="btn-moreinformation"></button>
+					<?php else: ?>
+                    <button onclick="setLocation('<?php echo $_product->getProductUrl() ?>')" title="<?php echo $this->__('Pre-Order Now') ?>" class="btn-pre-ordernow"></button>
+					<?php endif; ?>
+				<?php endif; ?>
+
+				<?php
+					if(!stripos($stockStatus, 'pre order'))
+						echo $stockStatus;
+					else
+						echo str_replace('pre order :','',$stockStatus);
+				?>
+            </div>
+        </li>
+    <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+    </ul>
+    <?php endif ?>
+	<?php if($i == $_productCount) break; ?>
+    <?php endforeach ?>
+    <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+</div>
+<?php endif; ?>

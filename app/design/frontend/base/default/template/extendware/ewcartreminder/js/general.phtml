@@ -1,0 +1,66 @@
+<?php $_config = $this->mHelper('config'); ?>
+var EWCartReminder = {
+	config: [],
+	flag: 0,
+	lastValueLog: {},
+    rewritePage: function () {
+		this.config.each(function(item) {
+			item.selectors.each(function(selector) {
+				var e = $$(selector).first();
+				if (!e) return;
+				e.stopObserving().observe('blur', function(item, event) {
+					var e = Event.element(event);
+					this.recordValue(item.type, e.value);
+				}.bind(this, item));
+				throw $break;
+			}.bind(this));
+		}.bind(this));
+	},
+	
+	setConfig: function (config) {
+		this.config = config;
+	},
+	
+	recordValue: function (type, value) {
+		if (type.indexOf('email') >= 0 && value.indexOf('@') < 0) return;
+		if (value != this.lastValueLog[type]) {
+			this.lastValueLog[type] = value;
+			this.ajax(<?php echo json_encode($this->getUrl('ewcartreminder/quote/updateAjax')); ?>, {type: type, value: value});
+		}
+	},
+	
+	ajax: function(url, params) {
+		if (!params) params = {};
+    	url = this.rewriteUrl(url);
+    	new Ajax.Request(url, {
+            method: 'post',
+            parameters: params
+        });
+    },
+    
+    rewriteUrl:function(url){
+		url = url.replace('http://', window.location.protocol+'//');
+        return url.replace('https://', window.location.protocol+'//');
+	},
+	
+	trigger: function() {
+		if (this.flag) return;
+		this.flag = 1;
+		this.rewritePage();
+		new PeriodicalExecuter(function(pe) {
+			this.rewritePage()
+		}.bind(this), 1);
+	}
+};
+
+EWCartReminder.setConfig([
+	{type: 'customer_email', 'selectors': ['input[id="billing:email"]','input[name="billing\[email\]"]','input[name="billing:email"]']},
+	{type: 'customer_email', 'selectors': ['input[id="login-email"]']},
+	{type: 'customer_email', 'selectors': ['div[class="account-create"] input[id="email_address"]']},
+	{type: 'customer_firstname', 'selectors': ['input[id="billing:firstname"]','input[name="billing:firstname"]']},
+	{type: 'customer_lastname', 'selectors': ['input[id="billing:lastname"]', 'input[name="billing:lastname"]']},
+	{type: 'customer_telephone', 'selectors': ['input[id="billing:telephone"]','input[name="billing:telephone"]']}
+]);
+
+Event.observe(document, 'dom:loaded', EWCartReminder.trigger.bind(EWCartReminder));
+Event.observe(window, 'load', EWCartReminder.trigger.bind(EWCartReminder));

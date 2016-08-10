@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Milandirect_M2ePro>
+            <version>0.0.1</version>
+        </Milandirect_M2ePro>
+    </modules>
+    <global>
+        <helpers>
+            <M2ePro>
+                <rewrite>
+                    <Module_Renderer_Description>Milandirect_M2ePro_Helper_Module_Renderer_Description</Module_Renderer_Description>
+                </rewrite>
+            </M2ePro>
+        </helpers>
+    </global>
+</config>

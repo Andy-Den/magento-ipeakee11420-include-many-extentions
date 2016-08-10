@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_catalog_category_edit>
+        <reference name="head">
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>mgt_amazing_wysiwyg/js/redactor/jquery-1.7.min.js</name>
+                <params/>
+            </action>
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>mgt_amazing_wysiwyg/js/redactor/redactor.js</name>
+                <params/>
+            </action>
+            <action method="addCss">
+                <file>merchandiser/css/smartmerch.css</file>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>merchandiser/js/openedit.js</name>
+            </action>
+            <action method="addCss">
+                <stylesheet>merchandiser/css/openedit.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="merchandiser/adminhtml_merchandiser" name="merchandiser_adminhtml_merchandiser" template="merchandiser/category/open.phtml">
+            </block>
+        </reference>
+    </adminhtml_catalog_category_edit>
+    <adminhtml_merchandiser_index>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>merchandiser/empty.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>mgt_amazing_wysiwyg/js/redactor/jquery-1.7.min.js</name>
+                <params/>
+            </action>
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>mgt_amazing_wysiwyg/js/redactor/redactor.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>merchandiser/jquery-1.7.2.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>merchandiser/jquery-ui.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>merchandiser/jquery.ui.touch-punch.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>merchandiser/js/merchandiser.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>merchandiser/js/searchform.js</name>
+            </action>
+            <action method="addCss">
+                <stylesheet>merchandiser/css/category.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="merchandiser/category_list" name="merchandiser.category.edit" template="merchandiser/new/category.phtml">
+                <block type="merchandiser/adminhtml_merchandiser" name="merchandiser.top.buttons" template="merchandiser/new/page/html/top-buttons.phtml">
+                    <block type="core/template" name="merchandiser.search" as="merchandiserSearch" template="merchandiser/new/search/form.phtml"/>
+                </block>
+                <block type="merchandiser/adminhtml_merchandiser" name="merchandiser.submit.button" template="merchandiser/new/category/button.phtml"/>
+                <block type="merchandiser/category_list" name="merchandiser.category.list" template="merchandiser/new/category/list.phtml" />
+            </block>
+        </reference>
+    </adminhtml_merchandiser_index>
+    <adminhtml_merchandiser_search>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>merchandiser/new/search.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="merchandiser/search_result" name="search_result_list" template="merchandiser/new/search/search-list.phtml">
+                </block>
+        </reference>
+    </adminhtml_merchandiser_search>
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addCss">
+                <file>merchandiser/css/openedit.css</file>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
+    <adminhtml_cache_index>
+        <reference name="cache.additional">
+            <block type="core/template" name="cache.additional.merchandiser" template="merchandiser/cache/additional.phtml"/>
+        </reference>
+    </adminhtml_cache_index>
+</layout>

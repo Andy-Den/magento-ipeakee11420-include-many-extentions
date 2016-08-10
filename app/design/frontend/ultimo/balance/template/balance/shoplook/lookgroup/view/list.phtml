@@ -1,0 +1,129 @@
+<?php
+$productCollections = $this->getLinkedProductCollection();
+//echo $productCollections->getSelect();
+?>
+<div class="product-list-container">
+    <h3 class="stl-list-ttl section-title">SHOP THE LOOK</h3>
+    <form id="shop-look-form">
+        <ul class="stl-prod-list">
+            <?php foreach ($productCollections as $product) {
+                $this->getChild('lookgroup.view.list.item')->setProduct($product);
+                echo $this->getChildHtml('lookgroup.view.list.item', false); // Do not use cache, otherwise it will always be the first product.
+            }?>
+        </ul>
+    </form>
+    <?php if ($productCollections->count() > 0) {?>
+        <div class="stl-list-btns">
+
+            <button class="button stl-look-add btn-inline" id="add-to-cart">
+                <span>
+                    <span>Add selected to bag</span>
+                </span>
+            </button>
+        </div>
+    <?php }?>
+</div>
+<script>
+
+    (function($){
+        "use-strict";
+
+        $(document).ready(function()
+        {
+
+            $('#add-to-cart').click(function()
+            {
+                startLoader();
+                /**
+                 * @todo form post validation.
+                 */
+                $.ajax(
+                    {
+                        url: '<?php echo Mage::getBaseUrl(); ?>shoplook/lookGroup/addToCart',
+                        type: 'POST',
+                        data: $('#shop-look-form').serialize(),
+                        dataType: 'json',
+                        success: function(response)
+                        {
+                            stopLoader();
+                            if (response.success) {
+                                showSuccess('products added to cart');
+
+                                if(response.cartcontent){
+                                    $('.top-cart').replaceWith(response.cartcontent);
+                                    $('#topCartContent').slideDown(600);
+                                }
+
+
+                            } else if (response.success === 0 && response.msg) {
+                                showError(response.msg);
+                            } else {
+                                showError('an error occured adding products to cart');
+                            }
+                        },
+                        error: function(response)
+                        {
+                            stopLoader();
+                        }
+                    });
+            });
+
+            showSuccess = function(content){
+                $('#stl-messages').html('<li><div id="messages_product_view"><div class="messages-content"><span>'+content+'</span></div></div></li>');
+            }
+
+            showError = function(content){
+                $('#stl-messages').html('<li class="error-msg"><ul><li>'+content+'</li></ul></li>');
+            }
+
+
+            startLoader = function() {
+//                $('#lookgroup-body-overlay').show();
+//                $('#stl-loader').addClass('is-loading');
+                $('.stl-look-add').attr('disabled', 'disabled');
+                $('.stl-look-add span span').append(' <i class="fa fa-spinner fa-spin"></i>');
+
+            }
+
+            stopLoader = function() {
+//                $('#lookgroup-body-overlay').hide();
+//                $('#stl-loader').removeClass('is-loading');
+                $('.stl-look-add').removeAttr('disabled');
+                $('.stl-look-add i').remove();
+            }
+
+        });
+
+    })(jQuery);
+
+
+
+
+function changeQuantity(btn, offset)
+{
+    if (btn && btn.length > 0)
+    {
+        var input = btn.parent().parent().find('input.quantity-input');
+        if (input.length > 0)
+        {
+            var newVal = parseInt(input.attr('value'))+parseInt(offset);
+            if (newVal < 1)
+            {
+                newVal = 1;
+            }
+            input.attr('value', newVal);
+        }
+    }
+}
+
+function changeSuperAttribute(btn)
+{
+    if (btn && btn.length > 0 && !btn.hasClass('is-outofstock'))
+    {
+        btn.parent().find('span.super-attr-span').removeClass('active');
+        btn.addClass('active');
+        btn.parent().find('input.super-attr-input').attr('value', btn.attr('data-value-index'));
+    }
+}
+
+</script>

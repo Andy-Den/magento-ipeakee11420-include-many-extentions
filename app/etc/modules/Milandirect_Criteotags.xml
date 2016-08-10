@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Criteotags>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <WIC_Criteotags/>
+            </depends>
+        </Milandirect_Criteotags>
+    </modules>
+</config>

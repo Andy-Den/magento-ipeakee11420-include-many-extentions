@@ -1,0 +1,87 @@
+<div id="bi-line-v" style="display: none"></div>
+<div class="frp-inner">
+    <form id="bi-frp-form">
+        <div class="title"><?php echo $this->__('We\'ll cover you for any loss or damage to your order during delivery.');?>
+            <img src="<?php echo $this->getSkinUrl('images/bi_tooltip.png')?>" id="bi_tooltip"/>
+            <div id="bi_tooltip_insert" style="display: none;"></div>
+        </div>
+        <div class="option-box">
+            <div class="option-frp clearer">
+                <input id="frp1" type="radio" value="1" name="frp" class="bi_frp" onchange="getCheckedFreightProtection()" <?php if($this->getDefaultChecked() == 1) echo 'checked'?> />
+                <label for="frp1">Freight Protection for just <span class="frp-cost"><?php echo $this->getFreightProtection();?></span></label>
+            </div>
+            <div class="option-frp clearer">
+                <input id="frp2" type="radio" value="2" name="frp" class="bi_frp" onchange="getCheckedFreightProtection()" <?php if($this->getDefaultChecked() == 2)  echo 'checked'?> />
+                <label for="frp2">No, Thank you!</label>
+            </div>
+        </div>
+        <span class="please-wait" id="frp-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading Freight Protection...') ?>" title="<?php echo $this->__('Loading Freight Protection...') ?>" class="v-middle" /> <?php echo $this->__('Loading Freight Protection...') ?>
+        </span>
+    </form>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+
+   /*$('bi-frp-form').on('change', '.bi_frp', function(event) {
+        if ($('frp1').checked == true) {
+            setFreightProtection(1);
+        } else if ($('frp2').checked == true) {
+            setFreightProtection(0);
+        }
+    });*/
+
+    $("bi_tooltip").observe('click', function() {
+        var indicator = "<ul id=\"tooltip_freight\" >" +
+            "<li>Premium Freight Protection. We will cover any loss or damage to your order that occurs during delivery.</li>" +
+            "</ul>";
+        if(!$('tooltip_freight'))
+        {
+            $('bi_tooltip_insert').insert(indicator);
+        }
+        $('bi_tooltip_insert').toggle();
+    });
+
+    /*$("bi_tooltip").observe('mouseout', function() {
+        if ($('tooltip_freight')) $('tooltip_freight').remove();
+    });*/
+
+
+    function getCheckedFreightProtection()
+    {
+        removeClassNotSelect();
+        if ($('frp1').checked == true) {
+            setFreightProtection(1);
+        } else if ($('frp2').checked == true) {
+            setFreightProtection(2);
+        }
+    }
+    function removeClassNotSelect()
+    {
+        if ($('bi-freight-protection-radio').hasClassName('bi-frp-not-select')) $('bi-freight-protection-radio').removeClassName('bi-frp-not-select');
+        if ($('bi-line-v')) $('bi-line-v').hide();
+    }
+
+    function setFreightProtection(freight_protection){
+        $('frp-please-wait').show();
+        new Ajax.Request("<?php echo Mage::getUrl('shippingprotection/index/updatefreightprotection',array('_secure'=>Mage::app()->getFrontController()->getRequest()->isSecure()))?>", {
+            method: 'post',
+            parameters:{freight_protection:freight_protection},
+            onSuccess: function(data) {
+                $('frp-please-wait').hide();
+            },
+            onComplete: function(data) {
+                $('frp-please-wait').hide();
+                var dataResponse	=	data.responseJSON;
+               if($('shopping-cart-totals-freight-protection')) $('shopping-cart-totals-freight-protection').update(dataResponse.totals);
+
+
+            }
+        });
+
+    }
+
+
+    //]]>
+</script>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Exceedz_Adminhtml>
+			<version>0.7.0</version>
+		</Exceedz_Adminhtml>
+	</modules>
+	<global>				<blocks>								<adminhtml>												<rewrite>																<shipping_carrier_tablerate_grid>Exceedz_Adminhtml_Block_Shipping_Carrier_Tablerate_Grid</shipping_carrier_tablerate_grid>                                    <review_add_form>Exceedz_Adminhtml_Block_Review_Add_Form</review_add_form>														</rewrite>												</adminhtml>								</blocks>				</global>
+</config>

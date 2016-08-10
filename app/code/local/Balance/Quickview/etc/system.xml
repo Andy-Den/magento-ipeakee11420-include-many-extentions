@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <balance translate="label">
+            <label>Balance</label>
+            <sort_order>100</sort_order>
+        </balance>
+    </tabs>
+    <sections>
+        <quickview translate="label" module="quickview">
+            <class>separator-top</class>
+            <label>Quick View</label>
+            <tab>balance</tab>
+            <sort_order>110</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <setting translate="label" module="quickview">
+                    <label>Balance Quick View</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <title translate="label">
+                            <label>Quickview title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>           					
+                    </fields>
+                </setting>
+            </groups>
+        </quickview>
+    </sections>
+</config>

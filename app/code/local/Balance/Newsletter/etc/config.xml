@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <modules>
+        <Balance_Newsletter>
+            <version>1.0.0</version>
+        </Balance_Newsletter>
+    </modules>
+    <frontend>
+        <routers>
+            <newsletter>
+                <use>standard</use>
+                <args>
+                    <module>Balance_Newsletter</module>
+                    <frontName>newsletter</frontName>
+                </args>
+            </newsletter>
+        </routers>
+    </frontend>
+    <!--<global>
+        <rewrite>
+            <newsletter>
+                <from><![CDATA[#^/newsletter/subscriber/#]]></from>
+                <to>/customnewsletter/subscriber/</to>
+            </newsletter>
+        </rewrite>
+    </global>-->
+</config>

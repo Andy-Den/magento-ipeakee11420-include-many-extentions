@@ -1,0 +1,18 @@
+<div class="box1Titles"><label class="titlTxt">Latest News<br /> &amp; Updates</label> <br />
+<p><a href="<?php echo $this->getUrl('blog') ?>">More News</a></p>
+<p>&nbsp;</p>
+</div>
+<?php
+$post = $this->getFirstLatestPost();
+$submitUrl = Mage::getUrl('blog');
+?>
+<div class="contentBox">
+	<div id="post-title"><a href="<?php echo $submitUrl; ?>" title="<?php echo $post->getTitle();?>" onclick="window.location.href('<?php echo $submitUrl?>')"><label class="bannTitl"><?php echo $post->getTitle();?></label></a> <br /> <em class="dtTxt">
+	<?php echo Mage::getModel('core/date')->date('jS F, Y' , strtotime($post->getCreatedTime()));?></em></div>
+    <div class="short_content">
+        <?php echo $post->getShortContent();?>
+    </div>
+</div>
+<script type="text/javascript">
+  jQuery("p:last").addClass("latest-news");
+</script>

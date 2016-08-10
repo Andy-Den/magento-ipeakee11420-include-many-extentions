@@ -1,0 +1,6 @@
+<?php $isSecure = Mage::app()->getStore()->isCurrentlySecure() ?>
+<script type="text/javascript" >
+    catalogBaseurl  =   '<?php echo $isSecure ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, true) : Mage::getBaseUrl(); ?>';
+    catalogSkinurl  =   '<?php echo $isSecure ? Mage::getBaseUrl('skin', true) : Mage::getBaseUrl('skin'); ?>';
+    totalautopage   =   <?php echo Mage::getStoreConfig('ajaxcatalog/general/autopage'); ?>
+</script>

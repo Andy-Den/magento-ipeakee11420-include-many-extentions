@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Exceedz_FacebookShare>
+            <version>0.1.4</version>
+        </Exceedz_FacebookShare>
+    </modules>
+    <global>
+		<blocks>
+            <facebookshare>
+                <class>Exceedz_FacebookShare_Block</class>
+            </facebookshare>
+        </blocks>		
+    </global>
+</config>

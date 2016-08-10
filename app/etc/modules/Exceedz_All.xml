@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Exceedz
+ * @category   Exceedz
+ * @package    Exceedz_ALL
+ * @copyright  Copyright (c) 2011 Exceedz.
+ */
+-->
+<config>
+    <modules>
+        <Exceedz_GeoIp>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_GeoIp>
+        <Exceedz_Checkout>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_Checkout>
+        <Exceedz_Catalog>
+            <active>true</active>
+            <codePool>community</codePool>
+            <version>1.01</version>
+        </Exceedz_Catalog>
+        <Exceedz_Newsletter>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Exceedz_Newsletter>
+        <Exceedz_Sales>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_Sales>
+        <Exceedz_CatalogInventory>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_CatalogInventory>
+        <Exceedz_Review>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_Review>
+        <Exceedz_Shipping>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_Shipping>
+        <Exceedz_Adminhtml>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_Adminhtml>
+        <Exceedz_CatalogSearch>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_CatalogSearch>
+        <Exceedz_Tracking>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_Tracking>
+        <Exceedz_OrderPopup>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_OrderPopup>
+        <Exceedz_Paypal>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_Paypal>
+        <Exceedz_ShippingFilter>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_ShippingFilter>
+        <Exceedz_PaginationFilter>
+            <active>false</active>
+            <codePool>community</codePool>
+        </Exceedz_PaginationFilter>
+        <Exceedz_AddDispatchDate>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Exceedz_AddDispatchDate>
+    </modules>
+</config>

@@ -1,0 +1,95 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php /** @var $this Mage_Sales_Block_Order_Info */ ?>
+<?php $_order = $this->getOrder() ?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $orderDate = strtotime($_order->getCreatedAtStoreDate());?>
+<div class="order-information">
+    <div class="order-title">
+        <div class="order-date"><?php echo $this->__('%s', date( 'F j, Y', $orderDate ) ) ?></div>
+        <div class="buttons">
+            <?php echo $this->getChildHtml('buttons') ?>
+        </div>
+    </div>
+    <?php echo $this->getChildHtml('sales.order.view')?>
+    <?php echo $this->getStatusHistoryRssUrl($_order) ?>
+    <div class="order-info">
+        <h2><?php echo $this->__('Order Information')?></h2>
+    </div>
+    <div class="details-order">
+        <?php if (!$_order->getIsVirtual()): ?>
+        <div class="col2-set order-info-box shipping">
+            <div class="col-1">
+                <div class="box">
+                    <div class="box-title">
+                        <h2><?php echo $this->__('Shipping Address') ?></h2>
+                    </div>
+                    <div class="box-content">
+                        <address><?php echo $_order->getShippingAddress()->format('html') ?></address>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="box">
+                    <div class="box-title">
+                        <h2><?php echo $this->__('Shipping Method') ?></h2>
+                    </div>
+                    <div class="box-content">
+                        <?php if ($_order->getShippingDescription()): ?>
+                            <?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
+                        <?php else: ?>
+                            <p><?php echo $this->helper('sales')->__('No shipping information available'); ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="col2-set order-info-box billing">
+            <div class="col-1">
+                <div class="box">
+                    <div class="box-title">
+                        <h2><?php echo $this->__('Billing Address') ?></h2>
+                    </div>
+                    <div class="box-content">
+                        <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="box box-payment">
+                    <div class="box-title">
+                        <h2><?php echo $this->__('Payment Method') ?></h2>
+                    </div>
+                    <div class="box-content">
+                        <?php echo $this->getPaymentInfoHtml() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

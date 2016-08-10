@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <payment>
+            <groups>
+                <braintreevzero translate="label comment" module="fris_pay">
+                    <label>Braintree v.zero</label>
+                    <sort_order>675</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[<a href="https://www.braintreepayments.com/get-started" target="_braintree">Click here to log in to your Braintree v.zero account or to sign up</a>.]]></comment>
+                    <fields>
+                        <version translate="label">
+                            <label>Version</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>fris_pay/adminhtml_version</frontend_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </version>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <host translate="label">
+                            <label>Hostname of this machine</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>fris_pay/adminhtml_host</frontend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </host>
+                        <authorization_key translate="label">
+                            <label>Authorization key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>You received this with your purchase. If you leave this blank you can only use this extension on localhost.</comment>
+                        </authorization_key>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <environment translate="label">
+                            <label>Environment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fris_pay/source_environment</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </environment>
+                        <merchant_id translate="label">
+                            <label>Merchant ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </merchant_id>
+                        <merchant_account_id translate="label comment">
+                            <label>Merchant Account ID (optional)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Each merchant account can only process for a single currency. So setting which merchant account to use will also determine which currency the transaction is processed with. If in doubt, leave blank.</comment>
+                        </merchant_account_id>
+                        <public_key translate="label">
+                            <label>Public Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </public_key>
+                        <private_key translate="label">
+                            <label>Private Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </private_key>
+                        <use_vault translate="label comment">
+                            <label>Use Vault</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If set to "Yes", returning customers will default to their favorite payment method. A link to change their payment method is shown also.</comment>
+                        </use_vault>
+                        <fraudprotection translate="label comment">
+                            <label>Advanced Fraud Protection</label>
+                            <sort_order>17</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Make sure to enable Advanced Fraud Tools on your Braintree merchant account. Basic Fraud Tools, such as the Address Verification System (AVS) and CVV will be active automatically, if enabled on your merchant account.]]></comment>
+                        </fraudprotection>
+                        <kount_id translate="label comment">
+                            <label>Kount ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <fraudprotection>1</fraudprotection>
+                            </depends>
+                            <comment><![CDATA[An optional special Advanced Fraud Tool that requires a <a href="http://www.kount.com">Kount</a> ID (not free). <a href="https://articles.braintreepayments.com/guides/fraud-tools/advanced">Read more.</a>]]></comment>
+                        </kount_id>
+                        <payment_action translate="label">
+                            <label>Payment action</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fris_pay/source_paymentAction</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>"Authorize and Capture" implies auto-invoicing.</comment>
+                        </payment_action>
+                        <order_status translate="label">
+                            <label>New order status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status_processing</source_model>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>If in doubt, set to "Processing".</comment>
+                        </order_status>
+                        <verification_time translate="label comment">
+                            <label>At what point are payment details verified?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fris_pay/source_verificationTime</source_model>
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[For best UX select <em>When "Place Order" is pressed</em>. Consider the other options only when your checkout extension is not one of the ones we recommend and you are experiencing incorrect behaviour. If so, please <a href="mailto:support@technology">let us know</a>.]]></comment>
+                        </verification_time>
+                        <verification_style translate="label comment">
+                            <label>Notifications when credit card or PayPal are verified and authorized</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>fris_pay/source_verificationStyle</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Pick up to 3 notifications. Whether these are supported depends on the checkout extension you use.</comment>
+                        </verification_style>
+                        <verification_timeout translate="label comment">
+                            <label>Payment verification timeout [sec]</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <verification_time>order_submit</verification_time>
+                            </depends>
+                            <comment><![CDATA[Only applies to Mage-core checkout styles and only with <em>When "Place order" is pressed</em> selected above. Allow 5 seconds, more if site or network are slow.]]></comment>
+                        </verification_timeout>
+                        <debug translate="label">
+                            <label>Debug</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </debug>
+                    </fields>
+                </braintreevzero>
+            </groups>
+        </payment>
+    </sections>
+</config>

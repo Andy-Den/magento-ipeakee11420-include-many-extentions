@@ -1,0 +1,124 @@
+<?php
+    $helper = Mage::helper('innobyte_product_questions');
+    $product = Mage::registry('product');
+    $customerHelper = $this->helper('customer');
+    $customerEmail = $customerName = '';
+    if ($customerHelper->isLoggedIn()) {
+        $customerEmail = $customerHelper->getCustomer()->getEmail();
+        $customerName = $customerHelper->getCustomer()->getName();
+    }
+?>
+
+<div id="response" class="response" style="display:none;"></div>
+<div id="product-question-wrapper">
+    <div id="product-question-content">
+        
+        <a href="javascript://" onclick="inno.product_questions.hideQuestionForm()" class="pq-close" id="pq-close-question-form">&nbsp;</a>
+        <div id="pq-message" class="message notice" style="display: none;">      
+            <?php echo $this->__('Loading. Please wait...') ?>
+        </div>
+        <div id="pq-question-form">
+            <?php if ($this->allowProductQuestions()): ?>
+
+                <div class="pq-question">
+                    <div class="box-title">
+                        <h2 class="title-form-question"><?php echo $this->__('Ask a question about')?> <div> <?php echo $product->getName(); ?></div></h2>
+                    </div>
+                    <?php if ($this->allowGuestToAskQuestions()): ?>
+                        <form action="<?php echo $this->getAction() ?>" method="post" id="pq-form" style="display:block;">
+                            <div class="box-content">
+                                <ul class="form-list">
+                                    <li>
+                                        <label for="innobyte_product_questions_customer_name" class="required"><em>*</em><?php echo $this->__('Name') ?></label>
+                                        <div class="input-box">
+                                            <input type="text" name="innobyte_product_questions_customer_name" placeholder="Nickname" id="innobyte_product_questions_customer_name" class="input-text required-entry" value="<?php echo $customerName; ?>" />
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <label for="innobyte_product_questions_customer_email" class="required"><em>*</em><?php echo $this->__('Email') ?></label>
+                                        <div class="input-box">
+                                            <input type="text" name="innobyte_product_questions_customer_email" placeholder="Your email address" id="innobyte_product_questions_customer_email" class="input-text required-entry validate-email" value="<?php echo $customerEmail; ?>" />
+                                        </div>
+                                    </li>
+                                    <?php if ($this->allowPrivateQuestions()): ?>
+                                        <li>
+                                            <label for="innobyte_product_questions_visibility"><?php echo $this->__('Visibility') ?></label>
+                                            <div class="input-box">
+                                                <select name="innobyte_product_questions_visibility" id="innobyte_product_questions_visibility" >
+                                                    <option value="1"><?php echo $this->__('Public - Visible on site') ?></option>
+                                                    <option value="0"><?php echo $this->__('Private - Not visible on site') ?></option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                    <?php else: ?>
+                                        <input type="hidden" name="innobyte_product_questions_visibility" id="innobyte_product_questions_visibility" value="1" />
+                                    <?php endif; ?>
+                                    <li>
+                                        <label for="innobyte_product_questions_content" class="required"><em>*</em><?php echo $this->__('Question') ?></label>
+                                        <div class="input-box">
+                                            <textarea name="innobyte_product_questions_content" placeholder="Your question..." id="innobyte_product_questions_content" cols="5" rows="3" class="required-entry"></textarea>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="buttons-set form-buttons btn-only">
+                                    <button id="pq-submit" type="button" class="button btn-submit-question"><span><span><?php echo $this->__('Submit Question') ?></span></span></button>
+                                </div>
+                            </div>
+                        </form>
+                        <script type="text/javascript">
+                            var productQuestionsForm = new VarienForm('pq-form', true);
+
+                            var product_questions_url = '<?php echo Mage::getBaseUrl() ?>innoproductquestions/index/add';
+
+                            /* document.observe("dom:loaded", function() { */
+
+                                $('pq-submit').observe('click', function(event){
+                                    if (productQuestionsForm.validator
+                                        && productQuestionsForm.validator.validate()
+                                    ) {
+
+                                        $('pq-message').show();
+                                        $('pq-question-form').hide();
+
+                                        new Ajax.Request(product_questions_url, {
+                                            method: 'post',
+                                            parameters: {
+                                                'customer_name' : $('innobyte_product_questions_customer_name').value,
+                                                'customer_email' : $('innobyte_product_questions_customer_email').value,
+                                                'visibility' : $('innobyte_product_questions_visibility').value,
+                                                'content' : $('innobyte_product_questions_content').value,
+                                                'product_id' : <?php echo $product->getId() ?>,
+                                                'product_name' : '<?php echo str_replace(array('"', "'"),array(' ', ' '),$product->getName()); ?>',
+                                                'vendor_id' : <?php echo $product->getVendor() ? $product->getVendor() : 0 ?>
+                                            },
+                                            dataType: 'json',
+                                            onSuccess: function(transport) {
+                                                var response = transport.responseJSON;
+                                                if (response['message'] != '') {
+                                                    $('pq-message').hide();
+                                                    $('response').update(response['message'] + response['html']);
+                                                    $('response').show();
+
+                                                    $('pq-question-form').reset();
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            /* }); */
+
+                        </script>
+                        <?php else: ?>
+                            <div class="box-content">
+                                <p class="review-nologged" id="review-form">
+                                    <?php echo $this->getGuestMessage() ?>
+                                </p>
+                            </div>
+                        <?php endif ?>
+
+                </div>
+
+    <?php endif ?>
+        </div>
+    </div>
+</div>

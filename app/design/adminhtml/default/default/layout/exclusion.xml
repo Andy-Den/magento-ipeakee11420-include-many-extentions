@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_exclusion_exclusion_index>
+        <reference name="content">
+            <block type="exclusion/adminhtml_exclusion" name="exclusion" />
+        </reference>
+    </adminhtml_exclusion_exclusion_index>
+        
+        
+    <!--    
+    <adminhtml_exclusion_exclusion_select>
+        <reference name="content">
+            <block type="exclusion/adminhtml_catalog" name="exclusion" />
+        </reference>
+    </adminhtml_exclusion_exclusion_select>      
+
+    <adminhtml_exclusion_catalog_index> 
+        <reference name="content">
+            <block type="exclusion/adminhtml_catalog" name="exclusion" />
+        </reference>
+        <reference name="before_body_end">
+            <block type="exclusion/adminhtml_preselect" name="preselector" template="exclusion/selector.phtml" />
+        </reference>
+    </adminhtml_exclusion_catalog_index>
+    
+    
+    <adminhtml_exclusion_catalog_grid> 
+        <block type="exclusion/adminhtml_catalog_grid" name="admin.product.grid"/>
+    </adminhtml_exclusion_catalog_grid>                        
+    -->           
+</layout>

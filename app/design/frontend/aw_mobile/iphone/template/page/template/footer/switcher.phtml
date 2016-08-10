@@ -1,0 +1,35 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php
+/**
+ * @see Mage_Page_Block_Template_Links
+ */
+?>
+ <?php $websites=Mage::app()->getWebsites();?>
+<?php if(count($websites)>1):
+?>
+<fieldset class="store-switcher">
+<label for="select-store"><?php echo $this->__('Select Store') ?>:</label>
+<select id="select-store" onchange="location.href=this.value">
+<?php foreach ($websites as $website): ?>
+<?php $_selected = ($website->getCode() == Mage::app()->getWebsite()->getCode()) ? ' selected="selected"' : '' ?>
+<option value="<?php echo $website->getDefaultStore()->getBaseUrl()?>"<?php echo $_selected ?>><?php echo ucwords(str_replace('_',' ',$website->getDefaultStore()->getCode())) ?></option>
+<?php endforeach; ?>
+</select>
+</fieldset>
+<?php endif; ?>

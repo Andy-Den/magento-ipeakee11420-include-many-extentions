@@ -1,0 +1,15 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_SeoRichData
+ */
+?>
+<?php $reviews = $this->helper('yotpo/richSnippets')->getRichSnippet($this); ?>
+
+<?php if ($reviews && $reviews["reviews_count"] > 0 ): ?>
+<div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+    <meta itemprop="ratingValue" content="<?php echo $reviews["average_score"]; ?>">
+    <meta itemprop="ratingCount" content="<?php echo $reviews["reviews_count"]; ?>">
+</div>
+<?php endif ?>

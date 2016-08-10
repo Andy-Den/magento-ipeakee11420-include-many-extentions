@@ -1,0 +1,33 @@
+<?php
+/**
+ * Contus Support Interactive.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file PRICE COUNTDOWN-LICENSE.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento 1.4.x and 1.5.x COMMUNITY edition
+ * Contus Support does not guarantee correct work of this package
+ * on any other Magento edition except Magento 1.4.x and 1.5.x COMMUNITY edition.
+ * =================================================================
+ */
+?>
+<?php
+/* Count for timer calculation declared here */
+$count = 1;
+$_product = $this->getProduct();
+$toDate = $_product->getSpecialTODate();
+
+/* Admin Controllers for timer are declared here */
+$timer_active = Mage::getStoreConfig('timer/general/activate_apptha_timer');
+$timer_head_active = Mage::getStoreConfig('timer/general/activate_apptha_heading');
+$timer_desc_active = Mage::getStoreConfig('timer/general/activate_apptha_description');
+$desc_color = Mage::getStoreConfig('timer/apptha_timer_color/description');
+$timer_color = Mage::getStoreConfig('timer/apptha_timer_color/text');
+$head_color = Mage::getStoreConfig('timer/apptha_timer_color/heading_text_color');
+$timer_head = Mage::getStoreConfig('timer/general/heading');
+?>

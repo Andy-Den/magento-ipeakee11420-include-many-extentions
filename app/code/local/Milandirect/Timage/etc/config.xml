@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Timage>
+            <version>0.1.0</version>
+        </Milandirect_Timage>
+    </modules>
+    <global>
+        <helpers>
+            <timage>
+                <rewrite>
+                    <data>Milandirect_Timage_Helper_Data</data>
+                </rewrite>
+            </timage>
+        </helpers>
+    </global>
+</config>

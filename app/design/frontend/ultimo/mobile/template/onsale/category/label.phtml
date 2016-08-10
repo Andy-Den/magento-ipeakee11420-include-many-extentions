@@ -1,0 +1,39 @@
+<?php
+    /**
+     * aheadWorks Co.
+     *
+     * NOTICE OF LICENSE
+     *
+     * This source file is subject to the EULA
+     * that is bundled with this package in the file LICENSE.txt.
+     * It is also available through the world-wide-web at this URL:
+     * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+     *
+     * @category   AW
+     * @package    AW_Onsale
+     * @copyright  Copyright (c) 2009-2010 aheadWorks Co. (http://www.aheadworks.com)
+     * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+     */
+?>
+<?php if ($this->isShow() || !$this->getProduct()->getIsSalable()): ?>
+<?php $position = $this->getPosition();
+$rand = rand();
+if(!$this->getProduct()->getIsSalable()) {
+    $position = 'MC';
+    $this->setImageFile('', 'detail-soldout.jpg');
+}
+?>
+<div id ="category-container-<?php echo $this->getProduct()->getId(); ?>-<?php echo $rand; ?>" class="onsale-category-container" onclick="document.location='<?php echo $this->getProduct()->getProductUrl() ?>'" style="<?php print $this->getImageSizeHtml(); ?> background-image: url('<?php print $this->getImageUrl(); ?>');
+            <?php if (in_array($position, array('TL', 'TC', 'TR'))): ?>top: -15px;<?php endif; ?>
+            <?php if (in_array($position, array('BL', 'BC', 'BR'))): ?>bottom: 0px;<?php endif; ?>">
+    <div id="category-onsale-label-<?php echo $this->getProduct()->getId(); ?>" class="<?php echo  $this->getType() ?>-onsale-category-label-text onsale-category-label"><span><?php if($this->getProduct()->getIsSalable()) print $this->getFormatedText() ?></span></div>
+</div>
+<script type="text/javascript">
+    onsale.registerHorPosition($('category-container-<?php echo $this->getProduct()->getId(); ?>-<?php echo $rand; ?>'), '<?php if (($position == 'TC') or ($position == 'BC') or ($position == 'MC')) print 'center'; if (($position == 'TL') or ($position == 'BL') or ($position == 'ML')) print 'left'; if (($position == 'TR') or ($position == 'BR') or ($position == 'MR')) print 'right'; ?>');
+    <?php if (in_array($position, array('ML', 'MC', 'MR'))): ?>
+    onsale.registerVertPosition($('category-container-<?php echo $this->getProduct()->getId(); ?>-<?php echo $rand; ?>'), 'middle');
+    <?php endif; ?>
+    onsale.registerHorPosition($('category-onsale-label-<?php echo $this->getProduct()->getId(); ?>-<?php echo $rand; ?>'), 'center');
+    onsale.registerVertPosition($('category-onsale-label-<?php echo $this->getProduct()->getId(); ?>-<?php echo $rand; ?>'), 'middle');
+</script>
+<?php endif; ?>

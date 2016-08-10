@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ajax Extension for Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade
+ * the Balance Ajax module to newer versions in the future.
+ * If you wish to customize the Balance Ajax module for your needs
+ * please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Balance
+ * @package    Balance_Ajax
+ * @copyright  Copyright (C) 2012 Balance Internet (http://www.balanceinternet.com.au/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Balance_Ajax>
+            <version>0.0.1</version>
+        </Balance_Ajax>
+    </modules>
+    <global>
+        <models>
+            <ajax>
+                <class>Balance_Ajax_Model</class>
+            </ajax>
+            <core>
+                <rewrite>
+                    <layout>Balance_Ajax_Model_Core_Layout</layout>
+                </rewrite>
+            </core>
+            <core>
+                <rewrite>
+                    <session>Balance_Ajax_Model_Core_Session</session>
+                </rewrite>
+            </core>
+            <checkout>
+                <rewrite>
+                    <session>Balance_Ajax_Model_Checkout_Session</session>
+                </rewrite>
+            </checkout>
+            <catalog>
+                <rewrite>
+                    <session>Balance_Ajax_Model_Catalog_Session</session>
+                </rewrite>
+            </catalog>
+            <customer>
+                <rewrite>
+                    <session>Balance_Ajax_Model_Customer_Session</session>
+                </rewrite>
+            </customer>
+            <wishlist>
+                <rewrite>
+                    <session>Balance_Ajax_Model_Wishlist_Session</session>
+                </rewrite>
+            </wishlist>
+        </models>
+        <blocks>
+            <ajax>
+                <class>Balance_Ajax_Block</class>
+            </ajax>
+            <core>
+                <rewrite>
+                    <messages>Balance_Ajax_Block_Core_Messages</messages>
+                </rewrite>
+            </core>
+        </blocks>
+        <events>
+            <balance_ajax_dispatch_after>
+                <observers>
+                    <ajax_process_response>
+                        <type>singleton</type>
+                        <class>Balance_Ajax_Model_Observer</class>
+                        <method>processAjaxResponse</method>
+                    </ajax_process_response>
+                </observers>
+            </balance_ajax_dispatch_after>
+            <controller_front_init_before>
+                <observers>
+                    <ajax_forward>
+                        <type>singleton</type>
+                        <class>Balance_Ajax_Controller_Router</class>
+                        <method>initControllerRouter</method>
+                    </ajax_forward>
+                </observers>
+            </controller_front_init_before>
+            <balance_ajax_dispatch_before>
+                <observers>
+                    <ajax_process>
+                        <type>singleton</type>
+                        <class>Balance_Ajax_Model_Observer</class>
+                        <method>processAjaxRequest</method>
+                    </ajax_process>
+                </observers>
+            </balance_ajax_dispatch_before>
+            <session_clear_messages_before>
+                <observers>
+                    <clear_message_before>
+                        <class>Balance_Ajax_Model_Observer</class>
+                        <method>initMessageFlag</method>
+                    </clear_message_before>
+                </observers>
+            </session_clear_messages_before>
+        </events>
+        <helpers>
+            <ajax>
+                <class>Balance_Ajax_Helper</class>
+            </ajax>
+        </helpers>
+    </global>
+    <frontend>
+        <events>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <render_ajax_block>
+                        <class>Balance_Ajax_Model_Observer</class>
+                        <method>renderAjaxBlock</method>
+                    </render_ajax_block>
+                </observers>
+            </core_block_abstract_to_html_after>
+        </events>
+        <routers>
+            <ajax>
+                <use>standard</use>
+                <args>
+                    <module>Balance_Ajax</module>
+                    <frontName>ajax</frontName>
+                </args>
+            </ajax>
+        </routers>
+        <layout>
+            <updates>
+                <ajax>
+                    <file>balance/ajax.xml</file>
+                </ajax>
+            </updates>
+        </layout>
+    </frontend>
+</config>
+

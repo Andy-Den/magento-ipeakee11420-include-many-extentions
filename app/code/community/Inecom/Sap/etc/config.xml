@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Inecom_Sap>
+            <version>1.0.0</version>
+            <depends>
+            <!-- no dependencies -->
+            </depends>
+        </Inecom_Sap>
+    </modules>
+    <global>
+        <models>
+            <sap>
+                <class>Inecom_Sap_Model</class>
+                <resourceModel>sap_mysql4</resourceModel>
+            </sap>
+            <sap_mysql4>
+                <class>Inecom_Sap_Model_Mysql4</class>
+                <entities>
+                    <order_queue>
+                        <table>sap_order_queue</table>
+                    </order_queue>
+                </entities>
+            </sap_mysql4>
+            <sales>
+                <rewrite>
+                    <order>Inecom_Sap_Model_Order</order>
+                </rewrite>
+            </sales>
+        </models>
+        <resources>
+            <sap_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </sap_write>
+            <sap_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </sap_read>
+        </resources>
+        <extraconfig />
+        <blocks>
+            <sap>
+                <class>Inecom_Sap_Block</class>
+            </sap>
+        </blocks>
+        <helpers>
+            <inecom_sap>
+                <class>Inecom_Sap_Helper</class>
+            </inecom_sap>
+        </helpers>
+        <template>
+            <email>
+                <sap_notification_email>
+                    <label>SAP web service failure notification</label>
+                    <file>sap_notification_email.html</file>
+                    <type>html</type>
+                </sap_notification_email>
+            </email>
+        </template>
+    </global>
+
+    <frontend>
+        <routers>
+            <sap>
+                <use>standard</use>
+                <args>
+                    <module>Inecom_Sap</module>
+                    <frontName>sap</frontName>
+                </args>
+            </sap>
+        </routers>
+    </frontend>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <sap>
+                                            <title>SAP Integration</title>
+                                        </sap>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <sap>
+                    <file>sap.xml</file>
+                </sap>
+            </updates>
+        </layout>
+        <menu>
+            <system>
+                <children>
+                    <inecom_sap translate="title">
+                        <title>SAP Integration</title>
+                        <sort_order>10</sort_order>
+                        <children>
+                            <import translate="title">
+                                <title>Product Import</title>
+                                <action>adminhtml/sap_import</action>
+                                <sort_order>10</sort_order>
+                            </import>
+                            <order translate="title">
+                                <title>SAP Order Reports</title>
+                                <action>adminhtml/sap_order</action>
+                                <sort_order>20</sort_order>
+                            </order>
+                        </children>
+                    </inecom_sap>
+                </children>
+            </system>
+        </menu>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <sap before="Mage_Adminhtml">Inecom_Sap_Adminhtml</sap>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <crontab>
+        <jobs>
+            <sap_pushorders>
+                <schedule>
+                    <cron_expr>*/15 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sap/observer::pushOrders</model>
+                </run>
+            </sap_pushorders>
+          <sap_exportproducts>
+            <schedule>
+              <cron_expr>0 2 * * *</cron_expr>
+            </schedule>
+            <run>
+              <model>sap/observer::exportProducts</model>
+            </run>
+          </sap_exportproducts>
+<!--
+            <sap_syncproducts>
+                <schedule>
+                    <cron_expr>0 */4 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sap/observer::syncProducts</model>
+                </run>
+            </sap_syncproducts>
+            <sap_syncproducts>
+                <schedule>
+                    <cron_expr>0 */4 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sap/observer::syncProducts</model>
+                </run>
+            </sap_syncproducts>
+            <sap_pushorders>
+                <schedule>
+                    <cron_expr>1,11,21,31,41,51  * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sap/observer::pushOrders</model>
+                </run>
+            </sap_pushorders>
+            <sap_checkfororderupdates>
+                <schedule>
+                    <cron_expr>0 21 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sap/observer::checkForOrderUpdates</model>
+                </run>
+            </sap_checkfororderupdates>
+            <sap_reporterrors>
+                <schedule>
+                    <cron_expr>*/10 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sap/observer::reportErrors</model>
+                </run>
+            </sap_reporterrors>
+-->
+        </jobs>
+    </crontab>
+</config>

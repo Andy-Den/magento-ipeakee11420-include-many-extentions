@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Respond>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Infortis_Ultimo />
+            </depends>
+        </Balance_Respond>
+    </modules>
+</config>

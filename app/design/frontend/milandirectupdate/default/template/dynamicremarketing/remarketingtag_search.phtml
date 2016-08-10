@@ -1,0 +1,29 @@
+<?php
+if($this->isActive() == 1):
+$productBlock = $this->getLayout()->getBlock("search_result_list");
+$products = $this->getCatProducts($productBlock->getLoadedProductCollection());
+//Mage::log($products,7,'md.log');
+?>
+<script type="text/javascript">
+//dynamic remarketing
+var google_tag_params = {
+ecomm_prodid: <?php echo $products['id'] ?>,
+ecomm_pagetype: 'searchresults',
+ecomm_totalvalue: <?php echo $products['total'] ?>};
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = "<?php echo $this->getConversionId();?>";
+var google_conversion_label = "<?php echo $this->getConversionLabel();?>";
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="http<?php echo (Mage::app()->getStore()->isCurrentlySecure() ? 's': '');?>://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http<?php echo (Mage::app()->getStore()->isCurrentlySecure() ? 's': '');?>://googleads.g.doubleclick.net/pagead/viewthroughconversion/<?php echo $this->getConversionId();?>/?value=0&amp;label=<?php echo $this->getConversionLabel();?>&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<?php endif;  ?>

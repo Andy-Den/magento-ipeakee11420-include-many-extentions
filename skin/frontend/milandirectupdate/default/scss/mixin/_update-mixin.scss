@@ -1,0 +1,14 @@
+@mixin touch-button {
+  color: $c-text;
+  background-color: $c-module-background;
+  padding: 5px 10px;
+}
+/* -------------------------------------------- *
+ * Icons
+ */
+
+.icon-sprite {
+  background-image: url(../images/icon_sprite.png);
+  background-repeat: no-repeat;
+  @include image-replacement;
+}

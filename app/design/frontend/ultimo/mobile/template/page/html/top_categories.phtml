@@ -1,0 +1,62 @@
+<?php $_helper = Mage::helper('catalog/category') ?>
+<?php $_categories = $_helper->getStoreCategories() ?>
+<?php if (count($_categories) > 0): ?>
+    <?php $int  = 0; ?>
+    <div class="top-cat">
+        <ul class="clearer">
+            <?php foreach($_categories as $_category): ?>
+                <?php
+                $int ++;
+                //Get images of category
+                $this_cat = Mage::getModel('catalog/category')->load($_category->getEntityId());
+                $img = $this_cat->getImageUrl(); //I suspect this line is wrong
+                if (! $img){
+                    $img    = Mage::getDesign()->getSkinUrl('images/catalog/product/placeholder/image.jpg');
+                }
+
+                // create folder
+                $dir = new Varien_Io_File();
+                $dir->mkdir(BP . "/media/catalog/category/resized/homepage", '0777');
+                //if(!file_exists(BP . "/media/catalog/category/resized/homepage"))
+                //@mkdir( BP . "/media/catalog/category/resized/homepage",0777);
+
+                // get image name
+                $imageName = substr(strrchr($img,"/"),1);
+
+                // resized image path (media/catalog/category/resized/homepage/IMAGE_NAME)
+                $imageResized = Mage::getBaseDir('media').DS."catalog".DS."category".DS."resized".DS."homepage".DS.$imageName;
+
+                // changing image url into direct path
+                if (strstr($img,'/media'))
+                    $dirImg = Mage::getBaseDir().str_replace("/",DS,strstr($img,'/media'));
+                else
+                    $dirImg = Mage::getBaseDir().str_replace("/",DS,strstr($img,'/skin'));
+
+                // if resized image doesn't exist, save the resized image to the resized directory
+                if (!file_exists($imageResized)&&file_exists($dirImg)) :
+                    $imageObj = new Varien_Image($dirImg);
+                    $imageObj->constrainOnly(TRUE);
+                    //$imageObj->keepAspectRatio(TRUE);
+                    $imageObj->keepFrame(FALSE);
+                    $imageObj->resize(110, 110);
+                    $imageObj->save($imageResized);
+                endif;
+                $newImageUrl = Mage::getBaseUrl('media')."catalog/category/resized/homepage/".$imageName;
+                ?>
+
+                <li class="cat-item clearer <?php if ($int % 2 == 0) echo 'cat-right';?>">
+                    <div class="left cat-image">
+                        <a href="<?php echo $_helper->getCategoryUrl($_category) ?>">
+                            <img src="<?php echo $newImageUrl;?>" alt="" />
+                        </a>
+                    </div>
+                    <div class="right cat-name">
+                        <a href="<?php echo $_helper->getCategoryUrl($_category) ?>">
+                            <?php echo $_category->getName() ?>
+                        </a>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>

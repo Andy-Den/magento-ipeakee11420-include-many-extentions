@@ -1,0 +1,5 @@
+AuthUserFile /etc/httpd/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Milan Direct - APC"
+AuthType Basic
+require valid-user

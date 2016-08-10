@@ -1,0 +1,94 @@
+<div class="common_spacing">
+  <?php $posts = $this->getPosts(); ?>
+  <div id="breadcrumb" class="breadcrumbs"><?php echo $this->getLayout()->getBlock('breadcrumbs')->toHtml()?> </div>
+
+  <div class="page-title category-title">
+    <h1>Blog</h1>
+    <p class="sub-text">All the Latest Milan Direct News and Specials</p>
+  </div>
+</div>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+  <div class="postWrapper">
+    <dl>
+      <?php
+$show = true;
+      $i=0;
+foreach ($posts as $key=>$post): ?>
+      <dt <?php if($show) : ?>class="first"<?php endif; ?>> <span onclick="showhidePost('<?php echo $key; ?>');$('read_more_<?php echo $key; ?>').toggle();" class="<?php if($show) : ?>arrow active<?php else: ?>arrow<?php endif; ?>" id="post_<?php echo $key; ?>">&nbsp;</span>
+        <div class="blogTitle">
+          <?php $createdTime =	$post->getCreatedTime();?>
+          <div class="blog-date"><span class="date"><?php echo Mage::getModel('core/date')->date('d' , $createdTime); ?></span> <span class="month-date"><?php echo Mage::getModel('core/date')->date('F' , $createdTime).'<BR>'.Mage::getModel('core/date')->date('Y' , $createdTime);?></span> </div>
+          <h2><a href="javascript:void(0);"  onclick="showhidePost('<?php echo $key; ?>');$('read_more_<?php echo $key; ?>').toggle();" title="<?php echo $post->getTitle();?>" ><?php echo $post->getTitle();?></a><br />
+            <a href="javascript:void(0);" onclick="showhidePost('<?php echo $key; ?>');$('read_more_<?php echo $key; ?>').toggle();" id="read_more_<?php echo $key; ?>" <?php if($show) : ?>style="display:none"<?php endif; ?> class="read-more" title="Read More">Read More <?php echo $post->getId() ?></a></h2>
+        </div>
+      </dt>
+      <dd id="post_<?php echo $key; ?>_content" <?php if(!$show) : ?>style="display:none"<?php endif; ?>>
+        <?php
+        if($i==0):
+            echo $this->getLayout()->createBlock('blog/postcontent')->setPostId($post->getId())->setTemplate('aw_blog/postcontent.phtml')->toHtml();
+            endif;
+        ?>
+      </dd>
+
+      <?php $show = false; $i++; endforeach; ?>
+    </dl>
+
+  <?php $this->getPages(); ?>
+
+  <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('share-and-connect')->toHtml() ?>
+  <?php echo $this->getLayout()->createBlock('newsletter/subscribe')->setTemplate('newsletter/subscribe.phtml')->toHtml() ?>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    jQuery(document).ready(function() {
+       if(jQuery('#blog-link'))
+        jQuery('#blog-link').addClass('select');
+     });
+
+    function showhidePost(id){
+        var link_detail ='<?php echo Mage::getUrl('blog/post/postdetail') ?>';
+        var currentUrl = window.location.href;
+        var isHttps = currentUrl.search('https://');
+        if(isHttps>=0){
+            link_search = link_detail.replace('http://','https://');
+        }
+        else {
+            link_search = link_detail.replace('https://','http://');
+        }
+        jQuery("#post_"+id).toggleClass('active');
+        if(jQuery("#post_"+id+"_content .postContent").length){
+            jQuery("#post_"+id+'_content').toggle();
+        }
+        else {
+            jQuery("#post_"+id+'_content').toggle();
+            jQuery("#post_"+id+'_content').html(jQuery("#loading-mask-cart").html());
+            new Ajax.Request(link_detail, {
+                method: 'post',
+                parameters: {"postId":id},
+                onSuccess: function(data){
+                    html = data.responseText.evalJSON();
+                    jQuery("#post_"+id+'_content').html(html.content);
+
+                },
+                onFailure: function(data){
+                    jQuery("#post_"+id+'_content').html('');
+                }
+            });
+        }
+
+
+    }
+    document.observe("dom:loaded", function() {
+		$$('div.share-buttons').each(function(item){
+				var id = item.id;
+				var postId = id.split('_');
+				var realPostId = postId[1];
+				var link = $('facebook_share_link_'+realPostId).innerHTML;
+				$$('div[id="'+id+'"] li[id="facebook-share"]').each(function(fbItem){
+					fbItem.update(link);
+				});
+            });
+	});
+//]]>
+</script>
+

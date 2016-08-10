@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Exceedz_PaginationFilter>
+			<version>0.1.0</version>
+			<depends>
+	            <Mage_Catalog />
+			</depends>
+		</Exceedz_PaginationFilter>
+	</modules>
+	<global>
+		<resources>
+            <paginationfilter_setup>
+                <setup>
+                    <module>Exceedz_PaginationFilter</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </paginationfilter_setup>
+            <paginationfilter_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</paginationfilter_write>
+			<paginationfilter_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</paginationfilter_read>
+        </resources>
+        <blocks>
+			<paginationfilter>
+				<class>Exceedz_PaginationFilter_Block</class>
+			</paginationfilter>
+            <catalog>
+				<rewrite>
+					<product_list_toolbar>Exceedz_PaginationFilter_Block_Product_List_Toolbar</product_list_toolbar>
+				</rewrite>
+			</catalog>
+		</blocks>
+	</global>
+</config>

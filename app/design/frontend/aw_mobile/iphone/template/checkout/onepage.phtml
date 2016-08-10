@@ -1,0 +1,77 @@
+<?php
+/**
+* aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento ENTERPRISE edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento ENTERPRISE edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.0
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?>
+<div class="opc-wrapper">
+<div class="common_spacing">
+
+<div class="page-title">
+    <?php //echo $this->getChildHtml('checkoutCallout') ?>
+	
+	<span><?php echo $this->__('You are on a secure server') ?></span>
+</div>
+<script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.1.1.js') ?>"></script>
+<script type="text/javascript">countryRegions = <?php echo $this->helper('directory')->getRegionJson() ?></script>
+
+<ol id="checkoutSteps" class="one-page-checkout">
+<?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
+<?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
+    <li id="opc-<?php echo $_stepId ?>" class="section <?php echo !empty($_stepInfo['allow'])?'allow':'' ?> <?php echo !empty($_stepInfo['complete'])?'saved':'' ?>">
+        <div class="head">
+            <h3><span class="step-count"><?php echo $i ?></span> &nbsp;<?php echo $_stepInfo['label'] ?></h3><a href="#"><img src="<?php echo $this->getSkinUrl('images/edit.gif') ?>" alt="<?php echo $this->__('Edit'); ?>" /></a>
+            <div class="clear"></div>
+        </div>
+        <div id="checkout-step-<?php echo $_stepId ?>" class="box<?php if($_stepId=='shipping_method'): ?>-no-padding<?php endif; ?> a-item" style="display:none;">
+            <?php echo $this->getChildHtml($_stepId) ?>
+        </div>
+    </li>
+<?php endforeach ?>
+</ol>
+
+<script type="text/javascript">
+//<![CDATA[
+    var accordion = new Accordion('checkoutSteps', '.head', true);
+    <?php if($this->getActiveStep()): ?>
+    accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
+    <?php endif ?>
+
+    var checkout = new Checkout(accordion,{
+        progress: '<?php echo $this->getUrl('checkout/onepage/progress', array('_secure'=>true)) ?>',
+        review: '<?php echo $this->getUrl('checkout/onepage/review',array('_secure'=>true)) ?>',
+        saveMethod: '<?php echo $this->getUrl('checkout/onepage/saveMethod',array('_secure'=>true)) ?>',
+        failure: '<?php echo $this->getUrl('checkout/cart',array('_secure'=>true)) ?>'}
+    );
+
+    checkout.isAdaptive = true;
+    $('opc-shipping').hide();
+    document.observe("dom:loaded", function() {
+        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder',array('_secure'=>true)) ?>', '<?php echo $this->getUrl('checkout/onepage/success',array('_secure'=>true)) ?>');
+        review.getReviewContent('<?php echo $this->getUrl('awmobile/onepage/cart', array('_secure'=>true)) ?>');
+    });
+//]]>
+</script>

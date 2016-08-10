@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Milandirect_Paypal>
+			<version>1.0.1</version>
+		</Milandirect_Paypal>
+	</modules>
+	<global>
+		<models>
+			<paypal>
+				<rewrite>
+					<api_nvp>Milandirect_Paypal_Model_Api_Nvp</api_nvp>
+				</rewrite>
+			</paypal>
+		</models>
+	</global>
+</config>

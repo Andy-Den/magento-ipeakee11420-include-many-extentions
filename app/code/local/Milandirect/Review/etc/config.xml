@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Review>
+            <version>0.1.0</version>
+        </Milandirect_Review>
+    </modules>
+    <global>
+        <blocks>
+            <review>
+                <rewrite>
+                    <product_view_list>Milandirect_Review_Block_Override_Product_View_List</product_view_list>
+                </rewrite>
+            </review>
+        </blocks>
+        <models>
+            <review_resource>
+                <rewrite>
+                    <review>Milandirect_Review_Model_Resource_Review</review>
+                </rewrite>
+            </review_resource>
+        </models>
+    </global>
+</config>

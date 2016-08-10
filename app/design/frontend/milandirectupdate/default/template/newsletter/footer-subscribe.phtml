@@ -1,0 +1,139 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<div class="newsletter-content">
+    <div class="container-newsletter">
+        <div class="block block-subscribe">
+            <div class="block-title">
+                <strong><?php echo $this->__('Want the latest specials and exclusive deals?') ?></strong>
+                <span><?php echo $this->__('Subscribe to our newsletter. It\'s free!') ?></span>
+            </div>
+            <form class="newsletter-form" action="<?php echo $this->getUrl('newsletter/subscriber/send/', array('_secure' => $this->getRequest()->isSecure())) ?>" onsubmit="return newsletterSubscriberFormDetailFooter.submit(event)" method="post" name="subscribeToNewsletterFormFooter" id="subscribeToNewsletterFormFooter">
+                <div class="block-content">
+                    <div class="input-box">
+                        <input type="text" name="cm-name" onclick="if(this.value=='Enter your full name'){this.value='';}" onblur="if(this.value==''){this.value='Enter your full name';}" id="deals-name" value="Enter your full name" placeholder="Enter your full name" class="input-text required-entry" title="Enter your full name"/>
+                    </div>
+                    <div class="input-box">
+                        <input name="cm-nkrlkr-nkrlkr" value="Email address" onclick="if(this.value=='Email address'){this.value='';}" onblur="if(this.value==''){this.value='Email address';}" type="text" id="deals-email" placeholder="Email address" class="input-text required-entry validate-email" title="Email address"/>
+                    </div>
+                    <div class="actions">
+                        <button type="submit" title="<?php echo $this->__('Subscribe') ?>" class="button btn-subscriber-box"><span><span><?php echo $this->__('Subscribe') ?></span></span></button>
+                    </div>
+                </div>
+                <div class="privacy-policy"><?php echo $this->__('You can unsubscribe any time.'); ?> <a href="<?php echo $this->getBaseUrl('')?>privacy-policy" target="_blank"><?php echo $this->__('Privacy Policy') ?></a></div>
+            </form>
+            <div id="loading-mask-subscribe-footer" style="display: none;">
+                <div class="loader" id="loading-mask-loader"><img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo $this->__('Loading...') ?>"/>
+                    <?php echo $this->__('Please wait...') ?>
+                </div>
+                <div id="loading-mask"></div>
+            </div>
+            <script type="text/javascript">
+                //<![CDATA[
+                var newsletterSubscriberFormDetailFooter = new VarienForm('subscribeToNewsletterFormFooter');
+                var postUrlFooter = "<?php echo $this->getUrl('newsletter/subscriber/send/', array('_secure' => $this->getRequest()->isSecure())) ?>";
+                newsletterSubscriberFormDetailFooter.submit = function(event) {
+                    if (this.validator.validate()) {
+                        submitSubscribeToNewsletterFormFooter();
+                    }
+                    return false;
+                }
+                function submitSubscribeToNewsletterFormFooter()
+                {
+                    Element.show('loading-mask-subscribe-footer');
+                    var request = new Ajax.Request(
+                        postUrlFooter,
+                        {
+                            method: 'post',
+                            evalJS: 'force',
+                            onComplete: function(response){
+                                //alert('subscribe successfully');
+                            },
+                            onFailure: function(response){
+                                alert('An error occurred while processing your request');
+                                Element.hide('loading-mask-subscribe-footer');
+                            },
+                            onSuccess: function(response){
+                                if (response && response.responseText){
+                                    try{
+                                        result = eval('(' + response.responseText + ')');
+                                    }
+                                    catch (e) {
+                                        result = {};
+                                    }
+                                }
+                                isSuccess = /You have successfully subscribed to this list$/.test(result.message);
+
+                                if(isSuccess) {
+                                    Element.hide('loading-mask-subscribe-footer');
+                                    alert(result.message);
+                                    $('deals-name').value = '';
+                                    $('deals-email').value = '';
+                                }
+                                else{
+                                    if(result.error){
+                                        alert(result.error);
+                                    }else{
+                                        alert('An error occurred while processing request');
+                                    }
+                                    Element.hide('loading-mask-subscribe-footer');
+                                }
+                            },
+                            parameters: jQuery('#subscribeToNewsletterFormFooter').serialize()
+                        }
+                    );
+                }
+                //]]>
+            </script>
+        </div>
+    </div>
+</div>

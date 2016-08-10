@@ -1,0 +1,159 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $ischeck = Mage::getStoreConfig('megamenu/general/reindex'); ?>
+<form id="reindex_megamenu" name="reindex-megamenu" action="<?php echo $this->getUrl('*/*/reindex'); ?>">
+    <div class="reindex_megamenu">
+        <div class="content_reindex">
+            <h1 class="menu reindex"><?php echo $this->__('Refresh Mega Menu Cache') ?></h1>
+        </div>
+        <div class="note_reindex">
+            <p class="textreindex"><?php echo $this->__('Magestore’s Mega Menu uses generated HTML code of Menu instead of interacting with database to avoid slowing your site. Therefore, when you change product/category, you should update Mega Menu manually by refreshing cache. Just click the button Refresh below and done!') ?></p>
+            <img class="img" src="<?php echo Mage::getBaseUrl('media') . 'megamenu/warning.png'; ?>"/>
+        </div>
+        <div class="footer-reindex">
+            <button type="button" onclick="reindexSubmit()"id="reindex_button"><?php echo $this->__('Refresh') ?></button>
+        </div>
+         <div class="content_reindex">
+            <h1 class="menu reindex"></h1>
+        </div>
+    </div>
+    <form>
+        <script type="text/javascript">
+            var ischeck = parseInt('<?php echo $ischeck ?>');
+            if(!ischeck){
+                $('reindex_button').className = 'scalable back';
+            }else{
+                $('reindex_button').className = 'form-button';
+            }
+            function reindexSubmit(){
+                if(!ischeck){
+                   alert('Already Refreshed! Please check again.');
+                   return;
+                }else{
+                    $('reindex_button').disabled = false;
+                    window.location.href = $('reindex_megamenu').action;
+                }
+            }
+        </script>
+        <style>
+            #anchor-content{
+                background:#fafafa;
+            }
+            /*Kienkun css for reindex page*/
+            .reindex_megamenu{
+                position:relative;
+
+            }
+
+            .reindex_megamenu #megamenu_icon{
+                background:url(megamenu/images/kun.png) no-repeat;
+            }
+
+            .reindex_megamenu h1{
+                font-family: Arial,Helvetica,sans-serif;
+                color: #006AA9;
+            }
+
+            .header-reindex span{
+                color: red;
+                font-family: Arial,Helvetica,sans-serif;
+                font-weight: 100;
+            }
+
+            .content_reindex .reindex{
+                margin-left: 15px;
+                font-size:1.3em;
+                line-height:1.25em;
+                color:#EB5E00;
+                border-bottom:4px solid #DFDFDF;
+            }
+            <?php if ($ischeck != 0): ?>
+                .footer-reindex #reindex_button{
+                    margin-left: 678px;
+                    position: absolute;
+                    width: 86px;
+                    height: 25px;
+                    top:186px;
+                    text-decoration: none;
+                    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                    background: #fe8900; /* non-CSS3 default background */
+                    background: -webkit-gradient(linear, left top, left bottom, from(#feb900), to(#fe8900));
+                    background: -moz-linear-gradient(#feb900, #fe8900);
+                    background: -ms-linear-gradient(#feb900, #fe8900);
+                    background: linear-gradient(#feb900, #fe8900);
+                    font-size:12px;
+                    color:#fff;
+                    line-height:13px;
+                }
+                .footer-reindex #reindex_button:hover{
+                    background: #CE662B;
+                    background: -webkit-gradient(linear, left top, left bottom, from(#F3C812), to(#CE662B));
+                    background: -moz-linear-gradient(#F3C812, #CE662B);
+                    background: -ms-linear-gradient(#F3C812, #CE662B);
+                    background: linear-gradient(#F3C812, #CE662B);
+                    -pie-background: linear-gradient(#F3C812, #CE662B);
+                }
+            <?php else : ?>
+                .footer-reindex #reindex_button{
+                    margin-left: 678px;
+                    position: absolute;
+                    width: 86px;
+                    height: 25px;
+                    top:186px;
+                    text-decoration: none;
+                    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                    font-size:12px;
+                    line-height:13px;
+                }
+                .footer-reindex #reindex_button:hover{
+                    background: #FFFFFF;
+                }
+            <?php endif; ?>
+
+            #reindex_megamenu .note_reindex .textreindex{
+                height: 140px;
+                width: 750px !important;
+                line-height: 24px;
+                margin-left: 15px;
+                float:left;
+                margin-top:35px;
+                background:#eee;
+                padding:5px;
+                border:2px solid #dfdfdf;
+            }
+            #reindex_megamenu .note_reindex img{
+                margin-top:5px;
+                margin-left:85px;
+            }
+            #reindex_megamenu .note_reindex span{
+                background-image: url(megamenu/images/kun.png);
+                width:430px;
+                height: 342px;
+            }
+
+        </style>
+        

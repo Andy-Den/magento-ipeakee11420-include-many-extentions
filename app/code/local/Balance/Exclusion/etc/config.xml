@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Exclusion>
+            <version>0.1.4</version>
+        </Balance_Exclusion>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+				<args>
+					<modules>
+						<exclusion before="Mage_Adminhtml">Balance_Exclusion_Adminhtml</exclusion>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <menu>
+            <newsletter module="newsletter">
+                <children>
+                    <exclusion translate="title">
+                        <title>Newsletter Exclusions</title>
+                        <sort_order>71</sort_order>
+                        <children>
+                            <add_terms module="exclusion">
+                                <title>Add Term</title>
+                                <sort_order>1</sort_order>
+                                <action>adminhtml/exclusion_exclusion/new</action>
+                            </add_terms>
+                            <manage_terms module="exclusion">
+                                <title>Manage Terms</title>
+                                <sort_order>2</sort_order>
+                                <action>adminhtml/exclusion_exclusion/index</action>
+                            </manage_terms>
+                        </children>
+                    </exclusion>
+                </children>
+            </newsletter>
+        </menu>
+        <layout>
+            <updates>
+                <exclusion>
+                    <file>exclusion.xml</file>
+                </exclusion>
+            </updates>
+        </layout>
+    </adminhtml>
+    <frontend>
+        <routers>
+            <newsletter>
+                <use>standard</use>
+                <args>
+                    <modules>
+                        <balance_exclusion before="Mage_Newsletter">Balance_Exclusion</balance_exclusion>
+                    </modules>
+                </args>
+            </newsletter>
+        </routers>
+    </frontend>
+    <global>
+        <models>
+            <exclusion>
+                <class>Balance_Exclusion_Model</class>
+                <resourceModel>exclusion_mysql4</resourceModel>
+            </exclusion>
+            <exclusion_mysql4>
+                <class>Balance_Exclusion_Model_Mysql4</class>
+                <entities>
+                    <exclusion>
+                        <table>exclusion</table>
+                    </exclusion>
+                </entities>
+            </exclusion_mysql4>
+            <newsletter>
+                <rewrite>
+                    <subscriber>Balance_Exclusion_Model_Subscriber</subscriber>
+                </rewrite>
+            </newsletter>
+        </models>
+        <resources>
+            <exclusion_setup>
+                <setup>
+                    <module>Balance_Exclusion</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </exclusion_setup>
+            <exclusion_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </exclusion_write>
+            <exclusion_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </exclusion_read>
+        </resources>
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <newsletter_subscriber_grid>Balance_Exclusion_Block_Adminhtml_Newsletter_Subscriber_Grid</newsletter_subscriber_grid>
+                </rewrite>
+            </adminhtml>
+            <exclusion>
+                <class>Balance_Exclusion_Block</class>
+            </exclusion>
+        </blocks>
+        <helpers>
+            <exclusion>
+                <class>Balance_Exclusion_Helper</class>
+            </exclusion>
+        </helpers>
+    </global>
+</config>

@@ -1,0 +1,68 @@
+# Crawlers Setup
+# Sitemap: https://www.milandirect.com.au/media/sitemap/sitemap_store_id_1.xml
+User-agent: *
+
+# Allowable Index
+Allow: /*?p=
+Allow: /catalog/seo_sitemap/category/
+
+Disallow: /index.php/
+Disallow: /app/
+Disallow: /js/
+Disallow: /lib/
+Disallow: /skin/
+Disallow: /catalog/product_compare/
+Disallow: /catalog/category/view/
+Disallow: /catalog/product/view/
+Disallow: /catalogsearch/
+Disallow: /checkout/
+Disallow: /contacts/
+Disallow: /customer/
+Disallow: /customize/
+Disallow: /newsletter/
+Disallow: /poll/
+Disallow: /review/
+Disallow: /sendfriend/
+Disallow: /tag/
+Disallow: /wishlist/
+Disallow: /ajax/
+Disallow: /directory/currency/switch/currency/
+
+Disallow: /*/index.php/
+Disallow: /*/app/
+Disallow: /*/js/
+Disallow: /*/lib/
+Disallow: /*/skin/
+Disallow: /*/catalog/product_compare/
+Disallow: /*/catalog/category/view/
+Disallow: /*/catalog/product/view/
+Disallow: /*/catalogsearch/
+Disallow: /*/checkout/
+Disallow: /*/contacts/
+Disallow: /*/customer/
+Disallow: /*/customize/
+Disallow: /*/newsletter/
+Disallow: /*/poll/
+Disallow: /*/review/
+Disallow: /*/sendfriend/
+Disallow: /*/tag/
+Disallow: /*/wishlist/
+Disallow: /*/ajax/
+Disallow: /*/directory/currency/switch/currency/
+
+Disallow: /*.php*
+Disallow: /*.sh*
+Disallow: /*?p=*&
+Disallow: /*?SID=
+Disallow: /*?ajax=
+Disallow: /*?code=
+Disallow: /*?dir=
+Disallow: /*?order=
+Disallow: /*?mode=
+
+# Explicitly allow images, css and js
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.jpg$

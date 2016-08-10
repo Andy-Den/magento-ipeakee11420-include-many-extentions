@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Addressbypostcode>
+            <version>0.1.1</version>
+        </Balance_Addressbypostcode>
+    </modules>
+    <global>
+        <models>
+            <addressbypostcode>
+                <class>Balance_Addressbypostcode_Model</class>
+                <resourceModel>addressbypostcode_mysql4</resourceModel>
+            </addressbypostcode>
+            <addressbypostcode_mysql4>
+                <class>Balance_Addressbypostcode_Model_Mysql4</class>
+                <entities>
+                    <address>
+                        <table>balance_addressbypostcode</table>
+                    </address>
+                </entities>
+            </addressbypostcode_mysql4>
+        </models>
+        <resources>
+            <balance_addressbypostcode_setup>
+                <setup>
+                    <module>Balance_Addressbypostcode</module>
+                    <connection>
+                        <use>core_setup</use>
+                    </connection>
+                </setup>
+            </balance_addressbypostcode_setup>
+        </resources>
+        <helpers>
+            <addressbypostcode>
+                <class>Balance_Addressbypostcode_Helper</class>
+            </addressbypostcode>
+        </helpers>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <balance_addressbypostcode>
+                                            <title>Address By Postcode</title>
+                                            <sort_order>60</sort_order>
+                                        </balance_addressbypostcode>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+</config>
+

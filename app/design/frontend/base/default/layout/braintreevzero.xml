@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addJs"><script>fris/pay/braintreevzero.js</script></action>
+            <!-- @todo: move next addJs into config.xml as data_js? -->
+            <action method="addJs"><script>fris/pay/braintree-data.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>fris/js/braintreevzero-checkout1.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>fris/css/braintreevzero-checkout.css</name></action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="page/html_head" name="hack_to_get_script_in_footer" template="fris/payment/form/braintreevzero.phtml">
+                <action method="addItem"><type>skin_js</type><name>fris/js/braintreevzero-checkout2.js</name></action>
+            </block>
+        </reference>
+    </checkout_onepage_index>
+    <onestepcheckout_index_index>
+        <!-- onestepcheckout.com, magestore.com -->
+        <reference name="head">
+            <action method="addJs"><script>fris/pay/braintreevzero.js</script></action>
+            <action method="addJs"><script>fris/pay/braintree-data.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>fris/js/braintreevzero-checkout1.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>fris/css/braintreevzero-checkout.css</name></action>
+        </reference>
+    </onestepcheckout_index_index>
+    <opc_index_index>
+        <!-- www.iwdagency.com -->
+        <reference name="head">
+            <action method="addJs"><script>fris/pay/braintreevzero.js</script></action>
+            <action method="addJs"><script>fris/pay/braintree-data.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>fris/js/braintreevzero-checkout1.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>fris/css/braintreevzero-checkout.css</name></action>
+        </reference>
+    </opc_index_index>
+    <firecheckout_index_index>
+        <!-- templates-master.com -->
+        <reference name="head">
+            <action method="addJs"><script>fris/pay/braintreevzero.js</script></action>
+            <action method="addJs"><script>fris/pay/braintree-data.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>fris/js/braintreevzero-checkout1.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>fris/css/braintreevzero-checkout.css</name></action>
+        </reference>
+    </firecheckout_index_index>
+    <!--checkout_onepage_review>
+    </checkout_onepage_review>
+    <checkout_cart_index>
+    </checkout_cart_index-->
+</layout>

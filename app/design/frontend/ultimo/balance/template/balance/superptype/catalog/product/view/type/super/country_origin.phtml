@@ -1,0 +1,17 @@
+<?php
+// Use default configurable product.
+$product = Mage::getBlockSingleton('balance_superptype/catalog_product_view_type_super')->getDefaultConfigurableProduct();
+if (!($product instanceof Mage_Catalog_Model_Product) || !$product->getId())
+{
+    return;
+}
+?>
+<?php $_manufacturer = $product->getManufacturer(); ?>
+<?php if(substr_count($_manufacturer,'Made in')||substr_count($_manufacturer,'MADE IN')>0)
+	{ $_manufacturer = substr($_manufacturer,1,8);}
+	$_manufacturer=ucfirst(strtolower($_manufacturer));
+?>
+<?php if ($_manufacturer): ?>
+<?php echo 'Made in '.$this->helper('catalog/output')->productAttribute($product, $_manufacturer, 'manufacturer') ?>
+<?php /* fixbug FN-1923 MADE should be Made for Country of Origin */?>
+<?php endif; ?>

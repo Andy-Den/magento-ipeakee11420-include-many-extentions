@@ -1,0 +1,385 @@
+<?php $sizing_chart = $this->getProduct()->getSizingChart(); ?>
+<?php if ($sizing_chart): ?>
+    <?php // echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $sizing_chart, 'sizing_chart') ?>
+<?php endif; ?>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        decorateTable('size-overview-specs-table');
+        decorateTable('size-rings-specs-table');
+        decorateTable('size-belts-specs-table');
+
+        // Open first pane and display sizing
+        jQuery('#sizing-chart_lightbox .left .preview .sizing, #sizing-chart_lightbox .left .preview .shoe, #sizing-chart_lightbox .left .preview .accessories').hide();
+        jQuery("#sizing-chart_lightbox .left .preview .sizing").show();
+
+
+        // left preview images.
+        jQuery('#sizing-measure').click(function () {
+            jQuery('#sizing-chart_lightbox .left .preview .sizing, #sizing-chart_lightbox .left .preview .shoe, #sizing-chart_lightbox .left .preview .accessories').hide();
+            jQuery('#sizing-chart_lightbox .left .preview .sizing').show();
+
+        });
+        jQuery('#sizing-overview').click(function () {
+            jQuery('#sizing-chart_lightbox .left .preview .sizing, #sizing-chart_lightbox .left .preview .shoe, #sizing-chart_lightbox .left .preview .accessories').hide();
+            jQuery('#sizing-chart_lightbox .left .preview .sizing').show();
+
+        });
+        jQuery('#sizing-footwear').click(function () {
+            jQuery('#sizing-chart_lightbox .left .preview .sizing, #sizing-chart_lightbox .left .preview .shoe, #sizing-chart_lightbox .left .preview .accessories').hide();
+            jQuery('#sizing-chart_lightbox .left .preview .shoe').show();
+
+        });
+        jQuery('#sizing-accessories').click(function () {
+            jQuery('#sizing-chart_lightbox .left .preview .sizing, #sizing-chart_lightbox .left .preview .shoe, #sizing-chart_lightbox .left .preview .accessories').hide();
+            jQuery('#sizing-chart_lightbox .left .preview .accessories').show();
+        });
+
+
+
+
+    });
+</script>
+
+
+<style>
+
+
+</style>
+
+
+<div id="sizing-chart_lightbox">
+<div class="left">
+    <h2>Sizing Guide</h2>
+
+    <div class="preview">
+        <div class="sizing">
+            <!--img src="/skin/frontend/enterprise/forevernew/images/girl_slice1.jpg"/ -->
+            <img src="<?php echo $this->getSkinUrl('images/girl_slice1.jpg')?>"/>
+
+        </div>
+        <div class="shoe">
+            <!-- img src="/skin/frontend/enterprise/forevernew/images/shoeslice_04.jpg"/ -->
+            <img src="<?php echo $this->getSkinUrl('images/shoeslice_04.jpg')?>"/>
+        </div>
+        <div class="accessories">
+            <!--img src="/skin/frontend/enterprise/forevernew/images/accessoriesslice_03.jpg"/-->
+            <img src="<?php echo $this->getSkinUrl('images/accessoriesslice_03.jpg')?>"/>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="right">
+<div id="accordion-container">
+
+<!-- How to Measure -->
+<h2 class="accordion-header" id="sizing-measure">How to measure</h2>
+
+<div class="accordion-content">
+    <p>Below we have listed a definition of the most commonly used product measurement terms. To help you
+        choose the best size, we
+        recommend that you compare the below when measuring yourself in order for getting the best fit.</p>
+    <br/>
+    <b>BUST CIRCUMFERENCE</b>
+
+    <p>Measure the fullest part of your bust. Keep your arms down by your side.</p><br/>
+    <strong>WAIST CIRCUMFERENCE</strong><br/>
+
+    <p>Measure the narrowest part of your natural waistline. You will find above your navel and
+        below your ribcage</p><br/>
+    <strong>HIP CIRCUMFERENCE</strong><br/>
+
+    <p>Measure the fullest part of your natural hipline. Remember to keep the tape measure flat</p><br/>
+</div>
+
+<!-- Size Overview -->
+<h2 class="accordion-header" id="sizing-overview">Size Overview</h2>
+
+<div class="accordion-content">
+    <table class="data-table" id="size-overview-specs-table">
+        <colgroup>
+            <col width="25%">
+            <tr class="first last odd">
+                <th class="label">AUS</th>
+                <th class="label">4</th>
+                <th class="label">6</th>
+                <th class="label">8</th>
+                <th class="label">10</th>
+                <th class="label">12</th>
+                <th class="label">14</th>
+                <th class="label">16</th>
+                <th class="label">18</th>
+            </tr>
+            </col>
+        </colgroup>
+        <tbody>
+        <tr class="first last odd">
+            <th class="label">Bust</th>
+            <td class="data">74</td>
+            <td class="data">79</td>
+            <td class="data">84</td>
+            <td class="data">89</td>
+            <td class="data">94</td>
+            <td class="data">99</td>
+            <td class="data">104</td>
+            <td class="data">109</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">Waist</th>
+            <td class="data">57</td>
+            <td class="data">62</td>
+            <td class="data">67</td>
+            <td class="data">72</td>
+            <td class="data">77</td>
+            <td class="data">82</td>
+            <td class="data">87</td>
+            <td class="data">92</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">Hips</th>
+            <td class="data">83</td>
+            <td class="data">88</td>
+            <td class="data">93</td>
+            <td class="data">98</td>
+            <td class="data">103</td>
+            <td class="data">108</td>
+            <td class="data">113</td>
+            <td class="data">118</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="data-table" id="size-overview-specs-table">
+        <colgroup>
+            <col width="25%">
+            <tr class="first last odd">
+                <th class="label">AUS</th>
+                <th class="label">4</th>
+                <th class="label">6</th>
+                <th class="label">8</th>
+                <th class="label">10</th>
+                <th class="label">12</th>
+                <th class="label">14</th>
+                <th class="label">16</th>
+                <th class="label">18</th>
+            </tr>
+            </col>
+        </colgroup>
+        <tbody>
+        <tr class="first last odd">
+            <th class="label"></th>
+            <td colspan="2" class="data">XS</td>
+            <td colspan="2" class="data">S</td>
+            <td colspan="2" class="data">M</td>
+            <td colspan="2" class="data">L</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">US</th>
+            <td class="data">0</td>
+            <td class="data">2</td>
+            <td class="data">4</td>
+            <td class="data">6</td>
+            <td class="data">8</td>
+            <td class="data">10</td>
+            <td class="data">12</td>
+            <td class="data">14</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">UK</th>
+            <td class="data">4</td>
+            <td class="data">6</td>
+            <td class="data">8</td>
+            <td class="data">10</td>
+            <td class="data">12</td>
+            <td class="data">14</td>
+            <td class="data">16</td>
+            <td class="data">18</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">EU</th>
+            <td class="data">32</td>
+            <td class="data">34</td>
+            <td class="data">36</td>
+            <td class="data">38</td>
+            <td class="data">40</td>
+            <td class="data">42</td>
+            <td class="data">44</td>
+            <td class="data">46</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+<!-- Footwear -->
+<h2 class="accordion-header" id="sizing-footwear">Footwear</h2>
+
+<div class="accordion-content sizing-footwear">
+    <p>Avoid pinched toes and falling over - If you are usually between
+        sizes, we suggest you order the larger size and add an insole.<br/>
+
+    <p>Heel heights are measured from the highpoint where the heel joins the shoes, right to the floor.</p>
+    <table class="data-table" id="size-overview-specs-table">
+        <colgroup>
+            <col width="25%">
+            <tr class="first last odd">
+                <th class="label">AUS</th>
+                <th class="label">5</th>
+                <th class="label">6</th>
+                <th class="label">7</th>
+                <th class="label">8</th>
+                <th class="label">9</th>
+                <th class="label">10</th>
+            </tr>
+            </col>
+        </colgroup>
+        <tbody>
+        <tr class="first last odd">
+            <th class="label">US</th>
+            <td class="data">5</td>
+            <td class="data">6</td>
+            <td class="data">7</td>
+            <td class="data">8</td>
+            <td class="data">9</td>
+            <td class="data">10</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">UK</th>
+            <td class="data">3</td>
+            <td class="data">4</td>
+            <td class="data">5</td>
+            <td class="data">6</td>
+            <td class="data">7</td>
+            <td class="data">8</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">EU</th>
+            <td class="data">36</td>
+            <td class="data">37</td>
+            <td class="data">38</td>
+            <td class="data">39</td>
+            <td class="data">40</td>
+            <td class="data">41</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+<!-- Accessories -->
+<h2 class="accordion-header" id="sizing-accessories">Accessories</h2>
+
+<div class="accordion-content">
+    <p>If you’ve ever lost a ring from your finger or had to make an
+        extra hole in another belt, you’ll know how important fit is where accessories are concerned. Some
+        of our pieces are ‘one size fits all’, but for those that aren’t, check below to find out which is
+        best for you.</p>
+    <br/>
+
+    <p><b>Hats</b></p>
+
+    <p>Our hats fit a head circumference of 00cm / 00in</p><br/>
+
+    <p><b class="rings">Rings &nbsp; </b> <b class="belts"> Belts</b></p>
+    <table class="data-table" id="size-rings-specs-table">
+        <tbody>
+        <tr class="first last odd">
+            <th class="label">S</th>
+            <td colspan="3" class="data">17mm</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">M</th>
+            <td colspan="3" class="data">18mm</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">L</th>
+            <td colspan="3" class="data">19mm</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <table class="data-table" id="size-belts-specs-table">
+        <colgroup>
+            <col width="25%">
+            <tr class="first last odd">
+                <th class="label">XS</th>
+                <td colspan="3" class="data">4-5</td>
+            </tr>
+            </col>
+        </colgroup>
+        <tbody>
+        <tr class="first last odd">
+            <th class="label">S</th>
+            <td colspan="3" class="data">8-10</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">M</th>
+            <td colspan="3" class="data">12-14</td>
+        </tr>
+        <tr class="first last odd">
+            <th class="label">L</th>
+            <td colspan="3" class="data">16</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="clearer"></div>
+    <div class="hosiery" style="margin-top: -12px;">
+        <p><b>Hosiery</b></p>
+        <table class="data-table" id="size-overview-specs-table">
+            <colgroup>
+                <col width="25%">
+                <tr class="first last odd">
+                    <th class="label"></th>
+                    <td colspan="3" class="data heights">HEIGHT</td>
+                </tr>
+                </col>
+            </colgroup>
+            <tbody>
+            <tr class="first last odd hips">
+                <th class="label hips">HIPS</th>
+                <td class="data hips">4'10-5'0 / 147 - 152cm</td>
+                <td class="data hips">5'1-5'4 / 155 - 163cm</td>
+                <td class="data hips">5'5-5'10 / 165 - 178cm</td>
+            </tr>
+            <tr class="first last odd">
+                <th class="label">34-37in/86<br/>-94cm</th>
+                <td class="data">SMALL</td>
+                <td class="data">MEDIUM</td>
+                <td class="data">LARGE</td>
+            </tr>
+            <tr class="first last odd">
+                <th class="label">37-39in/94<br/> -99cm</th>
+                <td class="data">SMALL</td>
+                <td class="data">MEDIUM</td>
+                <td class="data">LARGE</td>
+            </tr>
+            <tr class="first last odd">
+                <th class="label">39-42in/99<br/>-107cm</th>
+                <td class="data">MEDIUM</td>
+                <td class="data">MEDIUM</td>
+                <td class="data">LARGE</td>
+            </tr>
+            <tr class="first last odd">
+                <th class="label">34-42in/86cm</th>
+                <td class="data">ONE SIZE</td>
+                <td class="data">ONE SIZE</td>
+                <td class="data">ONE SIZE</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>

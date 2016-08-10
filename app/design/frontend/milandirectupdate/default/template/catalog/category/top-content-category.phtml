@@ -1,0 +1,103 @@
+<?php
+$storeId = Mage::app()->getStore()->getId();
+$_helper = Mage::helper('catalog/category');
+$currentCategory = Mage::registry('current_category');
+$childcategories = Mage::getModel('catalog/category')
+    ->getCollection()
+    ->setStoreId($storeId)
+    ->addAttributeToSelect("*")
+    ->addIsActiveFilter()
+    ->addFieldToFilter('parent_id', $currentCategory->getId())
+    ->setPageSize(8)
+    ->addAttributeToSort('position', 'ASC')
+;
+
+$listCategories = Mage::getModel('catalog/category')
+    ->getCollection()
+    ->setStoreId($storeId)
+    ->addAttributeToSelect("*")
+    ->addIsActiveFilter()
+    ->addFieldToFilter('parent_id', $currentCategory->getId())
+    ->addAttributeToSort('position', 'ASC')
+;
+
+$_helperImg = Mage::helper('timage');
+$_imgHtml   = '';
+$block = $this->getLayout()->getBlock('amshopby.navleft');
+?>
+<?php if(count($currentCategory->getChildrenCategories()) > 0):?>
+    <div class="top-category-landing">
+        <div class="desc-category-landing <?php if (!count($childcategories)): ?>desc-full-width<?php endif; ?>">
+            <h1><?php echo $currentCategory->getName();?></h1>
+            <p><?php echo $currentCategory->getDescription();?></p>
+        </div>
+        <?php if (count($childcategories)): ?>
+            <div class="grid-categories-landing">
+                <ul>
+                    <?php foreach ($childcategories as $childCategory) : ?>
+                        <?php
+                        $imgUrl = $childCategory->getThumbnail();
+                        $src = Mage::getBaseUrl('media').'catalog/category/'.$imgUrl;
+                        ?>
+                        <li>
+                            <a href="<?php echo $childCategory->getUrl($childCategory);?>">
+                                <?php if ($imgUrl) : ?>
+                                    <img src="<?php echo $_helperImg->init($childCategory->getImageUrl())->resize(192, 180)?>" alt="<?php echo $this->escapeHtml($childCategory->getName())?>" title="<?php echo $this->escapeHtml($childCategory->getName())?>" />
+                                <?php else : ?>
+                                    <img src="<?php echo $this->getSkinUrl('images/category-default-img.png')?>" alt="<?php echo $this->__('Default image')?>" title="<?php echo $this->__('Default image')?>" />
+                                <?php endif; ?>
+                                <span><?php echo $childCategory->getName();?></span>
+                            </a>
+                        </li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="top-category-landing-mobile">
+        <div class="desc-category-landing <?php if (!count($childcategories)): ?>desc-full-width<?php endif; ?>">
+            <h1><?php echo $currentCategory->getName();?></h1>
+            <p><?php echo $currentCategory->getDescription();?></p>
+        </div>
+        <?php if (count($childcategories)): ?>
+            <div class="grid-categories-landing">
+                <ul>
+                    <?php foreach ($listCategories as $category) : ?>
+                        <?php
+                        $imgUrl = $category->getThumbnail();
+                        $src = Mage::getBaseUrl('media').'catalog/category/'.$imgUrl;
+                        ?>
+                        <li>
+                            <a href="<?php echo $category->getUrl($category);?>">
+                                <?php if ($imgUrl) : ?>
+                                    <img src="<?php echo $_helperImg->init($category->getImageUrl())->resize(192, 180)?>" alt="<?php echo $this->escapeHtml($category->getName())?>" title="<?php echo $this->escapeHtml($category->getName())?>" />
+                                <?php else : ?>
+                                    <img src="<?php echo $this->getSkinUrl('images/category-default-img.png')?>" alt="<?php echo $this->__('Default image')?>" title="<?php echo $this->__('Default image')?>" />
+                                <?php endif; ?>
+                                <span><?php echo $category->getName();?></span>
+                            </a>
+                        </li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php else : ?>
+    <div class="page-title category-title">
+        <h1><?php echo $currentCategory->getName(); ?></h1>
+        <?php if($_description=$currentCategory->getDescription()): ?>
+            <div class="category-description std">
+                <?php $_helperOut = Mage::helper('catalog/output'); ?>
+                <?php echo $_helperOut->categoryAttribute($currentCategory, $_description, 'description') ?>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+<?php if (is_object($block) && $block->getStateHtml()): ?>
+    <div class="filter-state">
+        <?php echo $block->getStateHtml(); ?>
+        <?php if ($block->getLayer()->getState()->getFilters()): ?>
+            <!-- <div class="actions"><a href="--><?php //echo $block->getClearUrl() ?><!--">--><?php //echo $this->__('Clear All') ?><!--</a></div>-->
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

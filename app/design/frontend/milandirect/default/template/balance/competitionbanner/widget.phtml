@@ -1,0 +1,81 @@
+    <style>
+        .banner-modal{
+            /*position:relative;*/
+            /*display:block;*/
+            /*margin-top:15px;*/
+            bottom: 0;
+            display: block;
+            margin: 0 auto;
+            position: fixed;
+            width: 1000px;
+            z-index: 1000;
+        }
+        .banner-close {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 2em;
+            height: 2em;
+            text-align: center;
+            line-height: 2em;
+            border-radius: 2em;
+            background-color: #fff;
+            cursor: pointer;
+            font-weight:bold;
+            font-size:11px;
+        }​
+    </style>
+
+    <script type="text/javascript">
+
+        function getCookie(name) {
+            var dc = document.cookie;
+            var prefix = name + "=";
+            var begin = dc.indexOf("; " + prefix);
+            if (begin == -1) {
+                begin = dc.indexOf(prefix);
+                if (begin != 0) return null;
+            }
+            else
+            {
+                begin += 2;
+                var end = document.cookie.indexOf(";", begin);
+                if (end == -1) {
+                    end = dc.length;
+                }
+            }
+            return unescape(dc.substring(begin + prefix.length, end));
+        }
+        jQuery(document).ready(function() {
+            var myCookie = getCookie("banneroff");
+            if (myCookie == null) {
+                if(jQuery('.newsUpdates').length>0){
+                    jQuery(jQuery('#k-competition-banner').html()).insertBefore('.newsUpdates');
+                    jQuery('#k-competition-banner').html("");
+                }
+                else {
+                    jQuery('#k-competition-banner').html("");
+                }
+            }
+            else {
+                jQuery('#k-competition-banner').html("");
+            }
+        });
+    </script>
+
+    <div id="k-competition-banner" style="display: none">
+        <a href="<?php echo $this->getData('banner_destination')?>" target="_blank" class="banner-modal"  id="ka-competition-banner">
+            <span class="banner-close">X</span>
+            <div class="footer-comp" style="height: 100px; text-align: center; background-image: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'easylightbox/'.$this->getData('imagepath') ;?>);"></div>
+        </a>
+    </div>
+
+    <script type="text/javascript">
+        jQuery('span.banner-close').live('click',function(e){
+                e.preventDefault();
+                jQuery.cookie('banneroff', '1', { expires: 3 });
+                jQuery(this).closest('.banner-modal').fadeOut(1000);
+                return false;
+            });
+    </script>
+

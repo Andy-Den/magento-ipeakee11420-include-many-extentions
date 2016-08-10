@@ -1,0 +1,52 @@
+<?php
+    $orderId = "";
+    $productId = "";
+    $productInfo = "";
+    $quantity ="";
+    $total="";
+
+if(Mage::app()->getFrontController()->getRequest()->getModuleName() == 'checkout' && Mage::app()->getRequest()->getActionName() == 'success' && Mage::getSingleton('checkout/session')->getLastOrderId()):?>
+
+<script type="text/javascript">
+    var _roi = _roi || [];
+
+    <?php
+        {
+            $order= Mage::getModel('sales/order')->load(Mage::getSingleton('checkout/session')->getLastOrderId());
+            $orderId = $order->getId();
+            $items = $order->getAllVisibleItems();
+            $quantity = 0;
+            $total = round($order->getGrandTotal(), 2);
+        }
+    ?>
+
+    _roi.push(['_setMerchantId', '514141']);
+    _roi.push(['_setOrderId', '<?php echo $orderId;?>']);
+    _roi.push(['_setOrderAmount', '<?php echo $total;?>']);
+    _roi.push(['_setOrderNotes', '']);
+
+    <?php foreach($items as $item):?>
+
+    <?php
+    $product = Mage::getModel('catalog/product')->load($item->getProductId());
+    $topCategory = Mage::getResourceModel('catalog/category_collection')
+        ->addIdFilter($product->getCategoryIds())
+        ->setOrder('level', 'ASC')
+        ->setPage(1,1)
+        ->getFirstItem();
+    $category = Mage::getModel('catalog/category')->load($topCategory->getId());
+    ?>
+    _roi.push(['_addItem',
+        '<?php echo $product->getData('sku');?>',
+        '<?php echo $product->getName();?>',
+        '<?php echo $category->getId();?>',
+        '<?php echo $category->getName();?>',
+        '<?php echo round($product->getFinalPrice(), 2);?>',
+        '<?php echo round($item->getQtyOrdered(), 2);?>'
+    ]);
+    <?php endforeach;?>
+
+    _roi.push(['_trackTrans']);
+</script>
+<script type="text/javascript" src="https://stat.dealtime.com/ROI/ROI2.js"></script>
+<?php endif;?>

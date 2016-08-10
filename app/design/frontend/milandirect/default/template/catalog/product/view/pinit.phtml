@@ -1,0 +1,6 @@
+<?php
+if($this->getRequest()->getControllerName() == 'product') :
+$currentUrl = $this->helper("core/url")->getCurrentUrl();
+?>
+<a href="http://pinterest.com/pin/create/button/?url=<?php echo $currentUrl ?>&media=<?php echo Mage::helper('catalog/image')->init(Mage::registry('current_product'), 'image');?>&description=<?php echo Mage::registry('current_product')->getName(); ?>" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+<?php endif; ?>

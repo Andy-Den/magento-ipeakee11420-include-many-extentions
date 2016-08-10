@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * Exceed
+ */
+
+?>
+<div class="form-subscribe submit-review-popup">
+  <a id="popupClose" onclick="javascript:closePopup();">x</a>
+<div class="review-popup">
+  <div class="box-title">
+<div class="box-title"><h2><?php echo $this->__('E-mail a Friend') ?></h2></div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<form action="<?php echo $this->getSendUrl() ?>" id="emailcatalogForm" method="post" class="email-catalog">
+    <?php echo $this->getBlockHtml('formkey') ?>
+  <fieldset class="group-select">
+  <?php /*?><div class="qoc-sub-head"><?php echo $this->__('Email Information') ?></div><?php */?>
+  <ul class="form-list all-forms">
+    <li class="email-to"><?php echo $this->__('To:') ?></li>
+    <li>
+      <div class="field">
+        <label class="required" for="sender_name"><em>*</em><?php echo $this->__('Name') ?> </label>
+        <div class="input-box"><input name="senderName" value="<?php echo $this->htmlEscape($this->getSenderName()) ?>" title="<?php echo $this->__('Name') ?>" id="sender_name" type="text" class="input-text required-entry" /></div>
+      </div>
+    </li>
+    <li>
+      <div class="field">
+        <label class="required" for="email_address"><em>*</em><?php echo $this->__('Email') ?> </label>
+        <div class="input-box"><input name="receiveremails" id="email_address" cols="1" rows="1" class="input-text validate-email required-entry" title="<?php echo $this->__('Email') ?>"/></div>
+      </div>
+    </li>
+    <li class="email-from"><?php echo $this->__('From:') ?></li>
+    <li>
+      <div class="field">
+        <label class="required" for="name"><em>*</em><?php echo $this->__('Name') ?> </label>
+        <div class="input-box"><input name="receiverName" value="<?php echo $this->htmlEscape($this->getName()) ?>" title="<?php echo $this->__('Name') ?>" id="receiver_name" type="text" class="input-text required-entry" /></div>
+      </div>
+    </li>
+    <li>
+      <div class="field">
+        <label class="required" for="email_address"><em>*</em><?php echo $this->__('Email') ?> </label>
+        <div class="input-box"><input name="senderemails" id="receiver_email" cols="1" rows="1" class="input-text validate-email required-entry" title="<?php echo $this->__('Email') ?>"/></div>
+      </div>
+    </li>
+    <li class="email-message">
+      <div class="field">
+        <label for="message"><?php echo $this->__('Message') ?></label>
+        <div class="input-box"><textarea id="message" name="message" cols="30" rows="5" title="<?php echo $this->__('Message') ?>"><?php echo $this->getEnteredData('message') ?></textarea></div>
+      </div>
+    </li>
+
+  </ul>
+  </fieldset>
+  <div class="clearer"></div>
+      <div class="buttons-set">
+          <div class="input-box">
+              <label for="" class="required">
+                  <input type="checkbox" name="reference" class="left"
+                  id="checkreference" onclick="selectcheckbox(this)" value="1"/>
+                   <span><?php echo $this->__('Send me email updates from Milan Direct') ?></span>
+               </label>
+           </div>
+
+            <?php /*?><button onclick="javascript: window.location='<?php echo $this->getRefererUrl()?>'" type="button" class="back">Back</button><?php */?>
+            <button type="submit" class="btn-submit right" title="<?php echo $this->__('Send') ?>"><?php echo $this->__('Submit') ?></button>
+
+      </div>
+
+
+  <input type="hidden" name="link" value="<?php echo $this->getRefererUrl()?>" />
+  <input type="hidden" name="CALLBACK_FOR" id="CALLBACK_FOR" value="mail_friend" />
+</form>
+</div>
+<div class="clearer"></div>
+<!--Popup Corner tooltip
+<div class="popup-tooltip-corner"></div>-->
+</div></div>
+
+<script type="text/javascript">
+//<![CDATA[
+    var checkboxSelect = new Checkboxselect("<?php echo $this->getUrl('newsletter/subscriber/send')?>");
+    var emailcatalogForm = new VarienForm('emailcatalogForm', true);
+//]]>
+</script>

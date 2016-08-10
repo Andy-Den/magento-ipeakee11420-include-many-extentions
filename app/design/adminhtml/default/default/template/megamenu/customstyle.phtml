@@ -1,0 +1,425 @@
+<!--form action="<?php //echo $this->getLoadUrl()       ?>" method="post" id="template_load_form"-->   
+<?php $data = $this->getFormData(); ?>
+<?php $fontStyle = Mage::helper('megamenu')->getFontStyle(); ?>
+<?php echo $this->getBlockHtml('formkey') ?>
+<div id="custom_style">
+    <div class="entry-edit" id="general_style">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend">
+                <?php echo Mage::helper('adminhtml')->__('General Style') ?>
+            </h4>
+        </div>
+        <div class="fieldset">
+            <table class="form-list" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="label">
+                            <label for="background_color">
+                                <?php echo Mage::helper('adminhtml')->__('Background Color') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if ( isset($data['background_color']) && $data['background_color']) echo $data['background_color']; ?>" name="background_color" id="background_color"/>
+                            <span title="select a color" class="icon i-color-wheel" id="color_background_color"></span>
+                        </td>
+                        <td class="value use-default">
+                            <input id="background_color_default" name="background_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleCustomValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[background_color]" id="background_color_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="border_color">
+                                <?php echo Mage::helper('adminhtml')->__('Border Color') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if (isset($data['border_color']) && $data['border_color']) echo $data['border_color']; ?>" name="border_color" id="border_color"/>
+
+                            <span title="select a color" class="icon i-color-wheel" id="color_border_color"></span>
+                        </td>
+                        <td class="value use-default" >
+                            <input id="border_color_default" name="border_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleCustomValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[border_color]" id="border_color_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="border_size">
+                                <?php echo Mage::helper('adminhtml')->__('Border Size') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if (isset($data['border_size']) && $data['border_size']) echo $data['border_size']; ?>" name="border_size" id="border_size"/>
+
+                        </td>
+                        <td class="value">
+                            <input id="border_size_default" name="border_size_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleCustomValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[border_size]" id="border_size_hide"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="entry-edit" id="title_style">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend">
+                <?php echo Mage::helper('adminhtml')->__('Title') ?>
+                <a id="title_tooltip" href="JavaScript:void(0);">(?)</a>
+                <script type="text/javascript">
+                    tip = new Tooltip("title_tooltip","<?php echo Mage::getBaseUrl('media') ?>megamenu/title1.png");
+                </script>
+            </h4>
+        </div>
+        <div class="fieldset">
+            <table class="form-list" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="label">
+                            <label for="title_color">
+                                <?php echo Mage::helper('adminhtml')->__('Title Color') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if (isset($data['title_color']) && $data['title_color']) echo $data['title_color']; ?>" name="title_color" id="title_color"/>
+
+                            <span title="select a color" class="icon i-color-wheel" id="color_title_color"></span>
+
+                        </td>
+                        <td class="value">
+                            <input id="title_color_default" name="title_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[title_color]" id="title_color_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="title_background_color">
+                                <?php echo Mage::helper('adminhtml')->__('Background Color') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if (isset($data['title_background_color']) && $data['title_background_color']) echo $data['title_background_color']; ?>" name="title_background_color" id="title_background_color"/>
+
+                            <span title="select a color" class="icon i-color-wheel" id="color_title_background_color"></span>
+
+                        </td>
+                        <td class="value">
+                            <input id="title_background_color_default" name="title_background_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[title_background_color]" id="title_background_color_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="title_font">
+                                <?php echo Mage::helper('adminhtml')->__('Font Family') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <select id="title_font" name="title_font" class="select">
+                                <option value=""><?php echo Mage::helper('adminhtml')->__('-- Please choose Font Style --') ?></option>
+                                <?php foreach ($fontStyle as $_option): ?>
+                                    <?php if (isset($data['title_font'])): ?>
+                                        <?php if ($_option['value'] == $data['title_font']): ?>
+                                            <option selected value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                        <?php else: ?>
+                                            <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </td>
+                        <td class="value">
+                            <input id="title_font_default" name="title_font_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[title_font]" id="title_font_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="title_font_size">
+                                <?php echo Mage::helper('adminhtml')->__('Font Size') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if ( isset($data['title_font_size']) && $data['title_font_size']) echo $data['title_font_size']; ?>" name="title_font_size" id="title_font_size"/>
+
+                        </td>
+                        <td class="value">
+                            <input id="title_font_size_default" name="title_font_size_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[title_font_size]" id="title_font_size_hide"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="entry-edit" id="subtitle_style">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend">
+                <?php echo Mage::helper('adminhtml')->__('Subtitle') ?>
+                <a id="subtitle_tooltip" href="JavaScript:void(0);">(?)</a>
+                <script type="text/javascript">
+                    tip = new Tooltip("subtitle_tooltip","<?php echo Mage::getBaseUrl('media') ?>megamenu/title2.png");
+                </script>
+            </h4>
+        </div>
+        <div class="fieldset">
+            <table class="form-list" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="label">
+                            <label for="subtitle_color">
+                                <?php echo Mage::helper('adminhtml')->__('Text Color') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if (isset($data['subtitle_color']) && $data['subtitle_color']) echo $data['subtitle_color']; ?>" name="subtitle_color" id="subtitle_color"/>
+
+                            <span title="select a color" class="icon i-color-wheel" id="color_subtitle_color"></span>   
+                        </td>
+                        <td class="value">
+                            <input id="subtitle_color_default" name="subtitle_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[subtitle_color]" id="subtitle_color_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="subtitle_font">
+                                <?php echo Mage::helper('adminhtml')->__('Font Family') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <select id="subtitle_font" name="subtitle_font" class="select ">
+                                <option value=""><?php echo Mage::helper('adminhtml')->__('-- Please choose Font Style --') ?></option>
+                                <?php foreach ($fontStyle as $_option): ?>
+                                    <?php if (isset($data['subtitle_font'])): ?>
+                                        <?php if ($_option['value'] == $data['subtitle_font']): ?>
+                                            <option selected value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                        <?php else: ?>
+                                            <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </td>
+                        <td class="value">
+                            <input id="subtitle_font_default" name="subtitle_font_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[subtitle_font]" id="subtitle_font_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="subtitle_font_size">
+                                <?php echo Mage::helper('adminhtml')->__('Font Size') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if (isset($data['subtitle_font_size']) && $data['subtitle_font_size']) echo $data['subtitle_font_size']; ?>" name="subtitle_font_size" id="subtitle_font_size"/>
+
+                        </td>
+                        <td class="value">
+                            <input id="subtitle_font_size_default" name="subtitle_font_size_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[subtitle_font_size]" id="subtitle_font_size_hide"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="entry-edit" id="link_style">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend">
+                <?php echo Mage::helper('adminhtml')->__('Link') ?>
+                <a id="link_tooltip" href="JavaScript:void(0);">(?)</a>
+                <script type="text/javascript">
+                    tip = new Tooltip("link_tooltip","<?php echo Mage::getBaseUrl('media') ?>megamenu/title3.png");
+                </script>
+            </h4>
+        </div>
+        <div class="fieldset">
+            <table class="form-list" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="label">
+                            <label for="link_color">
+                                <?php echo Mage::helper('adminhtml')->__('Text Color') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if(isset($data['link_color'])&& $data['link_color']) echo $data['link_color']; ?>" name="link_color" id="link_color"/>
+
+                            <span title="select a color" class="icon i-color-wheel" id="color_link_color"></span>
+
+                        </td>
+                        <td class="value">
+                            <input id="link_color_default" name="link_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[link_color]" id="link_color_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="hover_color">
+                                <?php echo Mage::helper('adminhtml')->__('Hover Color') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if( isset($data['hover_color']) && $data['hover_color']) echo $data['hover_color']; ?>" name="hover_color" id="hover_color"/>
+
+                            <span title="select a color" class="icon i-color-wheel" id="color_hover_color"></span>
+
+                        </td>
+                        <td class="value">
+                            <input id="hover_color_default" name="hover_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[hover_color]" id="hover_color_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="link_font">
+                                <?php echo Mage::helper('adminhtml')->__('Font Family') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <select id="link_font" name="link_font" class="select ">
+                                <option value=""><?php echo Mage::helper('adminhtml')->__('-- Please choose Font Style --') ?></option>
+                                <?php foreach ($fontStyle as $_option): ?>
+                                    <?php if (isset($data['link_font'])): ?>
+                                        <?php if ($_option['value'] == $data['link_font']): ?>
+                                            <option selected value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                        <?php else: ?>
+                                            <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </td>
+                        <td class="value">
+                            <input id="link_font_default" name="link_font_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[link_font]" id="link_font_hide"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="link_font_size">
+                                <?php echo Mage::helper('adminhtml')->__('Font Size') ?>
+                            </label>
+                        </td>
+                        <td class="value">
+                            <input type="text" class="input-text" value="<?php if (isset($data['link_font_size']) && $data['link_font_size']) echo $data['link_font_size']; ?>" name="link_font_size" id="link_font_size"/>
+
+                        </td>
+                        <td class="value">
+                            <input id="link_font_size_default" name="link_font_size_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                            &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                            <input type="hidden" class="input-text" value="" name="hide[link_font_size]" id="link_font_size_hide"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="entry-edit" id="text_style">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-edit-form fieldset-legend">
+                    <?php echo Mage::helper('adminhtml')->__('Text') ?>
+                    <a id="text_tooltip" href="JavaScript:void(0);">(?)</a>
+                    <script type="text/javascript">
+                        tip = new Tooltip("text_tooltip","<?php echo Mage::getBaseUrl('media') ?>megamenu/title4.png");
+                    </script>
+                </h4>
+            </div>
+            <div class="fieldset">
+                <table class="form-list" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td class="label">
+                                <label for="text_color">
+                                    <?php echo Mage::helper('adminhtml')->__('Text Color') ?>
+                                </label>
+                            </td>
+                            <td class="value">
+                                <input type="text" class="input-text" value="<?php if(isset($data['text_color']) && $data['text_color']) echo $data['text_color']; ?>" name="text_color" id="text_color"/>
+
+                                <span title="select a color" class="icon i-color-wheel" id="color_text_color"></span>
+                            </td>
+                            <td class="value">
+                                <input id="text_color_default" name="text_color_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                                &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                                <input type="hidden" class="input-text" value="" name="hide[text_color]" id="text_color_hide"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="text_font">
+                                    <?php echo Mage::helper('adminhtml')->__('Font Family') ?>
+                                </label>
+                            </td>
+                            <td class="value">
+                                <select id="text_font" name="text_font" class="select ">
+                                    <option value=""><?php echo Mage::helper('adminhtml')->__('-- Please choose Font Style --') ?></option>
+                                    <?php foreach ($fontStyle as $_option): ?>
+                                        <?php if (isset($data['text_font'])): ?>
+                                            <?php if ($_option['value'] == $data['text_font']): ?>
+                                                <option selected value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                            <?php else: ?>
+                                                <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <option value="<?php echo $_option['value'] ?>"><?php echo $_option['label'] ?></option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+
+                            </td>
+                            <td class="value">
+                                <input id="text_font_default" name="text_font_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                                &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                                <input type="hidden" class="input-text" value="" name="hide[text_font]" id="text_font_hide"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="text_font_size">
+                                    <?php echo Mage::helper('adminhtml')->__('Font Size') ?>
+                                </label>
+                            </td>
+                            <td class="value">
+                                <input type="text" class="input-text" value="<?php if (isset($data['text_font_size']) && $data['text_font_size']) echo $data['text_font_size']; ?>" name="text_font_size" id="text_font_size"/>
+
+                            </td>
+                            <td class="value">
+                                <input id="text_font_size_default" name="text_font_size_default" type="checkbox" value="1" class="checkbox config-inherit" checked="checked" onclick="toggleValueElements(this, Element.previous(this.parentNode))" />
+                                &nbsp;<?php echo $this->__('Use value of template') ?><br>
+                                <input type="hidden" class="input-text" value="" name="hide[text_font_size]" id="text_font_size_hide"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--/form-->         
+    <script type="text/javascript"> 
+        loadColor('click');
+    </script>

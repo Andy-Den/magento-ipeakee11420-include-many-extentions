@@ -1,0 +1,83 @@
+<?php
+    $columnNumber = $this->getItem()->getFeaturedColumn();
+    if(!$columnNumber) $columnNumber = 2;
+    if ($this->hasFeaturedProducts()) {
+        $featuredProducts = $this->getAllFeaturedProduct();
+        if(count($featuredProducts) < $columnNumber){
+            $columnNumber = count($featuredProducts);
+        }elseif($columnNumber>12){
+            $columnNumber = 12;
+        }
+        
+    } elseif ($this->hasFeaturedCategories()) {
+        $featuredCategories = $this->getAllFeaturedCategory();
+        if(count($featuredCategories) < $columnNumber){
+            $columnNumber = count($featuredProducts);
+        }elseif($columnNumber>12){
+            $columnNumber = 12;
+        }
+    }
+    $col_index = floor(12/$columnNumber);
+    $feature_type = $this->getItem()->getFeaturedType();
+    switch ($columnNumber) {
+        case 5:$col_index = 24;
+                break;
+        case 7:$col_index = 14;
+                break;  
+        case 8:$col_index = 125;
+                break;
+        case 9:$col_index = 111;
+            break; 
+        case 10:$col_index = 100;
+            break; 
+        case 11:$col_index = 909;
+                break; 
+        default:
+            break;
+    }
+?>
+
+<?php if ($this->hasFeaturedItem()) :?>
+<div class="row">
+    <?php if(count($featuredProducts) && $feature_type == 1): ?>
+        <?php if($this->getItem()->getFeaturedProductsBoxTitle()): ?><div class="col-sm-12 form-group"><strong class="ms-boxtitle"><?php echo $this->getItem()->getFeaturedProductsBoxTitle(); ?></strong></div><?php endif; ?>
+        <?php $i=1; foreach ($featuredProducts as $featuredProduct): ?>
+        <div class="f-product col-sm-<?php echo $col_index ?> col-xs-<?php if($columnNumber != 1){ if($col_index>4) echo '6';else echo '4';}else{echo '12';}?> col-tn-<?php if($columnNumber != 1) echo '6';else echo '12';?>">
+            <a class="product-image text-center form-group" href="<?php echo $featuredProduct->getProductUrl(); ?>">
+                <img title="<?php echo Mage::helper('megamenu')->htmlEscape($featuredProduct->getName()); ?>" src="<?php echo $this->getImagePath($featuredProduct, 175); ?>" width="175"/>
+            </a>
+            <p class="color-available"><?php echo $this->__('More Colours Available')?></p>
+            <p class="product-brand"><?php echo $featuredProduct->getAttributeText('manufacturer');?></p>
+            <a class="product-name form-group" href="<?php echo $featuredProduct->getProductUrl(); ?>"><strong><?php echo $featuredProduct->getName(); ?></strong>
+            </a>
+            <?php echo Mage::getBlockSingleton('catalog/product_list')->setArea('frontend')->getPriceHtml($featuredProduct, true) ?>
+            <?php /*<p><?php echo $this->limitString($featuredProduct->getShortDescription(), 200); ?></p> */?>
+              
+        </div>
+        <?php if($i%2==0): ?><div class="hidden-lg hidden-md hidden-sm hidden-xs col-tn-12"></div><?php endif;?>
+        <?php if(($i%2==0&&$col_index>4)||($i%3==0&&$col_index<=4)): ?><div class="hidden-lg hidden-md hidden-sm col-xs-12 hidden-tn"></div><?php endif;?>
+        <?php if($i%$columnNumber==0): ?><div class="col-sm-12 form-group hidden-xs hidden-tn"></div><?php endif; ?>
+        <?php $i++; endforeach;?>
+    <?php elseif (count($featuredCategories) && $feature_type ==  2 ): ?>
+        <?php if($this->getItem()->getFeaturedCategoriesBoxTitle()): ?><div class="col-sm-12 form-group"><strong class="ms-boxtitle"><?php echo $this->getItem()->getFeaturedCategoriesBoxTitle(); ?></strong></div><?php endif; ?>
+        <?php $i=1; foreach ($featuredCategories as $featuredCategory): ?>
+        <div class="f-category col-sm-<?php echo $col_index ?> col-xs-<?php if($columnNumber != 1){ if($col_index>4) echo '6';else echo '4';}else{echo '12';}?> col-tn-<?php if($columnNumber != 1) echo '6';else echo '12';?>">
+            <a class="product-name form-group" href="<?php echo $featuredCategory->getUrl(); ?>"><strong><?php echo $featuredCategory->getName(); ?></strong></a>
+            <?php if($featuredCategory->getImageUrl()):?>
+            <a class="product-image text-center form-group" href="<?php echo $featuredCategory->getUrl(); ?>">
+                <img title="<?php echo Mage::helper('megamenu')->htmlEscape($featuredCategory->getName()); ?>" src="<?php echo $featuredCategory->getImageUrl(); ?>" width="110"/>
+            </a>
+            <?php endif;?>
+            <p><?php echo $this->limitString($featuredCategory->getShortDescription(), 200); ?></p>
+            
+        </div>
+        <?php if($i%2==0): ?><div class="hidden-lg hidden-md hidden-sm hidden-xs col-tn-12"></div><?php endif;?>
+        <?php if(($i%2==0&&$col_index>4)||($i%3==0&&$col_index<=4)): ?><div class="hidden-lg hidden-md hidden-sm col-xs-12 hidden-tn"></div><?php endif;?>
+         <?php if($i%$columnNumber == 0): ?><div class="col-sm-12 form-group hidden-xs hidden-tn"></div><?php endif; ?>
+        <?php $i++; endforeach;?>
+    <?php elseif($feature_type == 3 ): ?>
+        
+        <div class="col-sm-12"><?php echo $this->getItem()->getFeaturedContent();?></div>
+    <?php endif; ?>
+</div>
+<?php endif;?>

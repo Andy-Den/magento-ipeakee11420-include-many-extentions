@@ -1,0 +1,14 @@
+<?php 
+$isSecure = Mage::app()->getStore()->isCurrentlySecure();
+$url = Mage::getUrl('ajax/index/fetchview', array('_secure'=>$isSecure));
+?><script type="text/javascript">
+<?php if (Mage::getStoreConfigFlag('balance_ajax/settings/to_disable_forms')) {?>
+document.observe("dom:loaded", function(){
+	$$('form').each(function(e){e.disable();});
+});
+<?php } ?>
+if(typeof biAjax != 'undefined'){
+	biAjax.setLoadUrl('<?php echo $url?>');
+	biAjax.load();
+}
+</script>

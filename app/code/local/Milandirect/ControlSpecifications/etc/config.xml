@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_ControlSpecifications>
+            <version>0.1.0</version>
+        </Milandirect_ControlSpecifications>
+    </modules>
+    <global>
+        <helpers>
+            <milandirect_controlspecifications>
+                <class>Milandirect_ControlSpecifications_Helper</class>
+            </milandirect_controlspecifications>
+        </helpers>
+    </global>
+</config>

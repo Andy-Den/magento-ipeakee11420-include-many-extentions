@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Blockwhitelist>
+            <version>1.0.0</version>
+        </Milandirect_Blockwhitelist>
+    </modules>
+    <global>
+        <resources>
+            <milandirect_blockwhitelist_setup>
+                <setup>
+                    <module>Milandirect_Blockwhitelist</module>
+                </setup>
+            </milandirect_blockwhitelist_setup>
+        </resources>
+    </global>
+</config>

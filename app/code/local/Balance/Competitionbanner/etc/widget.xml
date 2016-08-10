@@ -1,0 +1,49 @@
+<widgets>
+    <balance_competitionbanner type="balance_competitionbanner/widget" translate="name description" module="balance_competitionbanner">
+        <name>Competition Banner</name>
+        <description>Competition Banner</description>
+        <parameters>
+            <!--<banner_position translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Position</label>
+                <type>select</type>
+                <source_model>balance_competitionbanner/position</source_model>
+            </banner_position>-->
+            <imageupload>
+                <label>Image</label>
+                <type>easylightbox/adminhtml_widget_image</type>
+                <required>1</required>
+                <visible>1</visible>
+                <value></value>
+                <description>Select image file</description>
+            </imageupload>
+            <imagepath>
+                <type>text</type>
+                <required>1</required>
+                <visible>0</visible>
+                <value></value>
+            </imagepath>
+            <banner_destination translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Destination</label>
+                <type>text</type>
+            </banner_destination>
+            <visibility>
+                <visible>1</visible>
+                <required>1</required>
+                <label>Visibility</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+            </visibility>
+            <template>
+                <visible>0</visible>
+                <required>1</required>
+                <label>Template</label>
+                <type>text</type>
+                <value>balance/competitionbanner/widget.phtml</value>
+            </template>
+        </parameters>
+    </balance_competitionbanner>
+</widgets>

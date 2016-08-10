@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_ConfigurableSimplePriceOverride>
+            <version>0.1.0</version>
+        </Balance_ConfigurableSimplePriceOverride>
+    </modules>
+   <global>
+        <helpers>
+            <configurablesimplepriceoverride>
+                <class>Balance_ConfigurableSimplePriceOverride_Helper</class>
+            </configurablesimplepriceoverride>
+              <catalog>
+			<rewrite>
+				<product>Balance_ConfigurableSimplePriceOverride_Helper_Catalog_Product</product>
+            </rewrite>
+        </catalog>
+        </helpers>
+          <models>
+       
+              <catalog>
+                <rewrite>
+                    <product_type_configurable_price>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Product_Type_Configurable_Price</product_type_configurable_price>
+                </rewrite>
+               <rewrite>
+                    <product_type_simple>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Product_Type_Simple</product_type_simple>
+                </rewrite>
+                 <rewrite>
+                    <product_type_virtual>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Product_Type_Virtual</product_type_virtual>
+                </rewrite>
+                <rewrite>
+                    <product_type_configurable>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Product_Type_Configurable</product_type_configurable>
+                </rewrite>
+                <!-- <rewrite>
+                    <product>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Product</product>
+                </rewrite> -->
+                <rewrite>
+                    <product_type_price>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Product_Type_Price</product_type_price>
+                </rewrite> 
+       
+                 
+            </catalog>
+             
+            <catalog_resource_eav_mysql4>
+                <rewrite>
+                    <product_collection>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Resource_Eav_Mysql4_Product_Collection</product_collection>
+                </rewrite>
+                <rewrite>
+                    <product_indexer_price_configurable>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Resource_Eav_Mysql4_Product_Indexer_Price_Configurable</product_indexer_price_configurable>
+                </rewrite>
+                <rewrite>
+                    <product_indexer_price>Balance_ConfigurableSimplePriceOverride_Model_Catalog_Resource_Eav_Mysql4_Product_Indexer_Price</product_indexer_price>
+                </rewrite>
+            </catalog_resource_eav_mysql4>
+            
+                
+     	
+            <sales>
+		<rewrite>
+			<quote>Balance_ConfigurableSimplePriceOverride_Model_Sales_Quote</quote>
+		</rewrite>
+            </sales>
+     	
+
+            
+          </models>
+          
+           <blocks>
+               
+            <catalog>
+                <rewrite>
+                    <product_view_type_configurable>Balance_ConfigurableSimplePriceOverride_Block_Catalog_Product_View_Type_Configurable</product_view_type_configurable>
+                </rewrite>
+                <!-- rewrite>
+                    <product_price>Balance_ConfigurableSimplePriceOverride_Block_Catalog_Product_Price</product_price>
+                </rewrite -->
+                <rewrite>
+                    <product_view_media>Balance_ConfigurableSimplePriceOverride_Block_Catalog_Product_View_Media</product_view_media>
+                </rewrite>
+                <rewrite>
+                    <product_view_attributes>Balance_ConfigurableSimplePriceOverride_Block_Catalog_Product_View_Attributes</product_view_attributes>
+                </rewrite>
+                 <rewrite>
+                    <product>Balance_ConfigurableSimplePriceOverride_Block_Catalog_Product</product>
+                </rewrite>
+                  <rewrite>
+                    <product_view>Balance_ConfigurableSimplePriceOverride_Block_Catalog_Product_View</product_view>
+                </rewrite>
+            </catalog>
+            
+            <checkout>
+                <!-- rewrite>
+                    <cart_item_renderer>Balance_ConfigurableSimplePriceOverride_Block_Checkout_Cart_Item_Renderer</cart_item_renderer>
+                </rewrite -->
+                  <!-- rewrite>
+                    <cart_item_renderer_configurable>Balance_ConfigurableSimplePriceOverride_Block_Checkout_Cart_Item_Renderer_Configurable</cart_item_renderer_configurable>
+                </rewrite -->
+            </checkout>
+            
+            <wishlist>
+                <rewrite>
+                    <customer_sidebar>Balance_ConfigurableSimplePriceOverride_Block_Wishlist_Customer_Sidebar</customer_sidebar>
+                </rewrite>
+            </wishlist>
+            
+            <adminhtml>
+				<rewrite>
+					<catalog_product_edit>Balance_ConfigurableSimplePriceOverride_Block_Adminhtml_Catalog_Product_Edit</catalog_product_edit>
+				</rewrite>
+            </adminhtml>
+            
+           </blocks>
+       
+      <resources>
+	  <configurablesimplepriceoverride_setup>
+		<setup>
+		  <module>Balance_ConfigurableSimplePriceOverride</module>
+                  <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </configurablesimplepriceoverride_setup>
+	  <configurablesimplepriceoverride_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </configurablesimplepriceoverride_write>
+	  <configurablesimplepriceoverride_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </configurablesimplepriceoverride_read>
+	</resources>
+ 
+  
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <configurablesimplepriceoverride>
+                    <file>simpleconfigurableproducts.xml</file>
+                </configurablesimplepriceoverride>
+            </updates>
+        </layout>
+        <routers>
+            <oi>
+                <use>standard</use>
+                <args>
+                    <module>Balance_ConfigurableSimplePriceOverride</module>
+                    <frontName>oi</frontName>
+                </args>
+            </oi>
+        </routers>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <SCP_options>
+                                            <title>SCP Module Section</title>
+                                        </SCP_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    
+    <default>
+		<SCP_options>
+			<cart>
+				<show_config_product_options>1</show_config_product_options>
+				<show_custom_options>1</show_custom_options>
+				<show_configurable_product_name>1</show_configurable_product_name>
+                                <show_configurable_product_image>1</show_configurable_product_image>
+			</cart>
+                        <product_page>
+				<change_name>1</change_name>
+				<change_description>1</change_description>
+				<change_short_description>1</change_short_description>
+                                <change_attributes>1</change_attributes>
+                                <change_image>1</change_image>
+                                <change_image_fancy>1</change_image_fancy>
+                                <show_price_ranges_in_options>1</show_price_ranges_in_options>
+       			</product_page>
+                        <general_page>
+				<enable_option>1</enable_option>
+			</general_page>
+		</SCP_options>
+	</default>
+        
+</config>

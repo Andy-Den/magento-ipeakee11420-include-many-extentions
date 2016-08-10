@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Balance_Eventtracking>
+            <version>1.0.0</version>
+        </Balance_Eventtracking>
+    </modules>
+    <global>
+        <helpers>
+            <eventtracking>
+                <class>Balance_Eventtracking_Helper</class>
+            </eventtracking>
+        </helpers>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <eventtracking>
+                    <file>eventtracking.xml</file>
+                </eventtracking>
+            </updates>
+        </layout>
+    </frontend>
+</config>

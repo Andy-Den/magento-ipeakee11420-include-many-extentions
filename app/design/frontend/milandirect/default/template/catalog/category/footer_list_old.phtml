@@ -1,0 +1,122 @@
+<div class="spcl-product-links">
+    <?php $_categoryCounter = 0;
+    $_categoryCount = $this->getCategoryCount();
+    $layer = Mage::getSingleton('catalog/layer');
+    $_category = $layer->getCurrentCategory();
+    $currentCategoryId = $_category->getId();
+
+    foreach ($this->getStoreCategories() as $_category):
+    ?>
+
+        <?php if (4 >= $_categoryCounter):
+            $curCategory = Mage::getModel('catalog/category')
+            ->load($_category->getId());?>
+            <?php if ($_category->getName()!= "ALL"):?>
+        <dl>
+            <dt>
+                <a title="<?php echo $_category->getName() ?>"
+                href="<?php echo $this->getCategoryUrl($_category)?>"
+                <?php if ($currentCategoryId &&
+                         $currentCategoryId == $_category->getId())
+                         echo 'class="select"'; ?>>
+                    <h3><?php echo $_category->getName();?></h3>
+                </a>
+            </dt>
+            <?php
+                $collection = Mage::getModel('catalog/category')
+                ->getCategories($curCategory->getId());
+
+                $catCount = 0;
+                $_subcategories = $_category->getChildrenCategories();
+
+                $subCatCount = 0;
+                foreach ($_subcategories as $_subcategory) {
+                    if ($_subcategory->getIsActive()) {
+
+                        $category = Mage::getModel('catalog/category')
+                        ->load($_subcategory->getEntityId());
+
+                        $prodCollection = Mage::getResourceModel('catalog/product_collection')
+                        ->addCategoryFilter($category);
+                        Mage::getSingleton('catalog/product_status')
+
+                        ->addVisibleFilterToCollection($prodCollection);
+
+                        Mage::getSingleton('catalog/product_visibility')
+                        ->addVisibleInCatalogFilterToCollection($prodCollection);
+
+                        if ($_categoryCount != $catCount) {
+            ?>
+
+                <?php if (5 >= $subCatCount):?>
+                    <?php //Applied condition for category Homewares and Designers?>
+                    <?php if (104 == $_subcategory->getParentId() ||
+                    		 25 == $_subcategory->getParentId()): ?>
+                         <?php $subcatChildren = $_subcategory->getChildrenCategories();
+                               $counter = 0; ?>
+
+                        <?php foreach ($subcatChildren as $subsubchild):
+                                $subsubCount = count($subsubchild->getChildrenCategories());
+
+                                $prodSubCollection = Mage::getResourceModel('catalog/product_collection')
+                                ->addCategoryFilter($subsubchild);
+
+                                $subsubChildData = $subsubchild->getData(); ?>
+
+                                <dd <?php if ($currentCategoryId &&
+                                			  $currentCategoryId == $subsubchild->getId())
+                                    echo 'class="select"'; ?>>
+                                    <a href="<?php echo $subsubchild->getUrl() ?>"
+                                    <?php if ($currentCategoryId &&
+                                             $currentCategoryId == $subsubchild->getId())
+                                    echo 'class="select"'; ?>><?php echo $subsubchild->getName();?></a>
+                                    <?php
+                                        $prodsubCount = $prodSubCollection->count();
+                                        if ($prodsubCount > 0) echo '('.$prodsubCount.')';
+                                    ?>
+                                </dd>
+                                <?php $counter++; ?>
+                                <?php //After 6 categories the should be 'More' link?>
+                                <?php if (6 == $counter):
+                                         break;
+                                      endif;?>
+                        <?php endforeach;?>
+
+                        <dd class="item">
+                            <a href="<?php echo $curCategory->getUrl() ?>">
+                            <?php echo $this->__('More..') ?></a>
+                        </dd>
+
+                    <?php else:?>
+                            <dd <?php if ($currentCategoryId &&
+                                          $currentCategoryId == $_subcategory->getId())
+                                echo 'class="select"'; ?>>
+                                <a href="<?php echo $_subcategory->getUrl() ?>"
+                                <?php if ($currentCategoryId &&
+                                         $currentCategoryId == $_subcategory->getId())
+                                echo 'class="select"'; ?>><?php echo $_subcategory->getName(); ?></a>
+                                    <?php
+                                    $prodCount = $prodCollection->count();
+                                    if ($prodCount > 0) echo '('.$prodCount.')';
+                                ?>
+                            </dd>
+                    <?php endif;?>
+
+                    <?php endif;?>
+                    <?php }
+
+                    }
+                        $catCount++;
+                        $subCatCount++;
+                }
+                ?>
+            </dl>
+            <?php endif;?>
+            <?php endif;?>
+            <?php $_categoryCounter++;?>
+        <?php endforeach ?>
+
+</div>
+<script>
+    decorateGeneric($$('ul.category-grid'), ['first', 'last']);
+</script>

@@ -1,0 +1,103 @@
+<?php
+    $columnNumber = $this->getColumnNumber();
+    if($this->getItem()->getCategoryShowType()){
+        $categories = $this->getParentCategories();
+    }else{
+        $categories = $this->getAllCategory();
+    }
+    //Zend_debug::dump(count($categories));die();
+    if (count($categories) < $columnNumber) {
+        $columnNumber = count($categories);    
+    }elseif($columnNumber>12){
+        $columnNumber = 12;
+    }
+    $col_index = floor(12/$columnNumber);
+    switch ($columnNumber) {
+        case 5:$col_index = 24;
+                break;
+        case 7:$col_index = 14;
+                break;  
+        case 8:$col_index = 125;
+                break;
+        case 9:$col_index = 111;
+            break; 
+        case 10:$col_index = 100;
+            break; 
+        case 11:$col_index = 909;
+                break; 
+        default:
+            break;
+    }
+    if(count($categories)%$columnNumber==0){
+       $num_cat = count($categories)/$columnNumber;
+   }else{
+       $num_cat = floor(count($categories)/$columnNumber) +1;
+       $add_cat = count($categories)%$columnNumber;
+   };
+?>
+    <?php if (count($this->getCategories())): ?>    
+        <div class="row ms-category">
+            <?php if($this->getItem()->getCategoriesBoxTitle()): ?><strong class="ms-boxtitle form-group col-xs-12"><?php echo $this->getItem()->getCategoriesBoxTitle(); ?></strong><?php endif; ?>
+        <?php if($this->getItem()->getCategoryShowType()):?>
+            <div class="view-all-category col-level col-sm-<?php echo $col_index ?> col-xs-<?php if($columnNumber != 1){ if($col_index>4) echo '6';else echo '4';}else{echo '12';}?> col-tn-<?php if($columnNumber != 1) echo '6';else echo '12';?>">
+                <a class="form-group <?php echo Mage::helper('megamenu')->setLevel(1); ?>" ><?php echo $this->__('View All') ?></a>
+            </div>
+            <?php $i=1;foreach($categories as $category): ?>
+            <div class="col-category col-level col-sm-<?php echo $col_index ?> col-xs-<?php if($columnNumber != 1){ if($col_index>4) echo '6';else echo '4';}else{echo '12';}?> col-tn-<?php if($columnNumber != 1) echo '6';else echo '12';?>">
+                <?php $childrens = $this->getChildrenCategoriesbByLevel($category,2);?>
+                <a class="form-group <?php echo Mage::helper('megamenu')->setLevel(1); ?>" href="<?php echo $category->getUrl() ?>"><?php echo $category->getName() ?> <?php if(count($childrens) >0) :?> <span  class="glyphicon glyphicon-plus">&nbsp;</span><?php endif;?></a>
+                <?php if(count($childrens) >0) :?>
+                <?php foreach($childrens as $children):?>
+                 <?php $childs =  $this->getChildrenCategoriesbByLevel($children,3) ?>
+                <div class="row">
+                <div class="col-xs-12 <?php if($children->hasChildren() && count($childs)>0) echo Mage::helper('megamenu')->setLevel(2); ?>">
+                    <a class="form-group <?php echo Mage::helper('megamenu')->setLevel(2); ?>" href="<?php echo $children->getUrl() ?>"><small class="glyphicon glyphicon-chevron-right">&nbsp;</small><?php echo $children->getName() ?> <span class="count"><?php echo count($children->getProductCollection())?></span> </a>
+                    <?php if($children->hasChildren() && count($childs)>0): ?>
+                    <div class="sub-level3">
+                        <?php foreach($childs as $child): ?>
+                            <a class="form-group" href="<?php echo $child->getUrl() ?>"><?php echo $child->getName() ?></a>
+                        <?php  endforeach;?>
+                    </div>
+                    <?php  endif;?>
+                </div>
+                </div>
+                <?php endforeach;?>
+                <?php endif; ?>
+            </div>
+            <?php endforeach;?>
+        <?php else: ?>
+            <?php if($this->getItem()->getCategoryType()): ?>
+                <?php $i=1;$j=0; foreach ($categories as $category): ?>         
+                    <?php if($i==1): ?>
+                    <div class="col-category col-sm-<?php echo $col_index ?> col-xs-<?php if($columnNumber != 1){ if($col_index>4) echo '6';else echo '4';}else{echo '12';}?> col-tn-<?php if($columnNumber != 1) echo '6';else echo '12';?>">
+                    <?php $j++;  endif;?>
+                        <a class="form-group <?php echo Mage::helper('megamenu')->setLevel($category->getLevel()); ?>" href="<?php echo $category->getUrl() ?>"><?php echo $category->getName() ?></a>
+                    <?php if($i==$num_cat): ?>
+                    </div>
+                    <?php if($j%2==0): ?><div class="hidden-lg hidden-md hidden-sm hidden-xs col-tn-12"></div><?php endif;?>
+                    <?php if(($j%2==0&&$col_index>4)||($j%3==0&&$col_index<=4)): ?><div class="hidden-lg hidden-md hidden-sm col-xs-12 hidden-tn"></div><?php endif;?>
+                    <?php if($add_cat != 0 && $j >= $add_cat) $num_cat= floor(count($categories)/$columnNumber) ;  endif;?> 
+                <?php if($i<$num_cat) $i++;else $i=1; endforeach; ?>
+            <?php else:?>    
+                <?php $i=1;$j=0; foreach ($categories as $category): ?>
+                    <?php if($category->getLevel()==1 && $i != 1): ?>
+                    </div>
+                    <?php if($j%2==0): ?><div class="hidden-lg hidden-md hidden-sm hidden-xs col-tn-12"></div><?php endif;?>
+                    <?php if(($j!=0&&$j%2==0&&$col_index>4)||($j!=0&&$j%3==0&&$col_index<=4)): ?><div class="hidden-lg hidden-md hidden-sm col-xs-12 hidden-tn"></div><?php endif;?>
+                    <?php if($j%$columnNumber==0 && $j!=0): ?><div class="col-sm-12 form-group hidden-xs hidden-tn"></div><?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php if($category->getLevel()==1): ?>
+                    <?php $j++; ?>
+                    <div class="col-category col-sm-<?php echo $col_index ?> col-xs-<?php if($columnNumber != 1){ if($col_index>4) echo '6';else echo '4';}else{echo '12';}?> col-tn-<?php if($columnNumber != 1) echo '6';else echo '12';?>">
+                    <?php endif;?>
+                        <a class="form-group <?php echo Mage::helper('megamenu')->setLevel($category->getLevel()); ?>" href="<?php echo $category->getUrl() ?>"><?php echo $category->getName() ?></a> 
+                    <?php if($i == count($categories)): ?>
+                    </div>
+                    <?php endif; ?>
+                <?php $i++; endforeach; ?>
+            <?php endif;?> 
+        <?php endif;?>
+            <div class="form-group"></div>
+        </div>
+    <?php endif; ?>

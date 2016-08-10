@@ -1,0 +1,71 @@
+<?php
+/**
+* aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento ENTERPRISE edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento ENTERPRISE edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.0
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?>
+<?php
+?>
+<div class="subsBg clear">
+<div class="subbtm">
+  <div class="box1Titles">
+    <label class="titlTxt"><?php echo $this->__('Want the latest specials and exclusive deals?') ?></label>
+    <br />
+    <p>
+      <label for="newsletter"><?php echo $this->__('Subscribe to our newsletter. It\'s free!') ?></label>
+    </p>
+  </div>
+  <div class="contentBox width675">
+    <form action="http://exceedmail.createsend.com/t/y/s/nkrlkr/" [^] method="post" id="subForm">
+
+      <div class="form-subscribe">
+        <div class="nl-block">
+          <label class="frmLbls mgrnR20" for="newsletter"><?php echo $this->__('Name'); ?></label>
+          <br />
+          <input type="text" name="cm-name" id="name" value="" class="input-text required-entry">
+        </div>
+        <div class="nl-block">
+          <label class="frmLbls" for="newsletter"><?php echo $this->__('Email'); ?></label>
+          <br />
+          <input name="cm-nkrlkr-nkrlkr" type="text" id="nkrlkr-nkrlkr" value="" class="input-text required-entry validate-email"/>
+          <label class="forUnsubs mgrnR20" for="newsletter"><?php echo $this->__('You can unsubscribe at any time.'); ?></label>
+        </div>
+        <div class="btn-block">
+          <button class="btn-subscribe" type="submit" title="<?php echo $this->__('Subscribe') ?>"></button>
+          <br />
+          <div><a href="<?php echo $this->getBaseUrl('')?>privacy-policy" target="_blank"><?php echo $this->__('Privacy Policy') ?></a></div>
+        </div>
+        <div class="cleaer"></div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+//<![CDATA[
+    var newsletterSubscriberFormDetail = new VarienForm('subForm');
+//]]>
+</script>

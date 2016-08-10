@@ -1,0 +1,58 @@
+
+
+<div class="loc-srch">
+    <h4 class="section-title">Search</h4>
+    <?php if($this->showSearchFilter()): ?>
+
+
+        <div class="loc-srch-section">
+            <form class="loc-srch-form" action="<?php echo Mage::getURL('') ?>locator/search/">
+
+                <div class="loc-search-form-row">
+                    <label>Postcode or suburb</label> <input id='locator-autocomplete' name="s" type="text" class="loc-srch-s input-text required-entry" placeholder="<?php echo $this->__('Enter a postcode or suburb') ?>" value="<?php echo $this->getRequest()->getParam('s'); ?>" />
+                </div>
+
+
+                <?php if($this->showDistanceFilter()): ?>
+                    <div class="loc-search-form-row">
+                        <label>within</label> <input name="distance" type="number" value="<?php echo $this->getCurrentDistance($this->getRequest()); ?>" class="loc-srch-dis input-text" /> Km&nbsp;
+                    </div>
+                <?php endif; ?>
+
+                <button type="submit" title="submit" class="loc-search-submit button btn-inline"><span><span>Submit</span></span></button>
+
+                <span class="loc-loader loader loader-med"><i class="fa fa-spinner fa-spin"></i></span>
+            </form>
+
+        </div>
+
+        <div class="loc-srch-section loc-srch-or"><strong>or</strong></div>
+
+    <?php endif; ?>
+
+
+    <?php
+    // This is just an example of how the theme level can be used to link to different types of searches
+    ?>
+    <div class="loc-srch-section links-wrapper-separators-left">
+        <ul class="search-areas links">
+            <li class="first"><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=victoria">VIC</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=new south wales">NSW</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=queensland">QLD</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=western australia">WA</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=south australia">SA</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=northern territory">NT</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=australian capital territory">ACT</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?a=tasmania">TAS</a></li>
+            <li><a class="loc-trigger" href="<?php echo Mage::getURL('') ?>locator/search/?country=australia">All Australia</a></li>
+        </ul>
+    </div>
+
+    <div class="section-line loc-srch-section-line"></div>
+</div>
+
+
+
+<script type="text/javascript">
+    var dataForm = new VarienForm('locator-search', true);
+</script>

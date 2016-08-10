@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magemagician_Guestorderprint>
+			<active>true</active>
+            <codePool>community</codePool>
+        </Magemagician_Guestorderprint>
+    </modules>
+</config> 

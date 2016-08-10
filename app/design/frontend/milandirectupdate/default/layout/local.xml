@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="top.links">
+            <action method="removeLinkBlock"><blockName>wishlist_link</blockName></action>
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>aw_onsale/onsale.js</script></action>
+            <action method="addCss"><name>onsale/css/product_onsale_label.css</name></action>
+            <action method="addCss"><name>onsale/css/category_onsale_label.css</name></action>
+        </reference>
+    </default>
+    <newsletter_subscriber_add translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="newsletter/subscribe" name="popup.newsletter" template="newsletter/popup_subscribe.phtml">
+                <block type="cms/block" name="newsletter_popup_image" as="newsletter_popup_image">
+                    <action method="setBlockId"><block_id>newsletter_popup_image</block_id></action>
+                </block>
+            </block>
+        </reference>
+    </newsletter_subscriber_add>
+
+    <catalog_category_layered>
+        <reference name="before_main_content">
+            <block type="core/template" name="full.width.content" as="full_width_content" template="catalog/category/top-content-category.phtml"/>
+        </reference>
+    </catalog_category_layered>
+    <!--
+    Product show Popup
+    -->
+    <catalog_product_showpopup translate="label">
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/addtocart.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/popupaddtocart.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="catalog/product_view" name="product.info" template="catalog/product/popupview.phtml">
+                <block type="enterprise_targetrule/catalog_product_list_upsell" name="product.info.upsell" as="upsell_products" template="catalog/product/list/popupsell.phtml">
+                    <action method="setColumnCount"><columns>4</columns></action>
+                    <action method="setItemLimit"><type>upsell</type><limit>2</limit></action>
+                </block>
+            </block>
+        </reference>
+    </catalog_product_showpopup>
+
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/addtocart.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/checkboxselect.js</name></action>
+        </reference>
+        <reference name="product.info">
+            <remove name="product.info.container1"/>
+            <remove name="product.info.container2"/>
+            <remove name="product.reviews"/>
+            <!--Estimate delivery-->
+            <block type="milandirect_shippingest/shipping" name="balance_shipping" template="shippingest/shipping.phtml"/>
+            <!--CMS static block social-->
+            <block type="cms/block" name="cms_product_social" as="cms_product_social">
+                <action method="setBlockId"><block_id>cms_product_social</block_id></action>
+            </block>
+            <!--Product tabs customized-->
+            <!--Overview and specifications-->
+            <block type="catalog/product_view_description" name="product.description" as="description"
+                   template="catalog/product/view/tabs/description.phtml">
+                <action method="addToParentGroup">
+                    <group>detailed_info</group>
+                </action>
+                <action method="setTitle" translate="value">
+                    <value>Overview &amp; Specifications</value>
+                </action>
+                <block type="catalog/product_view_attributes" name="product.attributes" as="additional" template="catalog/product/view/attributes.phtml">
+                    <action method="addToParentGroup"><group>detailed_info</group></action>
+                    <action method="setTitle" translate="value"><value>Additional Information</value></action>
+                </block>
+            </block>
+            <!--Overview tab show on mobile only (pulling product description)-->
+            <block type="catalog/product_view_description" name="product.description.mobile" as="overview.mobile"
+                   template="catalog/product/view/tabs/overview-mobile.phtml">
+                <action method="addToParentGroup">
+                    <group>detailed_info</group>
+                </action>
+                <action method="setTitle" translate="value">
+                    <value>Overview</value>
+                </action>
+            </block>
+            <!--Specifications tab show on mobile only-->
+            <block type="catalog/product_view_description" name="product.specifications.mobile" as="specifications"
+                   template="catalog/product/view/tabs/specifications.phtml">
+                <action method="addToParentGroup">
+                    <group>detailed_info</group>
+                </action>
+                <action method="setTitle" translate="value">
+                    <value>Specifications</value>
+                </action>
+                <block type="catalog/product_view_attributes" name="product.attributes" as="additional" template="catalog/product/view/attributes.phtml">
+                    <action method="addToParentGroup"><group>detailed_info</group></action>
+                    <action method="setTitle" translate="value"><value>Additional Information</value></action>
+                </block>
+            </block>
+            <block type="catalog/product_view_attributes" name="product.customer.reviews" as="customer.reviews"
+                   template="catalog/product/view/tabs/product-reviews.phtml">
+                <action method="addToParentGroup">
+                    <group>detailed_info</group>
+                </action>
+                <action method="setTitle" translate="value">
+                    <value>Customer Reviews</value>
+                </action>
+                <block type="review/product_view_list" name="product.info.product_additional_data" as="product_review" template="review/product/view/list.phtml">
+                    <block type="review/product_view_list" name="list-review-content" as="list-review-content" template="review/product/view/list-content.phtml" ajax="true"/>
+                    <block type="review/form" name="product.review.form" as="review_form"/>
+                </block>
+            </block>
+            <block type="catalog/product_view_attributes" name="product.postage.warranty" as="postage.warranty"
+                   template="catalog/product/view/tabs/postage-warranty.phtml">
+                <action method="addToParentGroup">
+                    <group>detailed_info</group>
+                </action>
+                <action method="setTitle" translate="value">
+                    <value>Postage &amp; Warranty</value>
+                </action>
+                <block type="cms/block" name="product_postage_warranty" as="product_postage_warranty">
+                    <action method="setBlockId"><block_id>product_postage_message</block_id></action>
+                </block>
+            </block>
+            <block type="innobyte_product_questions/question" name="product.askaquestion" as="askaquestion"
+                   template="innobyte/product_questions/questions.phtml" ajax="true" >
+                <action method="addToParentGroup">
+                    <group>detailed_info</group>
+                </action>
+                <action method="setTitle" translate="value">
+                    <value>Ask a Question</value>
+                </action>
+            </block>
+        </reference>
+        <reference name="product.info.upsell">
+            <action method="setColumnCount"><columns>4</columns></action>
+            <action method="setItemLimit"><type>upsell</type><limit>4</limit></action>
+        </reference>
+    </catalog_product_view>
+
+    <!--
+        Catalog search result
+    -->
+    <catalogsearch_result_index translate="label">
+        <label>Quick Search Form</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </catalogsearch_result_index>
+    <catalogsearch_advanced_result translate="label">
+        <label>Advanced Search Result</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+    </catalogsearch_advanced_result>
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="removeLink"><name>billing_agreements</name></action>
+            <action method="removeLink"><name>recurring_profiles</name></action>
+            <action method="removeLink"><name>downloadable_products</name></action>
+            <action method="removeLink"><name>enterprise_giftcardaccount</name></action>
+            <action method="removeLink"><name>giftregistry</name></action>
+            <action method="removeLink"><name>invitations</name></action>
+            <action method="removeLink"><name>enterprise_reward</name></action>
+            <action method="removeLink"><name>invitations</name></action>
+            <action method="removeLink"><name>orders</name></action>
+            <action method="removeLink"><name>reviews</name></action>
+            <action method="removeLink"><name>wishlist</name></action>
+            <!-- action method="removeLink"><name>newsletter</name></action -->
+            <action method="removeLink"><name>OAuth Customer Tokens</name></action>
+            <action method="addLink" translate="label" module="wishlist" ifconfig="wishlist/general/active"><name>wishlist-new</name><path>wishlist/</path><label>My Wishlist</label></action>
+            <action method="addLink" translate="label" module="sales"><name>orders-new</name><path>sales/order/history/</path><label>My Orders</label></action>
+            <action method="addLink" translate="label" module="review"><name>reviews-new</name><path>review/customer</path><label>My Product Reviews</label></action>
+            <!-- action method="addLink" translate="label" module="monkey"><name>newsletter-new</name><path>monkey/customer_account/index</path><label>Newsletter Subscriptions</label></action -->
+            <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>Account Dashboard</label></action>
+            <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
+            <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
+        </reference>
+    </customer_account>
+    <customer_account_create>
+        <reference name="breadcrumbs">
+            <action method="addCrumb"><crumbName>Home</crumbName><crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo></action>
+            <action method="addCrumb"><crumbName>create-an-account</crumbName><crumbInfo><label>create an account</label><title>create an account</title></crumbInfo></action>
+        </reference>
+        <reference name="customer_form_register">
+            <block type="cms/block" name="cms_customer_benefits" as="cms_customer_benefits">
+                <action method="setBlockId"><block_id>block-create-account</block_id></action>
+            </block>
+        </reference>
+    </customer_account_create>
+    <customer_account_login>
+        <reference name="breadcrumbs">
+            <action method="addCrumb"><crumbName>Home</crumbName><crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo></action>
+            <action method="addCrumb"><crumbName>Login or create an account</crumbName><crumbInfo><label>Login or create an account</label><title>Login or create an account</title></crumbInfo></action>
+        </reference>
+    </customer_account_login>
+
+    <sales_email_order_items>
+        <reference name="order_totals">
+            <action method="setLabelProperties"><value>colspan="3" align="right" style="padding:5px 0"</value></action>
+            <action method="setValueProperties"><value>align="right" style="padding:5px 0"</value></action>
+        </reference>
+    </sales_email_order_items>
+    <newsletter_manage_index>
+        <remove name="customer.account.link.back"/>
+    </newsletter_manage_index>
+</layout>

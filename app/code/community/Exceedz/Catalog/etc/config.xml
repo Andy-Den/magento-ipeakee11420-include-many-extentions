@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Exceedz_Catalog>
+            <version>0.1.0</version>
+        </Exceedz_Catalog>
+    </modules>
+    <frontend>
+        <routers>
+            <catalog>
+                <args>
+                    <modules>
+                    <Exceedz_Catalog before="Mage_Catalog">Exceedz_Catalog</Exceedz_Catalog>
+                    <frontName>zcatalog</frontName>
+                    </modules>
+                </args>
+            </catalog>
+        </routers>
+    </frontend>
+    <global>
+        <helpers>
+            <zcatalog>
+                <class>Exceedz_Catalog_Helper</class>
+            </zcatalog>
+        </helpers>
+        <blocks>
+            <catalog>
+                <rewrite>
+                    <product_featured>Exceedz_Catalog_Block_Product_Featured</product_featured>
+                    <category_view>Exceedz_Catalog_Block_Category_View</category_view>
+                    <!-- product_view_options_type_select>Exceedz_Catalog_Block_Product_View_Options_Type_Select</product_view_options_type_select>
+                    <navigation>Exceedz_Catalog_Block_Navigation</navigation -->
+                    <!--<product_list_toolbar>Exceedz_Catalog_Block_Product_List_Toolbar</product_list_toolbar>-->
+                </rewrite>
+            </catalog>
+        </blocks>
+        <models>
+            <catalog>
+                <rewrite>
+                    <url>Exceedz_Catalog_Model_Url</url>
+                </rewrite>
+            </catalog>
+        </models>
+    </global>
+    <default>
+        <catalog>
+            <frontend>
+                <grid_per_page>all</grid_per_page>
+                <list_per_page>all</list_per_page>
+            </frontend>
+        </catalog>
+</default>
+</config>

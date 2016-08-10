@@ -1,0 +1,180 @@
+body {
+    color: #282828;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+}
+.ebay-wrap {
+    background: url(../images/pageBg.gif) repeat-x scroll 0 160px #FFFFFF;
+}
+.ebay-page {
+    margin: 0 auto;
+    text-align: left;
+    width: 1000px;
+}
+.ebay-header {
+    height: 160px;
+    margin: 0 auto 25px;
+    padding:0;
+    position: relative;
+    width: 1000px;
+    z-index: 5;
+}
+.ebay-header .logo {
+    text-decoration: none !important;
+	margin:0 0 20px;
+	height:135px;
+	width:245px;
+	display:inline-block;
+	left: 380px;
+	position:relative;
+}
+.ebay-contact-us{ 
+	float:right;	
+	position: relative;
+    top: 65px;
+	width:290px;
+}
+.ebay-contact-us strong{
+	background:url(../images/email.png) no-repeat 0px 4px;
+	padding-left:60px;
+	font-size:36px;
+	float:right;
+}
+.ebay-contact-us span{
+	font-style:italic;
+	font-size:24px;
+	color:#7b7b7b;	
+}
+.ebay-main .ebay-top-curve{
+	background:url(../images/ebey-top-main.png) no-repeat;
+	height:10px;
+	
+}
+.ebay-main-content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    min-height: 500px;
+	padding:0 35px;
+}
+.ebay-product-name h1, .ebay-title, .ebay-subtitle{
+    font-family: 'ProximaNovaRgBold';
+}
+.ebay-product-name h1{
+	color: #282828;
+    font-size: 43px;
+    line-height: 44px;
+	margin: 0;
+    padding: 20px 0;
+}
+.ebay-product-image {
+    border: 1px solid #CCCCCC;
+    height: 400px;
+    width: 400px;
+}
+.ebay-product {
+    margin: 30px 0 0;
+}
+.ebay-product-image{
+	float:left;
+}
+.ebay-description{
+	float:right;
+    text-align:left;
+    width:460px;
+	font-size:14px;
+}
+.ebay-description p, .ebay-overview p, .ebay-delivery p, .ebay-warranty p, .ebay-payment p {
+    margin: 10px 0 20px;
+}
+.ebay-title{
+	margin:0 0 15px;
+	font-size:26px;
+	font-weight:bold;
+	display: block;
+}
+.ebay-subtitle{
+	margin:0 0 10px;
+	font-size:14px;
+	font-weight:bold;
+	display:block;
+}
+.ebay-desc{
+	display: inline-block;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+.ebay-img-thumbnail img{
+	border:1px solid #ccc;
+	width:144px;
+	height:110px;
+	display: inline-block;
+	margin-right:6px;
+}
+.ebay-img-thumbnail {
+    padding: 30px 0;
+}
+.ebay-overview, .ebay-delivery, .ebay-warranty, .ebay-payment {
+    border-bottom: 1px solid #edebeb;
+    font-size: 14px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+}
+.ebay-warranty ul, .ebay-payment ul{
+	padding: 0 0 0 15px;
+}
+.ebay-about-milan{
+	margin-bottom:30px;
+	font-size:14px;
+}
+.clear{
+	clear:both;
+}
+.ebay-delivery-rate, .ebay-delivery-rate ul{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.ebay-delivery-rate li{
+	display:block;
+}
+.ebay-delivery-rate li.ebay-subheading ul li{
+    border-right: 1px solid #edebeb;
+    border-bottom: none;
+	font-weight:bold;
+}
+.ebay-delivery-rate ul li {
+    border-bottom: 1px solid #edebeb;
+    border-right: 1px solid #edebeb;
+    float: left;
+    padding: 8px 0 5px 30px;
+    width: 200px;
+}
+.ebay-delivery-rate ul li.last, .ebay-delivery-rate li.ebay-subheading ul li.last {
+    border-right:none;
+}
+.ebay-delivery-rate li.ebay-heading{
+	text-align:center;
+	padding:20px 0;
+	background:#fafafa;
+	border-bottom:1px solid #edebeb;
+	font-size:16px;
+	font-weight:bold;
+	text-transform:uppercase;
+}
+.us-title a, .us-title a:hover{
+	color:#0e83c0 !important;
+	text-decoration:none;
+}
+.ebay-rate-content{
+	margin-top:30px;
+	font-size:14px;
+}
+.ebay-rate-content p{
+	margin:20px 0;
+}
+.ebay-note {
+    color: #FF0000;
+}
+.ebay-note p{
+	font-style:italic;
+}

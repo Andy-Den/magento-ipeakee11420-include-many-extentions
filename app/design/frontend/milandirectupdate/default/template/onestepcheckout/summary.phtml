@@ -1,0 +1,13 @@
+<?php
+$_coreHelper = $this->helper('core');
+$checkoutHelper = Mage::helper('onestepcheckout/checkout');
+?>
+<?php foreach($this->getTotals() as $total): ?>
+    <?php if($total->getCode() == 'grand_total'): ?>
+        <?php  $value = $total->getValue(); ?>
+        <div class="title-totals"><?php echo $this->__('GRAND TOTAL')?></div>
+        <div class="price">
+            <?php echo $this->helper('checkout')->formatPrice($value); ?>
+        </div>
+    <?php endif;?>
+<?php endforeach; ?>

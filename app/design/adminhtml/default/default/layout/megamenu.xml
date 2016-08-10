@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="notification_toolbar">
+            <action method="setTemplate">
+                <template>megamenu/toolbar.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            <action method="addJs"><file>megamenu/jscolor/jscolor.js</file></action>
+            <action method="addJs"><file>megamenu/jsconfig.js</file></action>
+        </reference>
+    </default>
+    <adminhtml_megamenuadmin_megamenu_index>
+        <reference name="content">
+            <block type="megamenu/adminhtml_megamenu" name="megamenu" />
+        </reference>
+    </adminhtml_megamenuadmin_megamenu_index>
+    <adminhtml_megamenuadmin_megamenu_edit>
+        <update handle="editor"/>
+        <reference name="head">		   
+            <action method="addJs">
+                <script>megamenu/tooltip.js</script>
+            </action>
+        </reference>
+    </adminhtml_megamenuadmin_megamenu_edit>
+	
+    <adminhtml_megamenuadmin_template_index>
+        <reference name="content">
+            <block type="megamenu/adminhtml_template" name="template" />
+        </reference>
+    </adminhtml_megamenuadmin_template_index>
+    <adminhtml_megamenuadmin_template_edit>
+        <reference name="head">
+            <action method="setCanLoadTinyMce">
+                <flag>1</flag>
+            </action>
+            <action method="addJs">
+                <script>mage/adminhtml/variables.js</script>
+            </action>
+            <action method="addJs">
+                <script>mage/adminhtml/wysiwyg/widget.js</script>
+            </action>
+            <action method="addJs">
+                <script>lib/flex.js</script>
+            </action>
+            <action method="addJs">
+                <script>lib/FABridge.js</script>
+            </action>
+            <action method="addJs">
+                <script>mage/adminhtml/flexuploader.js</script>
+            </action>
+            <action method="addJs">
+                <script>mage/adminhtml/browser.js</script>
+            </action>
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>lib/prototype/windows/themes/magento.css</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>mage/adminhtml/wysiwyg/tiny_mce/setup.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>tiny_mce/tiny_mce.js</name>
+                <params/>
+            </action>
+        </reference>
+    </adminhtml_megamenuadmin_template_edit>
+    <adminhtml_megamenuadmin_megamenu_product>
+        <block type="core/text_list" name="root">
+            <block type="megamenu/adminhtml_megamenu_edit_tab_content_maincontent_products" name="megamenu.edit.tab.content.maincontent.product"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>megamenu.edit.tab.content.maincontent.product</grid_block_name>
+                    <data_callback>getSelectedRelatedProducts</data_callback>
+                    <hidden_input_name>program_product</hidden_input_name>
+                    <reload_param_name>oproduct</reload_param_name>
+                </action>
+                <action method="addColumnInputName">
+                    <input_name>product_megamenu</input_name>
+                </action>
+            </block>
+        </block>
+    </adminhtml_megamenuadmin_megamenu_product>
+    <adminhtml_megamenuadmin_megamenu_productgrid>
+        <block type="core/text_list" name="root">
+            <block type="megamenu/adminhtml_megamenu_edit_tab_content_maincontent_products" name="megamenu.edit.tab.content.maincontent.product"/>
+        </block>
+    </adminhtml_megamenuadmin_megamenu_productgrid>
+    <adminhtml_megamenuadmin_megamenu_featuredproduct>
+        <block type="core/text_list" name="root">
+            <block type="megamenu/adminhtml_megamenu_edit_tab_content_featureditem_products" name="megamenu.edit.tab.content.featureditem.product"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>megamenu.edit.tab.content.featureditem.product</grid_block_name>
+                    <data_callback>getSelectedRelatedProducts</data_callback>
+                    <hidden_input_name>program_product</hidden_input_name>
+                    <reload_param_name>oproduct</reload_param_name>
+                </action>
+                <action method="addColumnInputName">
+                    <input_name>product_megamenu</input_name>
+                </action>
+            </block>
+        </block>
+    </adminhtml_megamenuadmin_megamenu_featuredproduct>
+    <adminhtml_megamenuadmin_megamenu_featuredproductgrid>
+        <block type="core/text_list" name="root">
+            <block type="megamenu/adminhtml_megamenu_edit_tab_content_featureditem_products" name="megamenu.edit.tab.content.featureditem.product"/>
+        </block>
+    </adminhtml_megamenuadmin_megamenu_featuredproductgrid>
+    <adminhtml_megamenuadmin_megamenu_cache>
+        <reference name="head">
+            <action method="addCss">
+                <styleSheet>css/magestore/megamenu.css</styleSheet>
+            </action>
+        </reference>
+        <block name="content">
+            <block type="megamenu/adminhtml_cache" name="megamenu.cache" template="megamenu/cache.phtml" />
+        </block>
+    </adminhtml_megamenuadmin_megamenu_cache>
+</layout>

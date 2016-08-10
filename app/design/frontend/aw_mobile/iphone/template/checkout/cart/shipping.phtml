@@ -1,0 +1,64 @@
+<?php
+/**
+* aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento ENTERPRISE edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento ENTERPRISE edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.0
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?>
+<div class="discount-codes box">
+<form id="shipping-zip-form" action="" method="post" onsubmit="return shippingForm.submit(event)">
+    <table align="center">
+    	<?php if(Mage::app()->getWebsite()->getCode() == "base"):?>
+    		<tr class="no-display">
+    	<?php else:?>
+    		<tr>
+		<?php endif;?>
+    		<td align="center" valign="middle"><h4><label for="country"><?php echo $this->__('Country') ?></label></h4></td>
+    		<td align="center" valign="middle">
+            	<?php echo Mage::getBlockSingleton('directory/data')->getCountryHtmlSelect($this->getEstimateCountryId()) ?>
+            </td>
+    	</tr>
+    	<tr>
+    		<td valign="middle"><h4><?php echo $this->__('Postcode') ?></h4></td>
+    		<td align="center" valign="middle"> <input type="hidden" class="radio" id="s_method_tablerate_bestway" value="tablerate_bestway" name="estimate_method">
+   			 <input  class="input-text validate-postcode required-entry" type="text" id="postcode" name="estimate_postcode" value="<?php echo $this->htmlEscape($this->getEstimatePostcode()) ?>" /></p>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td align="center" valign="middle" colspan="2">
+    			<button class="form-button form-button-alt delivery" type="button" value="<?php echo $this->__('Calculate') ?>" onclick="mobileCart.postDeliveryEstimateForm('shipping-zip-form', '<?php echo $this->getUrl('awmobile/cart/estimatePost') ?>'); return false;"><span><span><?php echo $this->__('Calculate') ?></span></span></button>
+    		</td>
+    	</tr>
+    	 <tr><td colspan="2" align="center" class="description"><?php echo $this->__('Enter your postcode for estimated delivery cost') ?></td></tr>
+	</table>
+</form>
+
+<script type="text/javascript">
+    new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+</script>
+
+<span id="gc-please-wait" class="please-wait" style="display:none;">
+    <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="" class="v-middle" /> <?php echo $this->__('Please wait, loading...') ?>
+</span>
+</div>

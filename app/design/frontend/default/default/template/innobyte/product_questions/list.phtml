@@ -1,0 +1,61 @@
+<?php 
+    $helper = Mage::helper('innobyte_product_questions');
+    $product = Mage::registry('product');
+    $data = $this->getAskedQuestions($product->getId());
+    $questions = $data['collection'];
+    $questionNr = count($questions);
+    $counter = 0;
+?>
+
+ <?php if ($questions->count()): ?>
+    <ul class="pq-answered-questions" id="answered-questions">
+        <?php foreach ($questions as $question): $counter++; ?>
+        <?php if($data['requested'] >= $counter): ?>
+        <li <?php if($questionNr==$counter): ?>class="last"<?php endif; ?>>
+            <?php $vote = $this->questionHasVote($question->getId());?>
+            <?php if(!empty($vote)): ?>
+                <p class="pq-question-vote f-right">
+                <?php  if($vote[0]['vote'] == 1): ?>
+                    <em class="pq-your-vote f-left"><?php echo $this->__('You think this question is helpful');?></em>
+                <?php else : ?>
+                    <em class="pq-your-vote f-left"><?php echo $this->__('You think this question is not helpul');?></em>
+                <?php endif;  ?>
+                &nbsp; <span class="pq-question-votes" style="color:<?php echo ($question->getVotes() < 0 ? 'red' : 'green' )?>">
+                    <?php echo ($question->getVotes() > 0 ? "+" : "")?><?php echo $question->getVotes() ?>
+                </span>    
+            <?php else : ?>
+                <?php if($this->allowGuestToVoteQuestions()): ?>
+                    <p class="pq-question-vote f-right">
+                        <a href="javascript://" class="pq-vote-up" onclick="inno.product_questions.voteQuestion(this,'<?php echo $this->getUrl('innoproductquestions/index/vote',array('id'=>$question->getId(),'vote' => 1));?>')" title="<?php echo $this->__('Vote up') ?>"><?php echo $this->__('Vote up') ?></a>
+                        <a href="javascript://" class="pq-vote-down" onclick="inno.product_questions.voteQuestion(this,'<?php echo $this->getUrl('innoproductquestions/index/vote',array('id'=>$question->getId(),'vote' => -1));?>')" title="<?php echo $this->__('Vote down') ?>"><?php echo $this->__('Vote down') ?></a>
+                        <span class="pq-question-votes" style="color:green">0</span>
+                    </p>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <p class="pq-author">
+                <strong><?php echo $question['customer_name']; ?></strong> asked on <?php echo $helper->dateFormat($question['created']); ?>:
+            </p>
+            <p class="pq-question">
+                <strong>Q:</strong>
+                <span><?php echo ucfirst($question['content']); ?></span>
+            </p>
+            <div class="pq-answer">
+                <label>A:</label>
+                <?php echo $question['answer']; ?>
+            </div>
+        </li>
+        <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <em><?php echo $this->__('This product has no questions yet.'); ?></em>
+<?php endif; ?>
+
+<?php if($data['requested'] == $data['extracted']):?>
+    <script>
+        if($("more-questions-trigger") != undefined) {
+            $("more-questions-trigger").hide();
+        }
+    </script>
+<?php endif; ?>

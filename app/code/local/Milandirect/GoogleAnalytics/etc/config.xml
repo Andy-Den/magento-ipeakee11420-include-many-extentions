@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Milandirect_GoogleAnalytics>
+            <version>0.0.1</version>
+        </Milandirect_GoogleAnalytics>
+    </modules>
+    <global>
+        <blocks>
+            <googleanalytics>
+                <rewrite>
+                    <ga>Milandirect_GoogleAnalytics_Block_Ga</ga>
+                </rewrite>
+            </googleanalytics>
+        </blocks>
+    </global>
+</config>

@@ -1,0 +1,96 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php $count = 0;?>
+<?php $totalPercent = 0;?>
+<?php foreach ($this->getRating() as $_rating): ?>
+    <?php if($_rating->getPercent()): $count++;$totalPercent+= ceil($_rating->getPercent());?>
+    <?php endif; ?>
+<?php endforeach; ?>
+<?php if($this->getProductData()->getId()): ?>
+<div class="product-review">
+    <div class="product-details">
+        <a href="<?php echo $this->getProductData()->getProductUrl() ?>" title="<?php echo $this->escapeHtml($this->getProductData()->getName()) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($this->getProductData(), 'small_image')->resize(255,255); ?>" alt="<?php echo $this->escapeHtml($this->getProductData()->getName()) ?>" /></a>
+        <div class="product-info">
+            <h2 class="product-name"><?php echo $this->escapeHtml($this->getProductData()->getName()) ?></h2>
+            <div class="ratings-totals">
+                <?php if( $this->getRating() && $this->getRating()->getSize()): ?>
+                    <?php if($this->getReviewData()->getStatusId() ==2):?>
+                        <div class="ratings">
+                            <div class="rating-box">
+                                <div class="rating" style="width:<?php echo ceil($totalPercent/$count) ?>%"></div>
+                            </div>
+                            <p class="rating-links">
+                                <a href="#review-details"><?php echo $this->__('%d Review', 1) ?></a>
+                                <span class="separator">|</span>
+                                <a class="btn-add-review" href="<?php echo $this->getProductData()->getProductUrl(); ?>#customer-reviews"><?php echo $this->__('Add Your Review') ?></a>
+                            </p>
+                        </div>
+                    <?php else: ?>
+                        <?php echo $this->getReviewsSummaryHtml($this->getProductData(),'short') ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="review-details" id="review-details">
+        <h2><?php echo $this->__('Your Review')?></h2>
+        <div class="ratings-sum">
+            <div class="rating-title"><?php echo $this->__('Rating')?></div>
+            <?php if( $this->getRating() && $this->getRating()->getSize()): ?>
+                <?php if($this->getReviewData()->getStatusId() ==2):?>
+                    <div class="ratings">
+                        <div class="rating-box">
+                            <div class="rating" style="width:<?php echo ceil($totalPercent/$count) ?>%"></div>
+                        </div>
+                        <p class="rating-links">
+                            <a href="#review-details"><?php echo $this->__('%d Review', 1) ?></a>
+                            <span class="separator">|</span>
+                            <a class="btn-add-review" href="<?php echo $this->getProductData()->getProductUrl(); ?>#customer-reviews"><?php echo $this->__('Add Your Review') ?></a>
+                        </p>
+                    </div>
+                <?php else: ?>
+                    <?php echo $this->getReviewsSummaryHtml($this->getProductData(),'short') ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+        <div class="details">
+            <h3><?php echo $this->getReviewData()->getTitle()?></h3>
+            <div class="container">
+                <?php echo nl2br($this->escapeHtml($this->getReviewData()->getDetail())) ?>
+            </div>
+            <div class="date-ratings">
+                <?php $orderDate = strtotime($this->getReviewData()->getCreatedAt());?>
+                <?php if ($this->isReviewOwner()): ?>
+                    <?php echo $this->__('Submitted on %s', date( 'F j, Y', $orderDate )) ?>
+                <?php else :?>
+                    <?php echo $this->__('Submitted on %s ', date( 'F j, Y', $orderDate )) ?>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

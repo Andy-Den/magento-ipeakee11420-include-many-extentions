@@ -1,0 +1,33 @@
+<?php /** @var $this Exceedz_OrderPopup_Block_View */ ?>
+<?php if (Mage::getModel('core/cookie')->get('order_closed')!=1): ?>
+    <?php $product = $this->getLastPurchasedProduct() ?>
+    <?php $order = $this->getLastPurchasedOrder() ?>
+    <?php if ($product): ?>
+    <div id="order-popup">
+        <div class="order-popup">
+            <a onclick="forgotOrderPopup();javascript:closeOrderPopup();" id="popupClose">x</a>
+            <div class="order-popup-desc">
+                <div class="order-popup-img">
+                    <a href="<?php echo $product->getProductUrl() ?>"
+                       title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>"
+                       class="product-image">
+                        <img
+                            src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(135); ?>"
+                            width="85"
+                            height="85"
+                            alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" /></a>
+                </div>
+                <div class="order-popup-content"><?php echo $this->__('Someone from'), ' ' ,$this->getLastPurchasedOrderRegion(), ' ' , $this->__('just purchased') ?> <strong class="order-popup-title"><?php echo $product->getName(); ?></strong>. <a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $this->stripTags($product->getName(), null, true) ?>"><?php echo $this->__('View product') ?></a>
+                <div class="order-popup-date"><?php echo $this->getLastPurchasedOrderDate() ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    setTimeout("closeOrderPopup()", 10000);
+    //setTimeout("showOrderPopup()", 30000);
+    </script>
+    <?php else:?>
+        <span class="no-display"><?php echo $this->__('No details available.'); ?></span>
+    <?php endif; ?>
+<?php endif; ?>

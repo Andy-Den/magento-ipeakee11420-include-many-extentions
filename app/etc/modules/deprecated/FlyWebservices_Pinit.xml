@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <FlyWebservices_Pinit>
+            <active>true</active>
+            <codePool>community</codePool>            
+        </FlyWebservices_Pinit>
+    </modules>
+</config>

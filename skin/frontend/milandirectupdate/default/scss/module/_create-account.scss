@@ -1,0 +1,186 @@
+
+.customer-account-create {
+    .account-create {
+        width: 100%;
+        .account-create-content {
+            float: left;
+            width: 50%;
+            margin-top: 10px;
+            padding: 0 50px;
+            #form-validate {
+                .form-title {
+                    font-size: 24px;
+                    line-height: 34px;
+                    color: $c-black;
+                    position: relative;
+                    margin-bottom: 0;
+                    &:before {
+                        font-family: $f-stack-icon;
+                        position: absolute;
+                        content: $fa-var-chevron-circle-right;
+                        font-size: 24px;
+                        color: #0e83c0;
+                        left: 0;
+                        top: 0;
+                        margin: 0 -30px;
+                    }
+                }
+                .form-subtitle {
+                    max-width: 370px;
+                    line-height: 36px;
+                }
+                .form-instructions {
+                    font-size: 14px;
+                    line-height: 22px;
+                    font-style: normal;
+                    font-family: $f-stack-regular;
+                    color: $c-black;
+                }
+                .required {
+                    display: none;
+                }
+                .form-list {
+                    li {
+                        label {
+                            font-size: 14px;
+                            line-height: 22px;
+                            font-family: $f-stack-regular;
+                            color: $c-gray;
+                            display: block;
+                            font-weight: normal;
+                            &:required {
+                                &:after {
+                                    color: $c-gray;
+                                }
+                            }
+                        }
+                        .customer-dob {
+                            max-width: 394px;
+                            width: 100%;
+                            .dob-day , .dob-month , .dob-year {
+                                display: inline-block;
+                                width: 29.5%;
+                                span {
+                                    padding-left: 14px;
+                                }
+                            }
+                            .dob-month {
+                                width: 33.5%;
+                                padding: 0 10px;
+                            }
+                        }
+                        &.control {
+                            margin-left: -4px;
+                            label {
+                                background: none;
+                                line-height: 10px;
+                            }
+                        }
+                    }
+                }
+                .btn-register-account {
+                    color: #4b84c0;
+                    border: 3px solid #4b84c0;
+                    display: block;
+                    margin-left: 30px;
+                    &:hover {
+                        background: #4b84c0;
+                        color: $c-white;
+                    }
+                }
+                a.back-link {
+                    display: block;
+                    width: 100%;
+                    margin-top: 45px;
+                    margin-left: 30px;
+                    &:before{
+                        font-family: $f-stack-icon;
+                        font-size: 14px;
+                        content: $fa-var-angle-double-left;
+                        margin-right: 4px;
+                    }
+                    small{
+                        display: none;
+                    }
+                }
+            }
+        }
+        .account-create-right {
+            display: inline-block;
+            width: 50%;
+            min-height: 570px;
+            border: 1px solid #e7e7e7;
+            border-radius: 4px;
+            margin-top: 10px;
+            .customer-benefits {
+                a {
+                    img {
+                        width: 100%;
+                    }
+                }
+                .content {
+                    padding: 36px;
+                    h3 {
+                        font-size: 18px;
+                        line-height: 22px;
+                        color: $c-gray;
+                    }
+                    ul {
+                        padding: 15px 25px;
+                        li {
+                            list-style: outside;
+                            text-indent: 5px;
+                        }
+                    }
+                }
+            }
+        }
+        @include bp(max-width, $bp-medium - 2){
+            .account-create-content {
+                padding: 0 15px;
+                #form-validate {
+                    .form-list {
+                        li {
+                            .customer-dob {
+                                max-width: 100%;
+                                .dob-day , .dob-month , .dob-year {
+                                    width: 33%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @include bp(max-width, $bp-medium - 3) {
+            .account-create-content {
+                padding: 0;
+                width: 100%;
+                #form-validate {
+                    .fieldset {
+                        margin-left: 0;
+                        .form-list {
+                            li {
+                                input {
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                    .btn-register-account {
+                        width: 100%;
+                        display: block;
+                        margin-left: 0;
+                        margin-bottom: 40px;
+                    }
+                    .back-link, .form-title, .form-subtitle {
+                        display: none;
+                    }
+                }
+            }
+            .account-create-right {
+                display: none;
+            }
+        }
+    }
+}

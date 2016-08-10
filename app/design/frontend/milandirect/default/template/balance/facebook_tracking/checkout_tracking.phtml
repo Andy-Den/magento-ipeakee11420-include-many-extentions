@@ -1,0 +1,32 @@
+<?php
+$storeCode = Mage::app()->getStore()->getCode();
+$fbCode = '';
+$currencyCode = '';
+
+$quote = Mage::getModel('checkout/session')->getQuote();
+$quoteData= $quote->getData();
+$grandTotal=$quoteData['grand_total'];
+
+switch($storeCode)
+{
+    case 'australia': $fbCode='6022174480264'; $currencyCode='AUD'; break;
+    case 'united_kingdom': $fbCode='6022174561864'; $currencyCode='GBP'; break;
+}
+?>
+
+<!-- Facebook Conversion Code for Checkout -->
+<script>(function() {
+        var _fbq = window._fbq || (window._fbq = []);
+        if (!_fbq.loaded) {
+            var fbds = document.createElement('script');
+            fbds.async = true;
+            fbds.src = '//connect.facebook.net/en_US/fbds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(fbds, s);
+            _fbq.loaded = true;
+        }
+    })();
+    window._fbq = window._fbq || [];
+    window._fbq.push(['track', '<?php echo $fbCode;?>', {'value':'<?php echo round($grandTotal,2);?>','currency':'<?php echo $currencyCode;?>'}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=<?php echo $fbCode;?>&amp;cd[value]=<?php echo round($grandTotal,2);?>&amp;cd[currency]=<?php echo $currencyCode;?>&amp;noscript=1" /></noscript>

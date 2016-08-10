@@ -1,0 +1,7 @@
+www.milandirect.com.au/all/ => www.milandirect.com.au/
+www.milandirect.com.au/shop/ => www.milandirect.com.au/
+www.milandirect.com.au/mobile/ => www.milandirect.com.au/
+www.milandirect.com.au/md-faq/ => www.milandirect.com.au/faq
+www.milandirect.com.au/mobile/shop/ => www.milandirect.com.au/
+www.milandirect.com.au/faq/  => www.milandirect.com.au/help-centre/
+www.milandirect.com.au/mobile/return/ => www.milandirect.com.au

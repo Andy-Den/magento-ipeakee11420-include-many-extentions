@@ -1,0 +1,50 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category    OnTap
+ * @package     OnTap_Merchandiser
+ * @copyright   Copyright (c) 2014 On Tap Networks Ltd. (http://www.ontapgroup.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php if ($this->getResultCount()): ?>
+    <p class="advanced-search-amount">
+        <?php echo $this->helper('catalogsearch')->__('<strong>%d item(s)</strong> were found using the following search criteria', $this->getResultCount()); ?>
+    </p>
+    <script type="text/javascript">
+        //<![CDATA[
+        jQuery('.col-right').height('100%');
+        //]]>
+    </script>
+<?php else: ?>
+    <p class="error-msg"><?php echo $this->helper('catalogsearch')->__('No items were found using the following search criteria.');?></p>
+    <script type="text/javascript">
+        //<![CDATA[
+        jQuery('.col-right').height('100px');
+        //]]>
+    </script>
+<?php endif; ?>
+
+<?php if($this->getResultCount()): ?>
+    <?php
+        $limitPage = Mage::getSingleton('catalog/session')->getLimitPage();
+        Mage::getSingleton('catalog/session')->setLimitPage(OnTap_Merchandiser_Block_Search_Result::PAGE_SEARCH_RESULTS);
+    ?>
+    <div class="column" id="merchandiser-search-list">
+        <?php echo $this->getProductListHtml() ?>
+    </div>
+    <?php Mage::getSingleton('catalog/session')->setLimitPage($limitPage) ?>
+<?php endif; ?>
+
+<?php $this->getSearchCriterias(); ?>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Milandirect_Megamenu>
+            <version>0.0.1</version>
+        </Milandirect_Megamenu>
+    </modules>
+    <global>
+        <helpers>
+            <milandirect_megamenu>
+                <class>Milandirect_Megamenu_Helper</class>
+            </milandirect_megamenu>
+            <megamenu>
+                <rewrite>
+                    <data>Milandirect_Megamenu_Helper_Data</data>
+                </rewrite>
+            </megamenu>
+        </helpers>
+        <blocks>
+            <megamenu>
+                <rewrite>
+                    <item>Milandirect_Megamenu_Block_Item</item>
+                </rewrite>
+            </megamenu>
+        </blocks>
+    </global>
+</config>

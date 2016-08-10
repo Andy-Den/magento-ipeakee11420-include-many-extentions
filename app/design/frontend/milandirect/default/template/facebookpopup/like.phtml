@@ -1,0 +1,26 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<form id="subscribeForm" name="subscribeForm" method="post" onsubmit="return newsletterSubscriberForm.submit(event)" action="http://milandirect.local.com/newsletter/subscriber/send/">
+    <?php echo $this->getBlockHtml('formkey') ?>
+  <div class="form-subscribe form-subscribe-popup">
+    <!--<a onclick="javascript:closePopup();" id="popupClose"></a>-->
+    <div class="subscribe-popup" style="text-align: center;">
+      <div class="facebook-title">
+        <img src="<?php echo $this->getSkinUrl('images/facebook.jpg'); ?>" height="48" />
+      </div>
+      <div class="like-us-header">
+        <h2>Like us on Facebook to get exclusive deals and promotions!</h2>
+      </div>
+      <div class="fb-like-box" data-href="https://www.facebook.com/milandirect" data-width="330" data-show-faces="true" data-stream="false" data-show-border="true" data-header="false"></div>    </div>
+  </div>
+  <input type="hidden" id="CALLBACK_FOR" value="newsletter" />
+</form>
+
+
+

@@ -1,0 +1,39 @@
+<?php
+//get postcode:
+$pcode = $this->getAddress()->getPostcode();
+if(!$pcode) {
+    //guess
+    $pcode = Mage::helper('checkout')->getQuote()->getShippingAddress()->getPostcode();
+}
+//get address info from postcode:
+$addressInfo = Mage::helper('addressbypostcode')->getAddressByPostCode($pcode);
+
+$regionId = $this->getAddress()->getRegionId();
+if(!$regionId) {
+    $countryCode = Mage::getStoreConfig('general/country/default');
+    $regionModel = Mage::getModel('directory/region')->loadByCode($addressInfo['state'], $countryCode);
+    $regionId = $regionModel->getId();
+}
+$helper = Mage::helper('onestepcheckout/checkout');
+$dataHelper = Mage::helper('onestepcheckout');
+?>
+<?php if ($addressInfo && is_array($addressInfo["suburb"])):?>
+    <?php
+    $billingFields['city'] = '<div class="input-box input-city">
+        <label for="billing:city">'.$this->__('Suburb / Town').'</label><br/>';
+    $billingFields['city'] .= '<select id="billing:city" name="billing[city]" title="'.$this->__('Suburb/Town').'" class="">';
+    foreach($addressInfo["suburb"] as $suburb){
+        $billingFields['city'] .= '<option value="'.$suburb.'">'.$suburb.'</option>';
+    }
+    $billingFields['city'] .= '</select>';
+    $billingFields['city'] .=  '</div>';
+    ?>
+<?php else: ?>
+    <?php $billingFields['city'] = '
+    <div class="input-box input-city'.((in_array('city', $formErrors)) ? ' input-error' : '').'">
+        <label for="billing:city">'.$this->__('Suburb / Town').'</label><br/>
+        <input type="text" name="billing[city]" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getCity()).'" title="'.$this->__('Suburb / Town').'" class="input-text" id="billing:city" />
+    </div>';
+    ?>
+<?php endif; ?>
+<?php echo $billingFields['city']; ?>

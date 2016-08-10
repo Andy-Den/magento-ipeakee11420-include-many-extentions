@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<connectfurniture translate="title" module="connectfurniture">
+										<title>ConnectFurniture Section</title>
+										<sort_order>0</sort_order>
+									</connectfurniture>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

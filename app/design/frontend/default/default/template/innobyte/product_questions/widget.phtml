@@ -1,0 +1,47 @@
+<?php
+    $questions = $this->latestProductQuestions();
+    $helper = Mage::helper('innobyte_product_questions');
+    $counter = 0;
+    $questionNr = $questions->count();
+?>
+
+<?php if ($questionNr > 0): ?>
+<div class="block block-product-questions">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Product Questions') ?></span></strong>
+    </div>
+    <div class="block-content">
+        <div class="product-questions">
+            <ul>
+            <?php foreach($questions as $question) : ?>
+                <?php 
+                    $product = Mage::getModel('catalog/product')
+                            ->load($question['product_id']);
+                    $counter ++;
+                ?>
+                <li <?php if($questionNr==$counter): ?>class="last"<?php endif; ?>>
+                    <p class="pq-product-name">
+                        <a href="<?php echo $product->getProductUrl()?>" title="<?php echo $question['product_name']?>"><?php echo $question['product_name']?></a>
+                    </p>
+                    <p class="pq-question">
+                        <strong>Q:</strong>
+                        <span><?php echo ucfirst($question['content']); ?></span>
+                    </p>
+                    <div class="pq-answer">
+                        <label>A:</label>
+                        <?php echo ucfirst($question['answer']); ?>
+                    </div>
+                    <p class="pq-add-date">Added on: <?php echo $helper->dateFormat($question['created']); ?></p>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+        </div>
+		
+        <!--<div class="actions">
+            <a href="<?php // echo $this->getUrl('reviews')?>">
+                <?php // echo $this->__('More questions') ?>
+            </a>
+        </div>-->
+    </div>
+</div>
+<?php endif; ?>

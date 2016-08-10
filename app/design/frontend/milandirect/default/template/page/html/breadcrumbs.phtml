@@ -1,0 +1,122 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+
+/**
+ * Exceedz End of the Code for the Breadcrumbs FPC fix
+ */
+$product = Mage::registry('current_product');
+if (is_object($product)) {
+    $categories = $product->getCategoryCollection()->load();
+    $path   =   explode('/',Mage::helper('core/url')->getCurrentUrl());
+    if($categories) {
+        foreach ($categories as $category)
+        {
+            if($category) {
+                $category = Mage::getModel('catalog/category')->load($category->getId());
+                $category->getName();
+                if(in_array($category->getData('url_key'),$path)){
+                    break;
+                }
+            }
+        }
+    }
+    $lastCrumbName = $product->getName();
+    $lastCategoryAdjust = 0;
+}else{
+    if($category = Mage::registry('current_category')) {
+        $lastCrumbName = $category->getName();
+    }
+    $lastCategoryAdjust = 1;
+}
+
+if($category) {
+    if($path = $category->getPath()) {
+        $path = explode('/', $path);
+        $crumbs = array('home' => array('label' => 'Home',
+                        'title' => 'Home',
+                        'link' => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB),
+                        'first' => true,
+                        'last' => false
+        ));
+        for($i = 1; $i < count($path) - $lastCategoryAdjust; $i++) {
+          $cur_category = Mage::getModel('catalog/category')->load($path[$i]);
+            if($cur_category->getName() == 'Default Category')
+            {
+                continue;
+            }
+
+            if($cur_category && $cur_category->getIsActive()) {
+                $crumbs['category' . $path[$i]] = array('label' =>  $cur_category->getName(),
+                                  'title' => $cur_category->getName(),
+                                  'link' => $cur_category->getUrl(),
+                                  'first' => false,
+                                  'last' => false
+                );
+            }
+        }
+        $crumbs['current'] = array('label' => $lastCrumbName,
+                       'title' => '',
+                       'link' => '',
+                       'first' => false,
+                       'last' => true
+        );
+    }
+}
+/**
+ * Exceedz End of the Code for the Breadcrumbs FPC fix
+ */
+
+if($crumbs && is_array($crumbs)): ?>
+<div id="breadcrumbs" style="display:none" class="breadcrumbs">
+    <ul>
+        <?php
+        	$displayLinks = array();
+        	foreach($crumbs as $_crumbName=>$_crumbInfo):
+        		if(in_array($_crumbInfo['label'], $displayLinks) && !$_crumbInfo['last']) continue;
+        		else $displayLinks[] = $_crumbInfo['label'];
+        ?>
+            <li class="<?php echo $_crumbName ?>">
+            <?php
+                if($_crumbInfo['label'] == 'Home' && !isset($_crumbInfo['link']))
+                    $_crumbInfo['link'] = Mage::getBaseUrl();
+                if($_crumbInfo['link']):
+            ?>
+                <a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->htmlEscape($_crumbInfo['title']) ?>"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></a>
+            <?php elseif($_crumbInfo['last']): ?>
+                <strong><?php echo $this->htmlEscape($_crumbInfo['label']) ?></strong>
+            <?php else: ?>
+                <?php echo $this->htmlEscape($_crumbInfo['label']) ?>
+            <?php endif; ?>
+            <?php if(!$_crumbInfo['last']): ?>
+                <span class='breadcrumb-seperator'>&nbsp;</span>
+            <?php endif; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>

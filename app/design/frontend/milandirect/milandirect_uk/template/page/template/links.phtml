@@ -1,0 +1,41 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * @see Mage_Page_Block_Template_Links
+ */
+?>
+
+<ul class="links">
+	<li class="first"><a class="subscribe-top-head" title="<?php echo $this->__('Subscribe') ?>" href="javascript:void(0);" onclick="javascript:showPopup('<?php echo Mage::getUrl('newsletter/subscriber/add', array('_secure' => $this->getRequest()->isSecure())); ?>')">Subscribe</a></li>
+	<!--<li><a href="https://livechat.boldchat.com/aid/815316311387536518/bc.chat?resize=true&amp;cbdid=2344749241920103942" target="_blank" onclick="window.open((window.pageViewer &amp;&amp; pageViewer.link || function(link){return link;})(this.href + (this.href.indexOf('?')>=0 ? '&amp;' : '?') + 'url=' + escape(document.location.href)), 'Chat815316311387536518', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=640,height=480');return false;" title="<?php echo $this->__('Live Chat') ?>">Live Chat</a></li>-->
+    <li><a href="<?php echo Mage::getUrl('help-centre'); ?>" target="_blank" title="<?php echo $this->__('Help Centre') ?>">Help Centre</a></li>
+    <li><a href="<?php echo $this->getUrl('blog') ?>" target="_blank" title="<?php echo $this->__('Blog') ?>">Blog</a></li>
+    <li><a href="<?php echo $this->getUrl('news-and-media') ?>" target="_blank" title="<?php echo $this->__('News & Media') ?>">News & Media</a></li>
+
+    <!--<li class="last"><a title="Track my Order" href="<?php echo $this->getBaseUrl()?>track-my-order">Track my Order</a></li>-->
+</ul>

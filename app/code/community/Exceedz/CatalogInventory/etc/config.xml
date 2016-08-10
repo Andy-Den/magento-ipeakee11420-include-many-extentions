@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Exceedz_CatalogInventory>
+			<version>0.1</version>
+		</Exceedz_CatalogInventory>
+	</modules>
+	<global>
+		<models>
+			<cataloginventory>
+				<rewrite>
+					<stock_item>Exceedz_CatalogInventory_Model_Stock_Item</stock_item>
+				</rewrite>
+			</cataloginventory>
+		</models>
+	</global>
+</config>

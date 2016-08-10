@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_SeoRichData
+ */
+?>
+<?php
+	$_product = Mage::registry('current_product') ? Mage::registry('current_product') : Mage::registry('product');
+?>
+<meta itemprop="sku" content="<?php echo $_product->getSku(); ?>" />
+<?php if ($_product->getManufacturer()): ?>
+<meta itemprop="brand" content="<?php echo $_product->getAttributeText('manufacturer')?>" />
+<?php endif ?>
+<?php if ($_product->getCondition()): ?>
+    <meta itemprop="itemCondition" content="<?php echo $_product->getAttributeText('condition')?>" />
+<?php endif ?>
+
+<?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_GROUPED): ?>
+    <div itemscope="" itemtype="<?php echo Amasty_SeoRichData_Helper_Product::ITEM_TYPE_OFFER_URL?>" itemprop="offers">
+        <link itemprop="availability" href="<?php echo $_product->isAvailable() ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'?>">
+        <meta itemprop="priceCurrency" content="<?php echo Mage::app()->getStore()->getCurrentCurrencyCode()?>">
+        <meta itemprop="price" content="<?php echo Mage::helper('amseorichdata/product')->getGroupedPrice($_product)?>">
+    </div>
+<?php endif ?>

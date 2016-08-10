@@ -1,0 +1,168 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+/** @var $this Enterprise_TargetRule_Block_Catalog_Product_Item */
+$stockHelper = Mage::helper('amstockstatus');
+$_item = $this->getItem();
+$_product = $_item;
+$catalogHelper = Mage::helper('catalog');
+if ($_item):
+?>
+    <div class="item-images onsale-category-container-grid">
+        <?php if ($productLabel = $catalogHelper->getLabel($_product)): $rand = rand(); ?>
+            <?php $position = $catalogHelper->getPosition($productLabel); ?>
+            <div id ="category-container-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>" class="onsale-category-container <?php echo $position;?>" onclick="document.location='<?php echo $_product->getProductUrl() ?>'" style="<?php echo $catalogHelper->getImageSizeHtml($productLabel) ?> background-image: url('<?php echo $catalogHelper->getImageUrl($productLabel); ?>');
+            <?php if (in_array($position, array('TL', 'TR'))): ?>top: 0;<?php endif; ?>
+            <?php if (in_array($position, array('TC'))): ?>top: -15px;<?php endif; ?>
+            <?php if (in_array($position, array('BL', 'BC', 'BR'))): ?>bottom: 0;<?php endif; ?>">
+            </div>
+            <script type="text/javascript">
+                onsale.registerHorPosition($('category-container-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), '<?php if (($position == 'TC') or ($position == 'BC') or ($position == 'MC')) print 'center'; if (($position == 'TL') or ($position == 'BL') or ($position == 'ML')) print 'left'; if (($position == 'TR') or ($position == 'BR') or ($position == 'MR')) print 'right'; ?>');
+                <?php if (in_array($position, array('ML', 'MC', 'MR'))): ?>
+                onsale.registerVertPosition($('category-container-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), 'middle');
+                <?php endif; ?>
+                onsale.registerHorPosition($('category-onsale-label-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), 'center');
+                onsale.registerVertPosition($('category-onsale-label-<?php echo $_product->getId(); ?>-<?php echo $rand; ?>'), 'middle');
+            </script>
+        <?php endif; ?>
+<!--        --><?php //echo Mage::helper('onsale')->getCategoryLabelHtml($_item); ?>
+        <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_item, 'small_image'), null, true) ?>" class="product-image">
+            <img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->resize(265,261); ?>"
+                 alt="<?php echo $this->stripTags($this->getImageLabel($_item, 'small_image'), null, true) ?>" />
+        </a>
+        <a href="<?php echo Mage::getBaseUrl().'quickview/index/view?pid='.$_item->getId(); ?>" data-fancybox-type="iframe" class="quickview_icon" id="quickview_<?php echo $_item->getId()?>"><span><?php echo Mage::helper('quickview/quickview')->getTitle(); ?></span></a>
+    </div>
+    <div class="product-info">
+        <h3 class="product-name"><a href="<?php echo $this->getProductUrl($_item) ?>"><?php echo $this->escapeHtml($_item->getName()) ?></a></h3>
+        <?php echo $this->getPriceHtml($_item, true, '-upsell') ?>
+        <?php echo $this->getReviewsSummaryHtml($_item) ?>
+        <div class="actions">
+            <?php if($_item->isSaleable() && !$_item->canConfigure()): ?>
+                <a title="<?php echo $this->__('View Details') ?>" class="button btn-view-details" href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
+                <?php if($_product->getTypeId()=='simple' && $_product->hasRequiredOptions()): ?>
+                <?php $additional['custom_option'] = 1; ?>
+                    <form id="product_addtocart_form<?php echo $_product->getId(); ?>" action="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>">
+                        <input type="hidden" name="popup_url" class="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+                        <input type="hidden" name="popup_top_position" class="popup_top_position" value="0px" />
+                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="productAddToCartForm<?php echo $_product->getId(); ?>.submit()"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                    </form>
+                    <script type="text/javascript">
+                        //<![CDATA[
+                        var productAddToCartForm<?php echo $_product->getId(); ?> = new VarienForm('product_addtocart_form<?php echo $_product->getId(); ?>');
+                        var addToCart<?php echo $_product->getId(); ?> = new Addtocart('product_addtocart_form<?php echo $_product->getId(); ?>', '<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>');
+                        productAddToCartForm<?php echo $_product->getId(); ?>.submit = function(event) {
+                            addToCart<?php echo $_product->getId(); ?>.getPostUrl = this.form.action;
+                            if (this.validator.validate()) {
+                                addToCart<?php echo $_product->getId(); ?>.getAddtocart();
+                                return false;
+                            }
+                        }.bind(productAddToCartForm<?php echo $_product->getId(); ?>);
+                        //]]>
+                    </script>
+                <?php elseif ($_product->getTypeId()=='configurable'): ?>
+                    <form action="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>" method="post" id="product_addtocart_form<?php echo $_product->getId(); ?>" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                        <?php Mage::unregister('product') ?>
+                        <?php Mage::register('product', $_product); ?>
+                        <div class="no-display">
+                            <input type="hidden" name="popup_url" class="popup_url" value="<?php echo Mage::getUrl('catalog/product/showpopup', array('id' =>$_product->getId())) ?>" />
+                            <input type="hidden" name="popup_top_position" class="popup_top_position" value="0px" />
+                            <?php echo $this->getLayout()->createBlock('catalog/product_view_type_configurable','', array('template'=> 'catalog/product/view/type/configurable_listing.phtml'))->toHtml(); ?>
+                        </div>
+                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="productAddToCartForm<?php echo $_product->getId(); ?>.submit()" ><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                    </form>
+                    <script type="text/javascript">
+                        //<![CDATA[
+                        var productAddToCartForm<?php echo $_product->getId(); ?> = new VarienForm('product_addtocart_form<?php echo $_product->getId(); ?>');
+                        var addToCart<?php echo $_product->getId(); ?> = new Addtocart('product_addtocart_form<?php echo $_product->getId(); ?>', '<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>');
+                        productAddToCartForm<?php echo $_product->getId(); ?>.submit = function(event) {
+                            addToCart<?php echo $_product->getId(); ?>.getPostUrl = this.form.action;
+                            if (this.validator.validate()) {
+                                addToCart<?php echo $_product->getId(); ?>.getAddtocart();
+                                return false;
+                            } else {
+                                if(jQuery(window).width() < 960){
+                                    window.location.href = '<?php echo $_product->getProductUrl() ?>';
+                                }
+                                else{
+                                    rwd.openFancybox('<?php echo Mage::getBaseUrl().'quickview/index/view?pid='.$_product->getId(); ?>','<?php echo $this->__('Please select options.'); ?>');
+                                }
+                            }
+                        }.bind(productAddToCartForm<?php echo $_product->getId(); ?>);
+                        //]]>
+                    </script>
+                <?php endif; ?>
+            <?php elseif($_item->isSaleable()): ?>
+                <a title="<?php echo $this->__('View Details') ?>" class="button btn-view-details" href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
+            <?php else: ?>
+                <p class="action"><a title="<?php echo $this->__('View Details') ?>" class="button" href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a></p>
+            <?php endif; ?>
+            <ul class="add-to-links">
+                <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                    <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_item) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                <?php endif; ?>
+            </ul>
+            <!-- Get custom stock status -->
+            <?php
+            $stockStatus = Mage::helper('stockstatus')->getCustomStockStatusText($_item);
+            $stockStatusId = Mage::helper('stockstatus')->getCustomStockStatusId($_item);
+            ?>
+            <?php if ($_item->isSaleable()):?>
+                <div class="product-custom-stock-status custom-stock-<?php echo $_product->getId(); ?>">
+                    <?php if($stockStatusId): ?>
+                        <?php $stockIconUrl = $stockHelper->getStatusIconUrl($stockStatusId); ?>
+                        <span <?php if ($stockIconUrl!=''): ?> style="background-image: url('<?php echo $stockIconUrl; ?>');" <?php endif; ?> class="icon-stock icon-stock-<?php echo $stockStatusId?>"></span>
+                        <span class="stock-status"><?php if($stockStatus) echo $stockStatus;?>
+                            <?php if($_product->getPreorderCalender()):?>
+                                <?php echo date("d/m/Y", strtotime($_product->getPreorderCalender()));?>
+                            <?php endif;?>
+                        </span>
+                    <?php endif; ?>
+                </div>
+            <?php else: ?>
+                <?php if ($_item->getData('hide_default_stock_status')): ?>
+                    <div class="product-custom-stock-status custom-stock-<?php echo $_product->getId(); ?>">
+                        <?php if($stockStatusId): ?>
+                            <?php $stockIconUrl = $stockHelper->getStatusIconUrl($stockStatusId); ?>
+                            <span <?php if ($stockIconUrl!=''): ?> style="background-image: url('<?php echo $stockIconUrl; ?>');" <?php endif; ?> class="icon-stock icon-stock-<?php echo $stockStatusId?>"></span>
+                            <span class="stock-status"><?php if($stockStatus) echo $stockStatus;?>
+                                <?php if($_product->getPreorderCalender()):?>
+                                    <?php echo date("d/m/Y", strtotime($_product->getPreorderCalender()));?>
+                                <?php endif;?>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="product-default-stock-status">
+                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <?php if ($_item->getTypeId() == 'configurable') : ?>
+                <div><span class="stock-status" id="stock-status-configurable"></span></div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif;?>

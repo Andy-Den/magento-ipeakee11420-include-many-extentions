@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">				
+            <action method="addCss">
+                <stylesheet>megamenu/css/megamenulibrary.css</stylesheet>
+            </action> 
+            <action method="addCss">
+                <stylesheet>megamenu/css/megamenu.css</stylesheet>
+            </action> 
+        </reference>              
+        <reference name="catalog.topnav">
+            <action method="setTemplate">
+                <template>megamenu/megamenu.phtml</template>
+            </action>
+            <block type="cms/block" name="menu_cached_1" as="menu_cached_1">
+                <action method="setBlockId"><block_id>megamenu_1</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_2" as="menu_cached_2">
+                <action method="setBlockId"><block_id>megamenu_2</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_3" as="menu_cached_3">
+                <action method="setBlockId"><block_id>megamenu_3</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_4" as="menu_cached_4">
+                <action method="setBlockId"><block_id>megamenu_4</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_5" as="menu_cached_5">
+                <action method="setBlockId"><block_id>megamenu_5</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_6" as="menu_cached_6">
+                <action method="setBlockId"><block_id>megamenu_6</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_7" as="menu_cached_7">
+                <action method="setBlockId"><block_id>megamenu_7</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_8" as="menu_cached_8">
+                <action method="setBlockId"><block_id>megamenu_8</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_9" as="menu_cached_9">
+                <action method="setBlockId"><block_id>megamenu_9</block_id></action>
+            </block>
+            <block type="cms/block" name="menu_cached_10" as="menu_cached_10">
+                <action method="setBlockId"><block_id>megamenu_10</block_id></action>
+            </block>
+            <block name="catalog.topnav.new" type="megamenu/navigationtop" template="megamenu/menu.phtml"/>
+            <block name="catalog.topnav.old" type="catalog/navigation" template="catalog/navigation/top.phtml"/>
+        </reference>
+        <reference name="after_body_start">
+            <block name="megamenu_cssgen" type="megamenu/cssgen" template="megamenu/cssgen.phtml"/>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="jsgen" template="megamenu/jsgen.phtml" />
+        </reference>
+        <!--reference name="left">
+            <block type="megamenu/megamenu" template="megamenu/megamenu-left.phtml" before="-"/>
+        </reference-->
+    </default>
+    <megamenu_index_index>
+        <reference name="content">
+            <block type="megamenu/megamenu" name="megamenu" template="megamenu/megamenu.phtml" />
+        </reference>
+    </megamenu_index_index>
+    <megamenu_index_menu>
+        <reference name="content">
+            <block type="megamenu/menu" name="megamenu" template="megamenu/menu.phtml" />
+        </reference>
+    </megamenu_index_menu>
+    <cms_index_index>
+        <reference name="content">
+            <block type="cms/block" name="megamenu-block">
+                <action method="setBlockId">
+                    <block_id>megamenu-block</block_id>
+                </action>
+            </block>
+        </reference>
+    </cms_index_index>
+</layout>

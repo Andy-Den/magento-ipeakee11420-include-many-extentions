@@ -1,0 +1,24 @@
+<?php 
+/**
+ * template
+ */
+?>
+<?php if (Mage::getStoreConfig('megamenu/general/enable')): ?>
+<?php    
+    //Mage::helper('megamenu')->getCssgen();
+   $session = Mage::getSingleton('core/session');
+   if($session->getData('megamenu_html')){
+       echo $session->getData('megamenu_html');
+   }else{
+       $store = Mage::app()->getStore()->getId();
+       $block = $this->getLayout()->createBlock('cms/block')->setBlockId('megamenu_'.$store);
+       if(!$block->getBlockId() || $block->toHtml() == null){
+           Mage::helper('megamenu')->saveCacheHtml($store);
+           $block = $this->getLayout()->createBlock('cms/block')->setBlockId('megamenu_'.$store);
+       }
+       echo $block->toHtml(); 
+   }
+?>
+<?php else: ?>
+	<?php echo $this->getChildHtml('catalog.topnav.old') ?>
+<?php endif ?>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <!-- reference name="head">
+            <action method="addCss"><stylesheet>css/innobyte/product_questions/base.css</stylesheet></action>
+        </reference -->
+    </default> 
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addJs"><script>innobyte/product_questions/init.js</script></action>
+        </reference>
+        <reference name="product.info">
+            <block type="innobyte_product_questions/question" name="inno.product_questions" as="innobyte_product_questions" template="innobyte/product_questions/questions.phtml"/>
+            <block type="innobyte_product_questions/question" name="inno.product_questions_list" as="inno_product_questions_list" template="innobyte/product_questions/list.phtml"/>
+            <block type="innobyte_product_questions/question" name="inno.product_questions_form" as="inno_product_questions_form" template="innobyte/product_questions/form.phtml"/>
+            <block type="innobyte_product_questions/question" name="inno.product_questions_login" as="inno_product_questions_login" template="innobyte/product_questions/login.phtml"/>
+        </reference>
+    </catalog_product_view>
+</layout>

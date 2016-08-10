@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ *
+ * @category    Exceedz
+ * @package     Exceedz_Tracking
+ */
+-->
+<config>
+    <modules>
+        <Exceedz_Tracking>
+            <version>0.1.0</version>
+        </Exceedz_Tracking>
+    </modules>
+    <global>
+        <models>
+            <exceedz_tracking>
+                <class>Exceedz_Tracking_Model</class>
+            </exceedz_tracking>
+        </models>
+        <resources>
+            <exceedz_tracking_setup>
+                <setup>
+                  <module>Exceedz_Tracking</module>
+                  </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </exceedz_tracking_setup>
+            <exceedz_tracking_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </exceedz_tracking_write>
+            <exceedz_tracking_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </exceedz_tracking_read>
+      </resources>
+    </global>
+    <frontend>
+        <routers>
+            <tracking>
+                <use>standard</use>
+                <args>
+                    <module>Exceedz_Tracking</module>
+                    <frontName>tracking</frontName>
+                </args>
+            </tracking>
+        </routers>  
+    </frontend>
+</config>

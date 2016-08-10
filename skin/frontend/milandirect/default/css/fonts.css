@@ -1,0 +1,116 @@
+@font-face {
+    font-family: 'ProximaNovaRgBold';
+    src: url('fonts/ProximaNova-Bold-webfont.eot');
+    src: url('fonts/ProximaNova-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ProximaNova-Bold-webfont.woff') format('woff'),
+         url('fonts/ProximaNova-Bold-webfont.ttf') format('truetype'),
+         url('fonts/ProximaNova-Bold-webfont.svg#ProximaNovaRgBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ProximaNovaLtSemibold';
+    src: url('fonts/ProximaNova-Sbold-webfont.eot');
+    src: url('fonts/ProximaNova-Sbold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ProximaNova-Sbold-webfont.woff') format('woff'),
+         url('fonts/ProximaNova-Sbold-webfont.ttf') format('truetype'),
+         url('fonts/ProximaNova-Sbold-webfont.svg#ProximaNovaLtSemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'proxima_novalight';
+    src: url('fonts/proximanova-light-webfont.eot');
+    src: url('fonts/proximanova-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/proximanova-light-webfont.woff') format('woff'),
+         url('fonts/proximanova-light-webfont.ttf') format('truetype'),
+         url('fonts/proximanova-light-webfont.svg#proxima_novalight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+/* ProximaNova Bold Fonts
+=================================================================================================*/
+
+/* ProximaNova bold 12px*/
+.warrenty label, .sidebar-image h2{ color:#282828; font-family:'ProximaNovaRgBold'; font-size:12px;}
+
+/* ProximaNova bold 13px*/
+.qty-box .grayboxCurvs_midBg label,
+#page_navigation_header .cart-pagination li, .news-subscribe-login label, .reviewername, .block-title-sub #cartHeader .price/*forminiproductfont-bold*/ { color:#282828; font-family:'ProximaNovaRgBold'; font-size:13px;}
+#cartHeader .price .price{color: #0980c2; font-weight: normal; font-family: arial, sans-serif;}
+/* ProximaNova bold 15px*/
+.r-head h3, .o-rating
+{ color:#282828; font-family:'ProximaNovaRgBold'; font-size:15px; line-height:normal;}
+
+/* ProximaNova Bold 17px */
+#shopping-cart-table th, .page-title h3, .sidebar .block .block-title strong, .titlTxt,
+.box-up-sell .box-title h5, .sideblocks .sideblock-titles label, .opc .step-title h2, .box-collateral .box-title h2, .suf,
+.form-subscribe .news-subscribe-login label, .sideblocks p.block-subtitle, .postWrapper .postDetails .tags h2, .sub-text-heading, .Blog-form-section h2.legend, .MediaPageHeading .mediadate, .MediaPageHeading .mediapublication, .MediaPageHeading .mediadiscription, .submit-review-popup .box-title h2
+{ color:#282828; font-family:'ProximaNovaRgBold'; font-size:17px; line-height:18px;}
+
+/* ProximaNova Bold 20px */
+.inner-wrapper .subtotal .regular-price, .inner-wrapper .subtotal .regular-price .price, .sideblocks .regular-price, .sideblocks .regular-price .price
+{ color:#282828; font-family:'ProximaNovaRgBold'; font-size:19px; line-height:19px;}
+
+p.old-price{ color:#282828 !important; font-family:'ProximaNovaRgBold'!important; font-size:16px !important; line-height:21px !important; text-decoration:line-through !important; font-style:normal !important;}
+
+/* ProximaNova Bold 24px */
+h2.items-display, h5.items-display
+{ color:#282828; font-family:'ProximaNovaRgBold'; font-size:24px; line-height:25px;}
+.lable-text { color:#282828; font-family:'ProximaNovaRgBold'; font-size:20px; line-height:22px; font-weight: bold;}
+
+
+/* ProximaNova Bold 24px */
+.great-deal .price
+{font-family:'ProximaNovaRgBold'; font-size:30px; line-height:31px;}
+
+
+/* ProximaNova Bold 35px */
+.regular-price .price, .g-total, .blogTitle .blog-date, .media-date span.date, .Mediasection .media-date
+{ color:#282828; font-family:'ProximaNovaRgBold'; font-size:35px; line-height:36px;}
+.regular-price .price{font-size:30px;}
+.special-price .price
+{ color:#ed1f24; font-family:'ProximaNovaRgBold'; font-size:30px; line-height:30px;}
+
+
+/* ProximaNova Bold 43px */
+.product-view .product-name h1, .page-title h1, .page-title h2, .product-review .page-title h1, .static-cont h1.page-title, .popup-text
+{ color:#282828; font-family:'ProximaNovaRgBold'; font-size:43px; line-height:44px;}
+
+
+.cart .cart-collaterals h2, .Left-Column .title,
+.security-info li .head, .frmLbls, .bannTitl, .products-grid,
+.opc-product-list li .product-item h2, .checkouttotal_holder #shopping-cart-totals-table strong, .d_adds, .quesition-title
+{ font-family:'ProximaNovaRgBold';}
+
+
+/* ProximaNova SemiBold Fonts
+=================================================================================================*/
+
+/* ProximaNova Semibold 13px*/
+ul.links, ul.links li, .top-cart, .data-table th, box-title h3, .sidebar-cart-items, span.month-date, .media-date span.month-date, #my-reviews-table h2.product-name
+{ color:#282828; font-family:'ProximaNovaLtSemibold'; font-size:13px;}
+
+/* ProximaNova Semibold 15px*/
+.listing-top-category h2, .products-grid .product-name,.products-grid li.item h2,.products-grid li.item a.product-item, .product-name, #reviews_content table tbody tr td span a, .my-account .dashboard .box-account .box-head h2, .my-account .dashboard .box-account .box-head h3,
+.box-account .col2-set .col-1 .box .box-title h3, .box-account .col2-set .col-2 .box .box-title h3, .box-account .col2-set .box .box-title h3, .box-content col-1 h4, .fieldset h2.legend, .sidebar .block-cart .block-title strong span,
+.order-info-box .col-1 .box .box-title h2, .order-info-box .col-1 .box .box-title, .order-info-box .col-2 .box .box-title,  .order-info-box .col-2 .box .box-title h2, .order-details .data-table th,
+.order-details .data-table h3, .old-price, .cart_popup .products-grid li.item h3.product-name, .mini-products-list h3.product-name, .static-cont .sub-text, .submit-review-popup .email-to, .submit-review-popup .email-from
+{ color:#282828!important; font-family:'ProximaNovaLtSemibold'; font-size:15px; line-height:18px;}
+
+.form-subscribe .news-subscribe-popup h3 strong.get-started
+{ color:#282828; font-family:'ProximaNovaLtSemibold'; font-size:15px; line-height:18px;}
+
+/* ProximaNova Semibold 17px*/
+.sign-up-for li { color:#282828; font-family:'ProximaNovaLtSemibold'; font-size:12px; line-height:18px;}
+
+.get-started { color:#282828; font-family:'proxima_novalight'; font-size:21px; line-height:22px;}
+/* ProximaNova Semibold 18px*/
+.toolbar .pager{ color:#282828; font-family:'ProximaNovaLtSemibold';}
+
+.form-subscribe .news-subscribe-login label {font-size:12px;}

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Checkout>
+            <version>0.1.0</version>
+        </Milandirect_Checkout>
+    </modules>
+    <frontend>
+        <routers>
+            <checkout>
+                <args>
+                    <modules>
+                        <Milandirect_Checkout before="Exceedz_Checkout">Milandirect_Checkout</Milandirect_Checkout>
+                    </modules>
+                </args>
+            </checkout>
+        </routers>
+    </frontend>
+    <global>
+        <models>
+            <checkout>
+                <rewrite>
+                    <session>Milandirect_Checkout_Model_Session</session>
+                </rewrite>
+            </checkout>
+        </models>
+    </global>
+</config>

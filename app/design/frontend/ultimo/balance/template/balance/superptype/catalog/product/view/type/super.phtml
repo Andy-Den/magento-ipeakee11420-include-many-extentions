@@ -1,0 +1,27 @@
+<?php
+/**
+ * @var $this Balance_SuperPtype_Block_Catalog_Product_View_Type_Super
+ */
+$product = $this->getProduct();
+if (!($product instanceof Mage_Catalog_Model_Product) || !$product->getId())
+{
+    return;
+}
+if (!$this->hasConfigurableProducts())
+{
+    return;
+}
+if (!$this->hasDefaultConfigurableProduct())
+{
+    return;
+}
+$configurableProducts = $this->getConfigurableProducts();
+//foreach ($configurableProducts as $p)
+//{
+//    assist(get_class($p));
+//}
+$defaultConfigurableProduct = $this->getDefaultConfigurableProduct();
+//assist($defaultConfigurableProduct->getData());
+?>
+<style>
+</style>

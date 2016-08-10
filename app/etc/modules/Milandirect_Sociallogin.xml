@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Sociallogin>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Magestore_Sociallogin />
+            </depends>
+        </Milandirect_Sociallogin>
+    </modules>
+</config>

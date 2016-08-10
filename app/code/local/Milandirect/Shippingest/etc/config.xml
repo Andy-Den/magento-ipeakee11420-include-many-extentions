@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Milandirect_Shippingest>
+            <version>0.0.1</version>
+        </Milandirect_Shippingest>
+    </modules>
+    <frontend>
+        <routers>
+            <shippingest>
+                <use>standard</use>
+                <args>
+                    <module>Milandirect_Shippingest</module>
+                    <frontName>shippingest</frontName>
+                </args>
+            </shippingest>
+        </routers>
+        <layout>
+            <updates>
+                <shippingest>
+                    <file>shippingest.xml</file>
+                </shippingest>
+            </updates>
+        </layout>
+    </frontend>
+    <global>
+        <blocks>
+            <milandirect_shippingest>
+                <class>Milandirect_Shippingest_Block</class>
+            </milandirect_shippingest>
+        </blocks>
+    </global>
+</config>

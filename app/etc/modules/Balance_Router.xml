@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balance_Router>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Balance_Router>
+    </modules>
+</config>

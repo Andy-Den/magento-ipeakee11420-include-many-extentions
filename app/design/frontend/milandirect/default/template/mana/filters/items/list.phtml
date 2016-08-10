@@ -1,0 +1,47 @@
+<?php
+/**
+ * @category    Mana
+ * @package     Mana_Filters
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+/**
+ * Template for showing options for filter as a HTML list
+ * @author Mana Team
+ * Injected instead of standard catalog/layer/filter.phtml in Mana_Filters_Block_Filter_Attribute constructor.
+ * This template is overridden by copying (template body was pasted from catalog/layer/filter.phtml
+ * and modified as needed). All changes are marked with comments.
+ */
+/* @var $this Mana_Filters_Block_Filter_Attribute */
+?>
+<ol class="m-filter-item-list">
+<?php $inputValue = array();
+$selectedAttributeValue = false;
+ ?>
+<?php foreach ($this->getItems() as $_item): ?>
+    <?php 
+        if($_item->getMSelected()) { 
+            $inputValue[] = $_item->getValue();
+            $selectedAttributeValue = true;
+        }
+    ?>
+    <li <?php if ($_item->getMSelected()): ?>class="select"<?php endif; ?> onclick="selectFilter('<?php echo $_item->getFilter()->getAttributeModel()->getAttributeCode(); ?>','<?php echo $_item->getValue() ?>');" id="<?php echo $_item->getFilter()->getAttributeModel()->getAttributeCode(); ?>_<?php echo $_item->getValue() ?>">
+        <?php // MANA BEGIN ?>
+        <?php if ($_item->getMSelected()): ?>
+            <?php echo $_item->getLabel() ?>
+        <?php else : ?>
+            <?php if ($_item->getCount() > 0): ?>
+                <?php echo $_item->getLabel() ?>
+            <?php else: echo $_item->getLabel() ?>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php // MANA END ?>
+        (<?php echo $_item->getCount() ?>)
+    </li>
+<?php endforeach ?>
+<input type="hidden" value="<?php echo implode('_', $inputValue); ?>" name='<?php echo $_item->getFilter()->getAttributeModel()->getAttributeCode(); ?>' id='<?php echo $_item->getFilter()->getAttributeModel()->getAttributeCode(); ?>' />
+</ol>
+<?php echo Mage::helper('mana_core')->getNamedHtml('mana_filters/markup', 'after_items', array('block' => $this)) ?>
+<?php if($selectedAttributeValue) :?>
+    <script type="text/javascript">showhide('<?php echo $_item->getFilter()->getAttributeModel()->getFrontendLabel() ?>');</script>
+<?php endif; ?>

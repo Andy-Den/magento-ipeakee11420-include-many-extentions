@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Exceedz Solutions
+ * @category   Exceedz 
+ * @package    Exceedz_Adminhtml
+ * @copyright  Copyright (c) 2008 Exceedz.
+ */
+-->
+<config>
+    <modules>
+        <Exceedz_Emailcatalog>
+			<active>true</active>
+			<codePool>community</codePool>
+			<version>1.01</version>
+		</Exceedz_Emailcatalog>
+    </modules>
+</config> 

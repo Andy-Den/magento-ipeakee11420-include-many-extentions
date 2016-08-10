@@ -1,0 +1,20 @@
+<?php 
+$itemCount = 1;
+foreach($this->getItems() as $_item):     
+    if($itemCount == 1) :
+?>
+    <ul class="opc-product-list">
+    <?php endif; ?>
+        <?php echo $this->getItemHtml($_item)?>
+    <?php if($itemCount == 2) : ?>
+        </ul>
+    <?php $itemCount = 0; 
+        endif; 
+        $itemCount++;
+    ?>
+<?php endforeach; ?>		
+<div class="clear"></div>
+<div class="total-box right">
+    <?php echo $this->getChildHtml('totals'); ?>
+</div>
+<script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>

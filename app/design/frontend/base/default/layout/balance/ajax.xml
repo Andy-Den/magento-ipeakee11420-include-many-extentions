@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			 <action method="addItem"><type>js</type><name>ajax/ajax.js</name></action> 
+      	</reference>
+      	<reference name="before_body_end">
+      		<block type="core/template" template="ajax/trigger.phtml" name="ajax_trigger" />
+      	</reference>
+	</default>
+</layout>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Balance_ConfigurableSimplePriceOverride>
+      <active>true</active>
+      <codePool>local</codePool>
+            <depends>
+                <Mage_Catalog />
+                <Exceedz_Checkout/>
+            </depends>
+    </Balance_ConfigurableSimplePriceOverride>
+  </modules>
+</config>

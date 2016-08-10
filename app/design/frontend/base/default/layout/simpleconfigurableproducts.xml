@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<layoutUpdate>
+    <catalog_product_view>
+     <!-- <reference name="head">
+
+            <action method="addItem"><type>skin_js</type><name>balance/configurable/js/scp_product_extension.js</name></action>
+        </reference>
+-->
+        <reference name="product.info.options.wrapper">
+            <action method="setTemplate"><template>balance/configurable/catalog/product/view/options/scpwrapper.phtml</template></action>
+        </reference>
+
+        <reference name="product.info.options">
+            <action method="setTemplate"><template>balance/configurable/catalog/product/view/scpoptions.phtml</template></action>
+        </reference>
+    </catalog_product_view>
+
+    <customer_account>
+        <reference name="sale.reorder.sidebar">
+            <action method="setTemplate"><template>balance/configurable/sales/reorder/scpsidebar.phtml</template></action>
+        </reference>
+    </customer_account>
+
+
+    <customer_logged_in>
+        <reference name="sale.reorder.sidebar">
+            <action method="setTemplate"><template>balance/configurable/sales/reorder/scpsidebar.phtml</template></action>
+        </reference>
+    </customer_logged_in>
+
+    <oi_ajax_co>
+        <reference name="root">
+            <action method="setTemplate"><template>balance/configurable/page/scpcontentonly.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="catalog/product_view_options" name="product.info.options" as="product_options" template="balance/configurable/catalog/product/view/scpajaxoptions.phtml">
+                <action method="addOptionRenderer"><type>text</type><block>catalog/product_view_options_type_text</block><template>catalog/product/view/options/type/text.phtml</template></action>
+                <action method="addOptionRenderer"><type>file</type><block>catalog/product_view_options_type_file</block><template>catalog/product/view/options/type/file.phtml</template></action>
+                <action method="addOptionRenderer"><type>select</type><block>catalog/product_view_options_type_select</block><template>catalog/product/view/options/type/select.phtml</template></action>
+                <action method="addOptionRenderer"><type>date</type><block>catalog/product_view_options_type_date</block><template>catalog/product/view/options/type/date.phtml</template></action>
+            </block>
+            <block type="catalog/product_view" name="product.tierprices" as="tierprices" template="catalog/product/view/tierprices.phtml"/>
+        </reference>
+    </oi_ajax_co>
+    <oi_ajax_image>
+        <reference name="root">
+            <action method="setTemplate"><template>balance/configurable/page/scpcontentonly.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="catalog/product_view_media" name="product.info.media" as="media" template="catalog/product/view/media.phtml"/>
+        </reference>
+    </oi_ajax_image>
+
+    <oi_ajax_gallery translate="label">
+        <label>Catalog Product Image Gallery Popup</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="catalog/product_gallery" name="catalog_product_gallery" template="catalog/product/gallery.phtml"/>
+        </reference>
+    </oi_ajax_gallery>
+
+
+
+
+<catalog_category_default translate="label">
+    <block type="catalog/product_list" name="product_list" template="catalog/product/list.phtml">
+        
+        <action method="addPriceBlockType"><type>simple</type><block>catalog/product_price</block><template>baldance/configurable/catalog/product/price.phtml</template></action>
+<action method="addPriceBlockType"><type>grouped</type><block>catalog/product_price</block><template>baldance/configurable/catalog/product/price.phtml</template></action>
+<action method="addPriceBlockType"><type>configurable</type><block>catalog/product_price</block><template>baladnce/configurable/catalog/product/price.phtml</template></action>
+        
+    </block>    
+</catalog_category_default>
+
+<catalog_category_layered translate="label">
+    
+    <block type="catalog/product_list" name="product_list" template="catalog/product/list.phtml">
+        
+     <action method="addPriceBlockType"><type>simple</type><block>catalog/product_price</block><template>balandce/configurable/catalog/product/price.phtml</template></action>
+<action method="addPriceBlockType"><type>grouped</type><block>catalog/product_price</block><template>baladnce/configurable/catalog/product/price.phtml</template></action>
+<action method="addPriceBlockType"><type>configurable</type><block>catalog/product_price</block><template>bdalance/configurable/catalog/product/price.phtml</template></action>   
+        
+        
+    </block>
+</catalog_category_layered>
+
+
+<wishlist_index_index translate="label">
+       
+       
+        <reference name="my.account.wrapper">
+            <block type="wishlist/customer_wishlist" name="customer.wishlist" template="wishlist/view.phtml">
+                <action method="setTitle" translate="title">
+                    <title>My Wishlist</title>
+                </action>
+                <block type="wishlist/customer_wishlist_items" name="customer.wishlist.items" as="items" template="wishlist/item/list.phtml">
+                    <block type="wishlist/customer_wishlist_item_column_image" name="customer.wishlist.item.image" template="balance/configurable/wishlist/item/column/image.phtml" />
+                    <block type="wishlist/customer_wishlist_item_column_comment" name="customer.wishlist.item.info" template="balance/configurable/wishlist/item/column/info.phtml">
+                        <action method="setTitle" translate="title">
+                            <title>Product Details and Comment</title>
+                        </action>
+                    </block>
+                    <block type="wishlist/customer_wishlist_item_column_cart" name="customer.wishlist.item.cart" template="wishlist/item/column/cart.phtml">
+                        <action method="setTitle" translate="title">
+                            <title>Add to Cart</title>
+                        </action>
+                        <block type="wishlist/customer_wishlist_item_options" name="customer.wishlist.item.options" />
+                    </block>
+                    <block type="wishlist/customer_wishlist_item_column_remove" name="customer.wishlist.item.remove" template="wishlist/item/column/remove.phtml" />
+                </block>
+                <block type="core/text_list" name="customer.wishlist.buttons" as="control_buttons">
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.share" template="wishlist/button/share.phtml" />
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.toCart" template="wishlist/button/tocart.phtml" />
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.update" template="wishlist/button/update.phtml" />
+                </block>
+            </block>
+        </reference>
+       
+    </wishlist_index_index>
+    
+ <checkout_cart_index translate="label">
+      <reference name="checkout.cart">
+   
+   
+      <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>balance/configurable/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>balance/configurable/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>balance/configurable/checkout/cart/item/default.phtml</template></action>
+   
+   
+</reference>
+
+    </checkout_cart_index>
+    
+    
+
+
+</layoutUpdate>
+
+
